@@ -1,5 +1,9 @@
+// Variables
 @import 'abstracts/variables';
 
-@import 'fonts';
+// Vendor
+@import 'vendor/bootstrap-grid';
 
+// Base
+@import 'base/reset';
 @import 'base/typography';
