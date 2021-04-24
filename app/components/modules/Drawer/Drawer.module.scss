@@ -1,0 +1,40 @@
+@import 'app.scss';
+
+.drawer {
+  background-color: $color-grayish;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  top: 0;
+  right: -100%;
+  width: 650px;
+  height: 100%;
+  padding: 24px 48px 48px 48px;
+  z-index: 10;
+  transition: all 500ms ease-out;
+
+  &.active {
+    right: 0;
+  }
+
+  &Buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &Links,
+  &LangDropdown {
+    text-align: center;
+  }
+}
+
+.closeButton {
+  transition: all 500ms ease-out;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

@@ -1,18 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 const Icon = (props) => {
-  const ImportedIconRef = useRef(null);
-  const [loading, setLoading] = useState(false);
   const { name } = props;
 
-  useEffect(() => {
-    const relPath = '../../../../public';
+  const ImportedIconRef = useRef(null);
+  const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
     setLoading(true);
     const importIcon = async () => {
       try {
         ImportedIconRef.current = (
-          await import(`${relPath}/icons/${name}.svg`)
+          await import(`../../../../public/icons/${name}.svg`)
         ).default;
       } catch (err) {
         throw err;
