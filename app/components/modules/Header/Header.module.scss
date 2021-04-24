@@ -1,1 +1,21 @@
-@import "app.scss";
+@import 'app.scss';
+
+.header {
+  @extend .container; // horizontal paddings
+  background-color: $color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 90px;
+}
+
+.logo {
+  width: 140px;
+  height: 50px;
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .header {
+    height: 106px;
+  }
+}

@@ -1,3 +1,6 @@
+// Variables
+@import 'abstracts/variables';
+
 html {
   box-sizing: border-box;
   -ms-overflow-style: scrollbar;
@@ -12,24 +15,35 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: "Exo 2", sans-serif;
+  font-family: 'Exo 2', sans-serif;
   font-weight: 400;
   font-style: normal;
-  color: $color-black;
+  color: $color-primary;
 }
 
-h1, h2, h3, h4, h5, h6, p { margin: 0; }
-button { border: none; }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+button {
+  border: none;
+  outline: none;
+}
 
 select,
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   margin: 0;
 }
 /* Firefox */
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 textarea:focus,
