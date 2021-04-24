@@ -2,26 +2,17 @@ import React, { useState } from 'react';
 
 import styles from './Toggler.module.scss';
 
-const Toggler = ({ onToggle }) => {
-  // Create an array of classes
-  const [togglerClasses, setTogglerClasses] = useState([styles.toggler]);
+const Toggler = ({ isActive, onToggle }) => {
+  const classNames = [styles.toggler];
 
-  const onToggleHandler = () => {
-    const isActive = togglerClasses.includes(styles.isActive);
-
-    // If not active, set active
-    if (!isActive) {
-      setTogglerClasses([styles.toggler, styles.isActive]);
-    } else {
-      setTogglerClasses([styles.toggler]);
-    }
-
-    // Pass updated value to parent
-    onToggle(!isActive);
-  };
+  // Add active class if toggle is active
+  // Don't show close button on desktop
+  if (isActive && window.innerWidth <= 992) {
+    classNames.push(styles.active);
+  }
 
   return (
-    <button onClick={onToggleHandler} className={togglerClasses.join(' ')}>
+    <button onClick={() => onToggle()} className={classNames.join(' ')}>
       <span className={styles.togglerBox}>
         <span className={styles.togglerInner}></span>
       </span>
