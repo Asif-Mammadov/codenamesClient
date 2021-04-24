@@ -1,7 +1,15 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
   sassOptions: {
-    includePaths: [path.join(__dirname, "app/styles")]
+    includePaths: [path.join(__dirname, 'app/styles')]
+  },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack']
+    });
+
+    return config;
   }
 };

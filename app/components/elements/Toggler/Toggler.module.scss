@@ -1,0 +1,102 @@
+@import 'app.scss';
+
+.togglerBox {
+  width: 50px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.togglerInner {
+  display: block;
+  width: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.togglerInner,
+.togglerInner::before,
+.togglerInner::after {
+  height: 5px;
+  border-radius: 5px;
+  background-color: white;
+  position: absolute;
+  right: 0;
+  transition-property: transform;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+.togglerInner::before,
+.togglerInner::after {
+  content: '';
+  display: block;
+  background-color: inherit;
+}
+.togglerInner::before {
+  width: 50px;
+  top: -11px;
+}
+.togglerInner::after {
+  width: 30px;
+  bottom: -11px;
+}
+
+.togglerSqueeze .togglerInner {
+  transition-duration: 0.075s;
+  transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.togglerSqueeze .togglerInner::before {
+  transition: top 0.075s 0.12s ease, opacity 0.075s ease;
+}
+.togglerSqueeze .togglerInner::after {
+  transition: bottom 0.075s 0.12s ease,
+    transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.togglerSqueeze.isActive .togglerInner {
+  width: 40px;
+  transform: rotate(45deg);
+  transition-delay: 0.12s;
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.togglerSqueeze.isActive .togglerInner::before {
+  top: 0;
+  opacity: 0;
+  transition: top 0.075s ease, opacity 0.075s 0.12s ease;
+}
+.togglerSqueeze.isActive .togglerInner::after {
+  width: 40px;
+  bottom: 0;
+  transform: rotate(-90deg);
+  transition: bottom 0.075s ease,
+    transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.toggler {
+  @extend .togglerSqueeze;
+  display: inline-block;
+  transition-property: opacity, filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  font: inherit;
+  color: inherit;
+  text-transform: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  overflow: visible;
+  cursor: pointer;
+}
+.toggler > * {
+  pointer-events: none;
+}
+.toggler:hover {
+  opacity: 0.8;
+}
+.toggler.isActive:hover {
+  opacity: 0.8;
+}
+.toggler.isActive.toggler-hover-no:hover,
+.toggler-hover-no:hover {
+  opacity: 1;
+}
