@@ -6,11 +6,13 @@ const Icon = (props) => {
   const { name } = props;
 
   useEffect(() => {
+    const relPath = '../../../../public';
+
     setLoading(true);
     const importIcon = async () => {
       try {
         ImportedIconRef.current = (
-          await import(`../../../../public/icons/${name}.svg`)
+          await import(`${relPath}/icons/${name}.svg`)
         ).default;
       } catch (err) {
         throw err;
