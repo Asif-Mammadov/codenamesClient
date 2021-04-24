@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import Toggler from '../../elements/Toggler';
 import styles from './Header.module.scss';
+import Icon from '../../elements/Icon';
 
 const Header = (props) => {
   const [isToggleOn, setIsToggleOn] = useState(false);
