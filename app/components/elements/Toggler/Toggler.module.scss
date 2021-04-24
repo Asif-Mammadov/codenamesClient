@@ -20,7 +20,7 @@
 .togglerInner::after {
   height: 5px;
   border-radius: 5px;
-  background-color: white;
+  background-color: $color-white;
   position: absolute;
   right: 0;
   transition-property: transform;
@@ -54,6 +54,7 @@
     transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
 .togglerSqueeze.active .togglerInner {
+  background-color: $color-primary;
   width: 40px;
   transform: rotate(45deg);
   transition-delay: 0.12s;

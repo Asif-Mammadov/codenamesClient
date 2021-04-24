@@ -6,8 +6,7 @@ const Toggler = ({ isActive, onToggle }) => {
   const classNames = [styles.toggler];
 
   // Add active class if toggle is active
-  // Don't show close button on desktop
-  if (isActive && window.innerWidth <= 992) {
+  if (isActive) {
     classNames.push(styles.active);
   }
 

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { DRAWER_LINKS } from '../../data/modules';
+import { HOME_LINKS } from '../../data/links';
 import Icon from '../../elements/Icon';
 import NavLink from '../../elements/NavLink';
 
 import styles from './Drawer.module.scss';
 
-const Drawer = ({ isActive, onClose }) => {
+const Drawer = ({ show, isActive, onClose }) => {
   const classNames = [styles.drawer];
 
   // Add active class if drawer is active
@@ -13,7 +13,7 @@ const Drawer = ({ isActive, onClose }) => {
     classNames.push(styles.active);
   }
 
-  return (
+  return show ? (
     <section className={classNames.join(' ')}>
       <div className={styles.drawerButtons}>
         <button onClick={() => onClose()} className={styles.closeButton}>
@@ -23,7 +23,7 @@ const Drawer = ({ isActive, onClose }) => {
       </div>
 
       <div className={styles.drawerLinks}>
-        {DRAWER_LINKS.map((link) => (
+        {HOME_LINKS.map((link) => (
           <NavLink href={link.href} key={link.href}>
             {link.name}
           </NavLink>
@@ -32,7 +32,7 @@ const Drawer = ({ isActive, onClose }) => {
 
       <div className={styles.drawerLangDropdown}>Language dropdown</div>
     </section>
-  );
+  ) : null;
 };
 
 export default Drawer;

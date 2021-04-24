@@ -12,7 +12,7 @@
   height: 100%;
   padding: 24px 48px 48px 48px;
   z-index: 10;
-  transition: all 500ms ease-out;
+  transition: $transition;
 
   &.active {
     right: 0;
@@ -31,7 +31,7 @@
 }
 
 .closeButton {
-  transition: all 500ms ease-out;
+  transition: $transition;
   cursor: pointer;
 
   &:hover {

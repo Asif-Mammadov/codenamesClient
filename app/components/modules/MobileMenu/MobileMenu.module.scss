@@ -1,0 +1,37 @@
+@import 'app.scss';
+
+.menu {
+  background-color: $color-grayish;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  right: -100%;
+  width: 100%;
+  height: calc(100% - 90px); // 90px for header
+  overflow-y: auto;
+  z-index: 10;
+  transition: $transition;
+
+  &.active {
+    right: 0;
+  }
+
+  &Options {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 48px 24px;
+
+    .langDropdown {
+      margin-bottom: 48px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
