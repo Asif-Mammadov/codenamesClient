@@ -8,9 +8,10 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  top: $header-height;
   right: -100%;
   width: 100%;
-  height: calc(100% - 90px); // 90px for header
+  height: calc(100% - #{$header-height});
   overflow-y: auto;
   z-index: 10;
   transition: $transition;

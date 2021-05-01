@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+const isBrowser = typeof window !== `undefined`;
+
 const useWindowDimensions = () => {
   const [windowDimensions, setWindowDimensions] = useState({
     width: undefined,
@@ -8,7 +10,7 @@ const useWindowDimensions = () => {
 
   useEffect(() => {
     // only execute all the code below in client side
-    if (typeof window !== 'undefined') {
+    if (isBrowser) {
       // Handler to call on window resize
       function handleResize() {
         // Set window width/height to state

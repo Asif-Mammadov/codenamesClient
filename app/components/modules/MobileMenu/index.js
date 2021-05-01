@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import styles from './MobileMenu.module.scss';
-import { HOME_LINKS } from '../../data/links';
+import { HOME_LINKS } from '../../../data/links';
 import NavLink from '../../elements/NavLink';
 
 const MobileMenu = ({ show, isActive }) => {

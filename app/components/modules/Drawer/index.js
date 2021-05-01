@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HOME_LINKS } from '../../data/links';
+import { HOME_LINKS } from '../../../data/links';
 import Icon from '../../elements/Icon';
 import NavLink from '../../elements/NavLink';
 

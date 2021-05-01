@@ -1,8 +1,13 @@
 import React from 'react';
 import Default from '../app/components/layouts/Default';
+import Home from '../app/components/templates/Home';
 
-const Home = () => {
-  return <Default></Default>;
+const HomePage = () => {
+  return (
+    <Default>
+      <Home />
+    </Default>
+  );
 };
 
-export default Home;
+export default HomePage;

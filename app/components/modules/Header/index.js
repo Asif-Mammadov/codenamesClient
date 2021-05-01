@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import Toggler from '../../elements/Toggler';
@@ -7,10 +7,23 @@ import Drawer from '../Drawer';
 import Backdrop from '../../elements/Backdrop';
 import MobileMenu from '../MobileMenu';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
+import { useScrollPositions } from '../../../hooks/useScrollPositions';
 
 const Header = ({}) => {
   const [isToggleOn, setIsToggleOn] = useState(false);
+  const [isScrollOn, setIsScrollOn] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+
   const { width } = useWindowDimensions();
+
+  useScrollPositions(
+    ({ prevPos, currPos }) => {
+      // Hide header on scroll down
+      const show = currPos.y < prevPos.y && isScrollOn;
+      if (show !== isHidden) setIsHidden(show);
+    },
+    [isHidden, isScrollOn]
+  );
 
   const classNames = [styles.header];
 
@@ -22,9 +35,22 @@ const Header = ({}) => {
   // A utility function to set toggle off
   const close = () => setIsToggleOn(false);
 
+  useEffect(() =>
+    window.addEventListener('scroll', () =>
+      // Set scroll on as soon as scroll starts
+      setIsScrollOn(window.scrollY > 100)
+    )
+  );
+
   return (
     <>
-      <header className={classNames.join(' ')}>
+      <header
+        className={[
+          classNames,
+          isScrollOn ? styles.scrollOn : '',
+          isHidden ? styles.hidden : ''
+        ].join(' ')}
+      >
         <Link href="/">
           <a>
             <img
