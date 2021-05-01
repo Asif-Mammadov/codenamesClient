@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { HOME_LINKS } from '../../../data/links';
-import Icon from '../../elements/Icon';
-import NavLink from '../../elements/NavLink';
+import React from 'react';
 
+import { HOME_LINKS } from '../../../data/links';
+import HomeLink from '../../elements/HomeLink';
+import Icon from '../../elements/Icon';
 import styles from './Drawer.module.scss';
 
 const Drawer = ({ show, isActive, onClose }) => {
@@ -24,9 +24,9 @@ const Drawer = ({ show, isActive, onClose }) => {
 
       <div className={styles.drawerLinks}>
         {HOME_LINKS.map((link) => (
-          <NavLink href={link.href} key={link.href}>
+          <HomeLink clicked={() => onClose()} key={link.href} to={link.href}>
             {link.name}
-          </NavLink>
+          </HomeLink>
         ))}
       </div>
 

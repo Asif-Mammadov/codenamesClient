@@ -1,0 +1,16 @@
+@import 'app.scss';
+
+.homeLink {
+  @extend .fs-28;
+  @extend .lh-36;
+  @extend .fw-700;
+  display: block;
+  color: $color-primary;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+
+  &.active {
+    color: $color-secondary;
+  }
+}
