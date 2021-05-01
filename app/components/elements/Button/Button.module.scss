@@ -1,0 +1,11 @@
+@import 'app.scss';
+
+.button {
+  border-radius: $border-radius;
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .button {
+    height: $header-height-lg;
+  }
+}

@@ -2,11 +2,13 @@
 
 .header {
   @extend .container; // horizontal paddings
-  background-color: $color-primary;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 90px;
+  height: $header-height;
+  position: fixed;
+  top: 0;
+  z-index: 1;
   transition: $transition;
 
   .logo {
@@ -14,15 +16,22 @@
     height: 50px;
   }
 
+  &.scrollOn {
+    background-color: rgba($color: $color-primary, $alpha: 0.7);
+  }
+
+  &.hidden {
+    transform: translateY(-100%);
+  }
+
   &.mobileActive {
     background-color: $color-grayish;
-    position: relative;
     z-index: 10;
   }
 }
 
 @media (min-width: map-get($breakpoints, lg)) {
   .header {
-    height: 106px;
+    height: $header-height-lg;
   }
 }

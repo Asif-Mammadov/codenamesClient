@@ -1,0 +1,69 @@
+@import 'app.scss';
+
+.homeContainer {
+  color: $color-white;
+}
+
+// Generate page classes dynamically
+@for $i from 1 through 3 {
+  .page#{$i} {
+    @extend .container; //Use paddings and grid system
+    position: relative;
+    height: 100vh;
+
+    &Bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: url('../../../../public/img/home-bg-#{$i}.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    &Body {
+      @extend .row;
+      @extend .py-5;
+      overflow: hidden;
+      height: 100%;
+    }
+  }
+}
+
+// Special stylings for each page
+.page2Content {
+  @extend .col-lg-6; // Grid config
+  @extend .offset-lg-6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h1 {
+    @extend .headline;
+    @extend .mb-lg-4;
+    @extend .mb-3;
+  }
+
+  p {
+    @extend .text;
+
+    &:not(:last-child) {
+      @extend .mb-lg-4;
+      @extend .mb-3;
+    }
+  }
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  @for $i from 1 through 3 {
+    .page#{$i} {
+      &Bg {
+        background-image: url('../../../../public/img/home-bg-#{$i}-lg.png');
+      }
+    }
+  }
+}
