@@ -9,8 +9,7 @@
   .page#{$i} {
     @extend .container; //Use paddings and grid system
     position: relative;
-    min-height: 100vh;
-    height: 100%;
+    height: 100vh;
 
     &Bg {
       position: absolute;
@@ -62,8 +61,6 @@
 @media (min-width: map-get($breakpoints, lg)) {
   @for $i from 1 through 3 {
     .page#{$i} {
-      height: 100vh;
-
       &Bg {
         background-image: url('../../../../public/img/home-bg-#{$i}-lg.png');
       }

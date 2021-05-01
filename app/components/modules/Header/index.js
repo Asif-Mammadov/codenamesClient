@@ -25,28 +25,26 @@ const Header = ({}) => {
     [isHidden, isScrollOn]
   );
 
-  const classNames = [styles.header];
-
-  // Change header style when active on mobile
-  if (isToggleOn && width <= 992) {
-    classNames.push(styles.mobileActive);
-  }
-
   // A utility function to set toggle off
   const close = () => setIsToggleOn(false);
 
-  useEffect(() =>
+  useEffect(() => {
     window.addEventListener('scroll', () =>
       // Set scroll on as soon as scroll starts
       setIsScrollOn(window.scrollY > 100)
-    )
-  );
+    );
+
+    // Disable scroll when mobile active
+    document.body.style.overflow =
+      isToggleOn && width <= 992 ? 'hidden' : 'auto';
+  }, [width, isToggleOn]);
 
   return (
     <>
       <header
         className={[
-          classNames,
+          styles.header,
+          isToggleOn && width <= 992 ? styles.mobileActive : '',
           isScrollOn ? styles.scrollOn : '',
           isHidden ? styles.hidden : ''
         ].join(' ')}
