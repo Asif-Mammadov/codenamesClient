@@ -34,10 +34,8 @@
   }
 }
 
-// Special stylings for each page
-.page2Content {
-  @extend .col-lg-6; // Grid config
-  @extend .offset-lg-6;
+// Common content style
+.pageContent {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,12 +48,22 @@
 
   p {
     @extend .text;
-
-    &:not(:last-child) {
-      @extend .mb-lg-4;
-      @extend .mb-3;
-    }
+    @extend .mb-lg-4;
+    @extend .mb-3;
   }
+}
+
+// Special stylings for each page
+.page1Content {
+  @extend .pageContent;
+  @extend .col-lg-6; // Grid config
+  padding-top: $header-height;
+}
+
+.page2Content {
+  @extend .pageContent;
+  @extend .col-lg-6; // Grid config
+  @extend .offset-lg-6;
 }
 
 @media (min-width: map-get($breakpoints, lg)) {
@@ -65,5 +73,9 @@
         background-image: url('../../../../public/img/home-bg-#{$i}-lg.png');
       }
     }
+  }
+
+  .page1Content {
+    padding-top: $header-height-lg;
   }
 }

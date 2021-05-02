@@ -31,7 +31,7 @@ const Header = ({}) => {
   useEffect(() => {
     window.addEventListener('scroll', () =>
       // Set scroll on as soon as scroll starts
-      setIsScrollOn(window.scrollY > 100)
+      setIsScrollOn(window.scrollY > 50)
     );
 
     // Disable scroll when mobile active
