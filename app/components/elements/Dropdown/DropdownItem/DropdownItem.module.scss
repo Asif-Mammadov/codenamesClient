@@ -1,0 +1,22 @@
+@import 'app.scss';
+
+.dropdownItem {
+  @extend .fs-16;
+  @extend .lh-20;
+  @extend .fw-700;
+  @extend .py-3;
+  @extend .px-4;
+  color: $color-primary;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  width: 100%;
+
+  // Dropdown button styling
+  &.isButton {
+    @extend .p-0;
+    @extend .mr-1;
+    @extend .fs-20;
+    @extend .lh-24;
+  }
+}
