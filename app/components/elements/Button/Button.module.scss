@@ -1,11 +1,39 @@
 @import 'app.scss';
 
 .button {
+  background-color: $color-secondary;
+  color: $color-white;
   border-radius: $border-radius;
-}
+  transition: $transition;
+  text-transform: uppercase;
+  width: max-content;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $color-secondary;
+  @extend .hover-dark;
+  @extend .ff-exo2;
+  @extend .fs-lg-24;
+  @extend .fs-20;
+  @extend .lh-lg-28;
+  @extend .lh-24;
+  @extend .fw-600;
+  @extend .px-lg-5;
+  @extend .px-4;
+  @extend .py-3;
 
-@media (min-width: map-get($breakpoints, lg)) {
-  .button {
-    height: $header-height-lg;
+  &.big {
+    @extend .py-4;
+  }
+
+  &.shadow {
+    box-shadow: 0px 3px 6px #1b1f2a;
+  }
+
+  //Button types
+  &.white {
+    background-color: white;
+    color: $color-secondary;
   }
 }
