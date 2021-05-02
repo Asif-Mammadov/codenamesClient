@@ -1,1 +1,35 @@
-@import "app.scss";
+@import 'app.scss';
+
+
+.footer {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(
+    180deg,
+    rgba(4, 53, 58, 0.1) 0%,
+    rgba(4, 53, 58, 0.1) 0.01%,
+    rgba(4, 53, 58, 0.3) 14.58%,
+    #04353a 100%
+  );
+  color: $color-white;
+  @extend .fs-lg-18;
+  @extend .fs-15;
+  @extend .lh-lg-24;
+  @extend .lh-20;
+  @extend .fw-600;
+  section:first-child {
+    @extend .fw-500;
+    @extend .mb-2;
+  }
+
+  .codenames {
+    color: $color-secondary;
+  }
+
+}
