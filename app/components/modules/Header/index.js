@@ -65,7 +65,7 @@ const Header = ({}) => {
       </header>
 
       <Drawer show={width > 992} onClose={close} isActive={isToggleOn} />
-      <MobileMenu show={width <= 992} isActive={isToggleOn} />
+      <MobileMenu show={width <= 992} onClose={close} isActive={isToggleOn} />
 
       {isToggleOn ? <Backdrop onClose={close} /> : null}
     </>

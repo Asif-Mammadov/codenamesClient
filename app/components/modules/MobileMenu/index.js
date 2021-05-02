@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import styles from './MobileMenu.module.scss';
 import { HOME_LINKS } from '../../../data/links';
-import NavLink from '../../elements/NavLink';
+import HomeLink from '../../elements/HomeLink';
 
-const MobileMenu = ({ show, isActive }) => {
+const MobileMenu = ({ show, isActive, onClose }) => {
   const classNames = [styles.menu];
 
   // Add active class if MobileMenu is active
@@ -16,9 +16,9 @@ const MobileMenu = ({ show, isActive }) => {
     <section className={classNames.join(' ')}>
       <div>
         {HOME_LINKS.map((link) => (
-          <NavLink href={link.href} key={link.href}>
+          <HomeLink clicked={() => onClose()} key={link.href} to={link.href}>
             {link.name}
-          </NavLink>
+          </HomeLink>
         ))}
       </div>
 

@@ -12,7 +12,8 @@
 
 .text {
   @extend .fs-xl-24;
-  @extend .fs-16;
+  @extend .fs-lg-16;
+  @extend .fs-14;
   @extend .lh-xl-32;
   @extend .lh-24;
   color: $color-white;

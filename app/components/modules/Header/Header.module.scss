@@ -12,8 +12,7 @@
   transition: $transition;
 
   .logo {
-    width: 140px;
-    height: 50px;
+    width: 120px;
   }
 
   &.scrollOn {
@@ -33,5 +32,9 @@
 @media (min-width: map-get($breakpoints, lg)) {
   .header {
     height: $header-height-lg;
+
+    .logo {
+      width: 140px;
+    }
   }
 }
