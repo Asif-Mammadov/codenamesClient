@@ -24,15 +24,15 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    padding: 48px 24px;
+    padding: 0 24px 24px 24px;
 
     .langDropdown {
-      margin-bottom: 48px;
+      margin-bottom: 36px;
     }
 
     .buttons {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
     }
   }
 }

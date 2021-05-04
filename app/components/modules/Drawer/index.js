@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { HOME_LINKS } from '../../../data/links';
+import { HOME_LINKS, LANGS } from '../../../data/main';
+import Button from '../../elements/Button';
+import Dropdown from '../../elements/Dropdown';
 import HomeLink from '../../elements/HomeLink';
 import Icon from '../../elements/Icon';
 import styles from './Drawer.module.scss';
@@ -19,7 +21,12 @@ const Drawer = ({ show, isActive, onClose }) => {
         <button onClick={() => onClose()} className={styles.closeButton}>
           <Icon name="close" width="40" height="40" />
         </button>
-        <div>Auth buttons</div>
+        <div className={styles.auth}>
+          <Button type="white" style={{ marginRight: 24 }}>
+            Login
+          </Button>
+          <Button>Register</Button>
+        </div>
       </div>
 
       <div className={styles.drawerLinks}>
@@ -30,7 +37,9 @@ const Drawer = ({ show, isActive, onClose }) => {
         ))}
       </div>
 
-      <div className={styles.drawerLangDropdown}>Language dropdown</div>
+      <div className={styles.drawerLangDropdown}>
+        <Dropdown items={LANGS} />
+      </div>
     </section>
   ) : null;
 };

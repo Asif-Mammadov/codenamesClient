@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import styles from './MobileMenu.module.scss';
-import { HOME_LINKS } from '../../../data/links';
+import { HOME_LINKS, LANGS } from '../../../data/main';
 import HomeLink from '../../elements/HomeLink';
+import Button from '../../elements/Button';
+import Dropdown from '../../elements/Dropdown';
 
 const MobileMenu = ({ show, isActive, onClose }) => {
   const classNames = [styles.menu];
@@ -23,8 +25,15 @@ const MobileMenu = ({ show, isActive, onClose }) => {
       </div>
 
       <div className={styles.menuOptions}>
-        <div className={styles.langDropdown}>Language dropdown</div>
-        <div className={styles.buttons}>Menu Buttons</div>
+        <div className={styles.langDropdown}>
+          <Dropdown items={LANGS} />
+        </div>
+        <div className={styles.buttons}>
+          <Button type="white" style={{ width: 140, marginRight: 24 }}>
+            Login
+          </Button>
+          <Button style={{ width: 140 }}>Register</Button>
+        </div>
       </div>
     </section>
   ) : null;
