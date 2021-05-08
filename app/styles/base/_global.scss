@@ -1,8 +1,6 @@
 .headline {
-  @extend .fs-xl-82;
   @extend .fs-lg-64;
   @extend .fs-44;
-  @extend .lh-xl-90;
   @extend .lh-lg-72;
   @extend .lh-52;
   @extend .fw-800;
@@ -11,10 +9,10 @@
 }
 
 .text {
-  @extend .fs-xl-24;
+  @extend .fs-xl-20;
   @extend .fs-lg-16;
   @extend .fs-14;
-  @extend .lh-xl-32;
+  @extend .lh-xl-28;
   @extend .lh-24;
   color: $color-white;
   text-shadow: 0px 4px 1px rgba(0, 0, 0, 0.25);
