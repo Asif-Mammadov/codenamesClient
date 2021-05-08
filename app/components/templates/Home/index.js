@@ -1,7 +1,9 @@
 import React from 'react';
 import Fade from 'react-reveal/Fade';
+import { TEAM_MEMBERS } from '../../../data/main';
 
 import Button from '../../elements/Button';
+import TeamMember from '../../elements/TeamMember';
 import styles from './Home.module.scss';
 
 const Home = () => {
@@ -35,7 +37,7 @@ const Home = () => {
         <div className={styles.page2Body}>
           <Fade delay={200} big>
             <div className={styles.page2Content}>
-              <h1>GAME RULES</h1>
+              <h2>GAME RULES</h2>
               <p>
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem Ipsum has been the industry's standard dummy
@@ -65,7 +67,23 @@ const Home = () => {
       <section id="about-us" className={styles.page3}>
         <div className={styles.page3Bg}></div>
         <div className={styles.page3Body}>
-          <div className={styles.page3Content}></div>
+          <Fade delay={200} big>
+            <div className={styles.page3Content}>
+              <h2>ABOUT US</h2>
+              <div className={styles.cardsContainer}>
+                {TEAM_MEMBERS.map((member) => (
+                  <div className={styles.cardWrapper} key={member.name}>
+                    <TeamMember
+                      name={member.name}
+                      position={member.position}
+                      avatar={member.avatar}
+                      socialMedia={member.socialMedia}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Fade>
         </div>
       </section>
     </div>

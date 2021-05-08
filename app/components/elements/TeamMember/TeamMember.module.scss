@@ -1,48 +1,70 @@
-@import "app.scss";
+@import 'app.scss';
 
-.body{
-    position: absolute;
-    width: 271px;
-    height: 315px;
-    left: 96px;
-    top: 383px;
-}
-.img{
-    width: 173.72px;
-    height: 179.69px;
-    margin-left: 50px;
+.teamMember {
+  text-align: center;
+
+  img {
+    max-width: 170px;
+    height: 170px;
+    border: 2px solid $color-secondary;
     border-radius: 50px;
-}
-.p{
-    width: 191px;
-    height: 32px;
-    margin-left: 45px;
+  }
 
-    font-family: Exo 2;
-    font-style: normal;
-    font-weight: 800;
-    font-size: 24px;
-    line-height: 32px;
-    color: #FFFFFF;
-    /* identical to box height, or 133% */
+  .content {
+    @extend .fw-800;
+    @extend .my-3;
 
+    .info {
+      height: 80px;
+      overflow: hidden;
 
-}
-.profession{
-    width: 271px;
-    height: 20px;
-    margin-left: 15px;
-    font-family: Exo 2;
-    font-style: normal;
-    font-weight: 800;
-    font-size: 16px;
-    line-height: 20px;
+      h6 {
+        @extend .fs-21;
+        @extend .lh-32;
+        @extend .mb-1;
+        white-space: nowrap;
+      }
 
-    color: #F3AA4E;
-}
-.icons{
-    width: 260px;
-    height: 98px;
-    margin-top: 17px;
-    margin-left: 50px;
+      p {
+        @extend .fs-16;
+        @extend .lh-20;
+        color: $color-secondary;
+      }
+    }
+
+    .linksWrapper {
+      @extend .mt-3;
+      display: inline-flex;
+      align-items: center;
+
+      a {
+        @extend .hover-dark;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 8px;
+        box-shadow: 0px 3px 6px #1b1f2a;
+        transition: $transition;
+
+        &:not(:last-child) {
+          @extend .mr-2;
+        }
+      }
+    }
+  }
+
+  // Background colors for different social media links
+  .email {
+    background-color: #00a7eb;
+  }
+
+  .github {
+    background-color: #24292e;
+  }
+
+  .linkedin {
+    background-color: #2867b2;
+  }
 }

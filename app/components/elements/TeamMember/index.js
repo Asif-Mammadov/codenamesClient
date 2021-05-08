@@ -1,20 +1,30 @@
-import React from 'react'
-import styles from "./TeamMember.module.scss"
+import React from 'react';
 
-const TeamMember = () => {
-    return (
-        <div className={styles.body}> 
-            
-            <img src="../img/person.png" className={styles.img}></img>
-            <p className={styles.p}>Asif Mammadov</p>
-            <p className={styles.profession} >Team Lead, Back-End Developer</p>
-            <div className={styles.icons}>
-                <img src="../icons/mail.svg"></img>
-                <img src="../icons/github.svg"></img>
-                <img src="../icons/linkedin.svg"></img>
-            </div>
+import Icon from '../Icon';
+import styles from './TeamMember.module.scss';
 
-        </div>
-    )
-}
+const TeamMember = ({ name, position, avatar, socialMedia }) => (
+  <div className={styles.teamMember}>
+    <img src={`/img/${avatar}.png`}></img>
+    <div className={styles.content}>
+      <div className={styles.info}>
+        <h6>{name}</h6>
+        <p>{position}</p>
+      </div>
+      <div className={styles.linksWrapper}>
+        {Object.entries(socialMedia).map(([media, link]) => (
+          <a
+            key={media}
+            className={styles[media]}
+            href={media === 'email' ? `mailto:${link}` : link}
+            target="_blank"
+          >
+            <Icon name={media} width="24" height="24"></Icon>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
 export default TeamMember;
