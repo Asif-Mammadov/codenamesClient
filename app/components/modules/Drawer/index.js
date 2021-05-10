@@ -1,10 +1,10 @@
+import Link from 'next/link';
 import React from 'react';
-
 import { HOME_LINKS, LANGS } from '../../../data/main';
 import Button from '../../elements/Button';
 import Dropdown from '../../elements/Dropdown';
-import HomeLink from '../../elements/HomeLink';
 import Icon from '../../elements/Icon';
+import NavLink from '../../elements/NavLink';
 import styles from './Drawer.module.scss';
 
 const Drawer = ({ show, isActive, onClose }) => {
@@ -22,18 +22,30 @@ const Drawer = ({ show, isActive, onClose }) => {
           <Icon name="close" width="40" height="40" />
         </button>
         <div className={styles.auth}>
-          <Button type="white" style={{ marginRight: 24 }}>
-            Login
-          </Button>
-          <Button>Register</Button>
+          <Link href="/login">
+            <a>
+              <Button type="white" style={{ marginRight: 24 }}>
+                Login
+              </Button>
+            </a>
+          </Link>
+          <Link href="/register">
+            <a>
+              <Button>Register</Button>
+            </a>
+          </Link>
         </div>
       </div>
 
       <div className={styles.drawerLinks}>
         {HOME_LINKS.map((link) => (
-          <HomeLink clicked={() => onClose()} key={link.href} to={link.href}>
+          <NavLink
+            key={link.name}
+            href={`/#${link.href}`}
+            clicked={() => onClose()}
+          >
             {link.name}
-          </HomeLink>
+          </NavLink>
         ))}
       </div>
 

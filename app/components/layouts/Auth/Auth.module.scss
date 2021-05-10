@@ -1,0 +1,81 @@
+@import 'app.scss';
+
+.authContainer {
+    @extend .row;
+    @extend .no-gutters;
+    height: 100vh;
+
+    .pageBg {
+        @extend .col-lg-7;
+        // Not visible on mobile
+        @extend .d-lg-block;
+        @extend .d-none;
+        height: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        &.login {
+            background-image: url('../../../../public/img/login-bg-lg.png');
+        }
+
+        &.register {
+            background-image: url('../../../../public/img/register-bg-lg.png');
+        }
+    }
+
+    .formWrapper {
+        @extend .col-lg-5;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        h2 {
+            @extend .fs-28;
+            @extend .fs-28;
+            @extend .fs-lg-44;
+            @extend .lh-lg-52;
+            @extend .fw-800;
+            color: $color-primary;
+
+            span {
+                color: $color-secondary;
+            }
+        }
+
+        form {
+            @extend .mt-5;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .bottomLink {
+                @extend .fs-16;
+                @extend .lh-24;
+                @extend .fw-400;
+                @extend .mt-2;
+
+                a {
+                    color: $color-secondary;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+    .authContainer {
+        .formWrapper {
+            padding-left: 96px;
+            padding-right: 96px;
+        }
+    }
+}
