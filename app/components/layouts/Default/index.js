@@ -1,16 +1,13 @@
 import React from 'react';
-
-import Header from '../../modules/Header';
 import Footer from '../../modules/Footer';
+import Header from '../../modules/Header';
 
-const Default = (props) => {
-  return (
-    <>
-      <Header />
-      <main>{props.children}</main>
-      <Footer />
-    </>
-  );
-};
+const Default = (props) => (
+  <>
+    <Header />
+    <main>{props.children}</main>
+    <Footer />
+  </>
+);
 
 export default Default;

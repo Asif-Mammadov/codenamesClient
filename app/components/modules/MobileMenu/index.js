@@ -1,10 +1,10 @@
+import Link from 'next/link';
 import React from 'react';
-
-import styles from './MobileMenu.module.scss';
 import { HOME_LINKS, LANGS } from '../../../data/main';
-import HomeLink from '../../elements/HomeLink';
 import Button from '../../elements/Button';
 import Dropdown from '../../elements/Dropdown';
+import NavLink from '../../elements/NavLink';
+import styles from './MobileMenu.module.scss';
 
 const MobileMenu = ({ show, isActive, onClose }) => {
   const classNames = [styles.menu];
@@ -18,9 +18,13 @@ const MobileMenu = ({ show, isActive, onClose }) => {
     <section className={classNames.join(' ')}>
       <div>
         {HOME_LINKS.map((link) => (
-          <HomeLink clicked={() => onClose()} key={link.href} to={link.href}>
+          <NavLink
+            key={link.name}
+            clicked={() => onClose()}
+            href={`/#${link.href}`}
+          >
             {link.name}
-          </HomeLink>
+          </NavLink>
         ))}
       </div>
 
@@ -29,10 +33,18 @@ const MobileMenu = ({ show, isActive, onClose }) => {
           <Dropdown items={LANGS} />
         </div>
         <div className={styles.buttons}>
-          <Button type="white" style={{ width: 140, marginRight: 24 }}>
-            Login
-          </Button>
-          <Button style={{ width: 140 }}>Register</Button>
+          <Link href="/login">
+            <a>
+              <Button type="white" style={{ width: 140, marginRight: 24 }}>
+                Login
+              </Button>
+            </a>
+          </Link>
+          <Link href="/register">
+            <a>
+              <Button style={{ width: 140 }}>Login</Button>
+            </a>
+          </Link>
         </div>
       </div>
     </section>

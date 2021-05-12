@@ -1,7 +1,6 @@
 // Add global reset stylings
-import '../app/styles/base/_reset.scss';
-
 import Head from 'next/head';
+import '../app/styles/base/_reset.scss';
 
 function MyApp({ Component, pageProps }) {
   return (
