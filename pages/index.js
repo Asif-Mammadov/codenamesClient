@@ -1,11 +1,11 @@
 import React from 'react';
-import Default from '../app/components/layouts/Default';
+import DefaultLayout from '../app/components/layouts/DefaultLayout';
 import Home from '../app/components/templates/Home';
 
 const HomePage = () => (
-  <Default>
+  <DefaultLayout>
     <Home />
-  </Default>
+  </DefaultLayout>
 );
 
 export default HomePage;

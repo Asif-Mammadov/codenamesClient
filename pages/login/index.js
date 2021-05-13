@@ -1,11 +1,11 @@
 import React from 'react';
-import Auth from '../../app/components/layouts/Auth';
+import AuthLayout from '../../app/components/layouts/AuthLayout';
 import Login from '../../app/components/templates/Login';
 
 const LoginPage = () => (
-  <Auth isLogin>
+  <AuthLayout isLogin>
     <Login />
-  </Auth>
+  </AuthLayout>
 );
 
 export default LoginPage;

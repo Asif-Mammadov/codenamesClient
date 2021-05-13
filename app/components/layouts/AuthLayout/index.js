@@ -2,9 +2,9 @@ import Link from 'next/link';
 import React from 'react';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import Header from '../../modules/Header';
-import styles from './Auth.module.scss';
+import styles from './AuthLayout.module.scss';
 
-const Auth = ({ isLogin, children }) => {
+const AuthLayout = ({ isLogin, children }) => {
   // Get window width
   const { width } = useWindowDimensions();
 
@@ -48,4 +48,4 @@ const Auth = ({ isLogin, children }) => {
   );
 };
 
-export default Auth;
+export default AuthLayout;

@@ -25,6 +25,10 @@
     @extend .py-4;
   }
 
+  &.small {
+    @extend .py-2;
+  }
+
   &.shadow {
     box-shadow: 0px 3px 6px #1b1f2a;
   }

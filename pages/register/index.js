@@ -1,11 +1,11 @@
 import React from 'react';
-import Auth from '../../app/components/layouts/Auth';
+import AuthLayout from '../../app/components/layouts/AuthLayout';
 import Register from '../../app/components/templates/Register';
 
 const RegisterPage = () => (
-  <Auth>
+  <AuthLayout>
     <Register />
-  </Auth>
+  </AuthLayout>
 );
 
 export default RegisterPage;

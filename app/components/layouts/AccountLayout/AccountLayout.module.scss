@@ -1,0 +1,14 @@
+@import 'app.scss';
+
+.accountContent {
+  min-height: 100vh;
+  padding-top: calc(#{$header-height} + 48px);
+  background-color: $color-alabaster;
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .accountContent {
+    padding-top: calc(#{$header-height-lg} + 48px);
+    padding-left: $sidebar-width;
+  }
+}
