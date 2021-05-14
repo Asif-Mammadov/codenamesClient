@@ -1,14 +1,16 @@
-@import 'app.scss';
+@import 'abstracts/variables';
 
 .accountContent {
   min-height: 100vh;
-  padding-top: calc(#{$header-height} + 48px);
+  display: flex;
+  justify-content: center;
+  padding: calc(#{$header-height} + 48px) 20px 48px 20px;
   background-color: $color-alabaster;
 }
 
 @media (min-width: map-get($breakpoints, lg)) {
   .accountContent {
     padding-top: calc(#{$header-height-lg} + 48px);
-    padding-left: $sidebar-width;
+    padding-left: calc(#{$sidebar-width} + 48px);
   }
 }

@@ -1,4 +1,5 @@
 @import 'app.scss';
+@import 'vendor/bootstrap-grid';
 
 .header {
   @extend .container; // horizontal paddings
@@ -15,8 +16,12 @@
     width: 120px;
   }
 
-  &.scrollOn {
+  &.darkScrollOn {
     background-color: rgba($color: $color-primary, $alpha: 0.8);
+  }
+
+  &.lightScrollOn {
+    background-color: $color-grayish;
   }
 
   &.hidden {
@@ -86,6 +91,7 @@
       top: 0;
       width: calc(100% - #{$sidebar-width});
       height: 100%;
+      z-index: -1;
     }
   }
 }

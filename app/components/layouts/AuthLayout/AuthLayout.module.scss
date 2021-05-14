@@ -1,4 +1,5 @@
 @import 'app.scss';
+@import 'vendor/bootstrap-grid';
 
 .authContainer {
   @extend .row;
@@ -32,6 +33,8 @@
     text-align: center;
     padding-left: 20px;
     padding-right: 20px;
+    padding-top: $header-height;
+    padding-bottom: 48px;
 
     h2 {
       @extend .fs-28;

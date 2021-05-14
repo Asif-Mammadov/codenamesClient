@@ -5,7 +5,7 @@ export const HOME_LINKS = [
 ];
 
 export const ACCOUNT_LINKS = [
-  { name: 'Account', href: '/account' },
-  { name: 'History', href: '/account/history' },
-  { name: 'Scoreboard', href: '/account/scoreboard' }
+  { name: 'Account', icon: 'user', href: '/account' },
+  { name: 'History', icon: 'history', href: '/account/history' },
+  { name: 'Scoreboard', icon: 'scoreboard', href: '/account/scoreboard' }
 ];

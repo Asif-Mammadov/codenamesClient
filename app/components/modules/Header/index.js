@@ -66,7 +66,7 @@ const Header = ({ logoDark, togglerDark, isAccount }) => {
           <div className={styles.buttons}>
             <Link href="/game">
               <a>
-                <Button icon="cards-orange" type="white" small>
+                <Button icon="play-cards" type="white" small>
                   Play
                 </Button>
               </a>
@@ -96,7 +96,11 @@ const Header = ({ logoDark, togglerDark, isAccount }) => {
         className={[
           styles.header,
           isToggleOn && width <= 992 ? styles.mobileActive : '',
-          isScrollOn ? styles.scrollOn : '',
+          isScrollOn
+            ? logoDark && togglerDark
+              ? styles.lightScrollOn
+              : styles.darkScrollOn
+            : '',
           isHidden ? styles.hidden : ''
         ].join(' ')}
       >

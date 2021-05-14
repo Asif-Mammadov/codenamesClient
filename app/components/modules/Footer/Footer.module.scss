@@ -25,7 +25,7 @@
 
   section:first-child {
     @extend .fw-500;
-    @extend .mb-2;
+    margin-bottom: 8px;
   }
 
   .codenames {

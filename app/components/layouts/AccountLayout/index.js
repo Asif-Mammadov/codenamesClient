@@ -5,7 +5,7 @@ import Sidebar from '../../modules/Sidebar';
 
 import styles from './AccountLayout.module.scss';
 
-const AccountLayout = () => {
+const AccountLayout = (props) => {
   // Get window width
   const { width } = useWindowDimensions();
 
@@ -13,7 +13,7 @@ const AccountLayout = () => {
     <>
       <Header isAccount />
       <Sidebar show={width > 992} />
-      <main className={styles.accountContent}>Hello world</main>
+      <main className={styles.accountContent}>{props.children}</main>
     </>
   );
 };
