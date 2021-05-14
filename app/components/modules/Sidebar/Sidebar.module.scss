@@ -1,0 +1,16 @@
+@import 'abstracts/variables';
+
+.sidebar {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  left: 0;
+  bottom: 0;
+  height: calc(100% - #{$header-height-lg});
+  padding: 64px 0 48px 96px;
+  overflow: hidden;
+  width: $sidebar-width;
+  background-color: $color-white;
+  box-shadow: 1px 5px 6px rgba(27, 31, 42, 0.25);
+}

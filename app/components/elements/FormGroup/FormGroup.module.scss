@@ -1,41 +1,41 @@
 @import 'app.scss';
 
 .formGroup {
-    @extend .fs-16;
-    @extend .lh-24;
-    width: 100%;
+  @extend .fs-16;
+  @extend .lh-24;
+  width: 100%;
 
-    label {
-        @extend .fw-600;
-        @extend .mb-2;
-        color: $color-secondary;
-        display: block;
-        text-align: left;
+  label {
+    @extend .fw-600;
+    margin-bottom: 8px;
+    color: $color-secondary;
+    display: block;
+    text-align: left;
+  }
+
+  .inputWrapper {
+    position: relative;
+
+    svg {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
     }
 
-    .inputWrapper {
-        position: relative;
+    input {
+      @extend .ff-exo2;
+      @extend .fw-500;
+      width: 100%;
+      border: 1px solid $color-primary;
+      border-radius: $border-radius;
+      background-color: $color-white;
+      color: $color-primary;
+      padding: 16px 56px;
 
-        svg {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        input {
-            @extend .ff-exo2;
-            @extend .fw-500;
-            width: 100%;
-            border: 1px solid $color-primary;
-            border-radius: $border-radius;
-            background-color: $color-white;
-            color: $color-primary;
-            padding: 16px 56px;
-
-            &::placeholder {
-                color: rgba($color: $color-primary, $alpha: 0.3);
-            }
-        }
+      &::placeholder {
+        color: rgba($color: $color-primary, $alpha: 0.3);
+      }
     }
+  }
 }

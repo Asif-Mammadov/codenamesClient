@@ -1,24 +1,26 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ClickAwayListener from 'react-click-away-listener';
 
 import Icon from '../Icon';
 import styles from './Dropdown.module.scss';
 import DropdownItem from './DropdownItem';
 import utils from '../../../utils';
+import Link from 'next/link';
 
-const Dropdown = ({ items, name }) => {
+const Dropdown = ({ items, name, icon, img }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Set the first one active
   const [activeItem, setActiveItem] = useState(items[0]);
   const [openUpward, setOpenUpward] = useState(false);
 
   const dropdownMenu = useRef(null);
 
-  // If menu is off screen, open it upward
-  useEffect(() => setOpenUpward(!utils.isInViewport(dropdownMenu)), [
-    dropdownMenu
-  ]);
+  useEffect(
+    () =>
+      // If menu is off screen, open it upward
+      setOpenUpward(!utils.isInViewport(dropdownMenu)),
+    [dropdownMenu]
+  );
 
   const onItemSelected = (item) => {
     setIsOpen(false);
@@ -37,8 +39,8 @@ const Dropdown = ({ items, name }) => {
           className={styles.buttonWrapper}
           onClick={() => setIsOpen((prevState) => !prevState)}
         >
-          <DropdownItem isButton icon={activeItem.icon}>
-            {name || activeItem.name}
+          <DropdownItem isButton icon={icon || activeItem?.icon} img={img}>
+            {name || activeItem?.name}
           </DropdownItem>
           <Icon name="arrow-down" width="20" height="9" />
         </div>
@@ -51,17 +53,34 @@ const Dropdown = ({ items, name }) => {
             openUpward ? styles.upward : ''
           ].join(' ')}
         >
-          {items.map((item) =>
-            // Don't add to menu if active
-            item.name !== activeItem.name ? (
-              <button
-                onClick={() => onItemSelected(item)}
-                key={item.name}
-                className={styles.menuItem}
-              >
-                <DropdownItem icon={item.icon}>{item.name}</DropdownItem>
-              </button>
-            ) : null
+          {useMemo(
+            () =>
+              items.map((item) => {
+                // If item is not a link
+                if (item.href == undefined) {
+                  // Don't add to menu if active
+                  return item.name !== activeItem?.name ? (
+                    <button
+                      onClick={() => onItemSelected(item)}
+                      key={item.name}
+                      className={styles.menuItem}
+                    >
+                      <DropdownItem icon={item.icon}>{item.name}</DropdownItem>
+                    </button>
+                  ) : null;
+                }
+                return (
+                  <Link href={item.href} key={item.name}>
+                    <a
+                      className={styles.menuItem}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <DropdownItem>{item.name}</DropdownItem>
+                    </a>
+                  </Link>
+                );
+              }),
+            [items]
           )}
         </div>
       </div>

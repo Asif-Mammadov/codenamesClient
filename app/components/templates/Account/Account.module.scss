@@ -1,0 +1,61 @@
+@import 'app.scss';
+@import 'vendor/react-tabs';
+
+// Override default styling
+.tabs {
+  @extend .react-tabs;
+  -webkit-tap-highlight-color: transparent;
+
+  .tabList {
+    @extend .react-tabs__tab-list;
+    margin-bottom: 48px;
+    border-bottom: none;
+  }
+
+  .tab {
+    @extend .react-tabs__tab;
+    @extend .hover-dark;
+    transition: $transition;
+    border: 1px solid $color-secondary;
+    background-color: $color-white;
+    color: $color-secondary;
+    padding: 16px 20px;
+
+    &.tabSelected {
+      background-color: $color-secondary;
+      color: $color-white;
+    }
+
+    &:first-child {
+      border-radius: 50px 0px 0px 50px;
+    }
+
+    &:last-child {
+      border-radius: 0px 50px 50px 0px;
+    }
+
+    &:focus {
+      box-shadow: none;
+      border-color: $color-secondary;
+
+      &:after {
+        display: none;
+      }
+    }
+  }
+
+  .tabPanel {
+    @extend .react-tabs__tab-panel;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .tabs {
+    .tab {
+      padding: 16px 24px;
+    }
+  }
+}

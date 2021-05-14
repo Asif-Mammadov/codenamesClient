@@ -1,14 +1,18 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { ACCOUNT_LINKS } from '../../../data/links';
+import { LANGS } from '../../../data/main';
 import { useScrollPositions } from '../../../hooks/useScrollPositions';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import Backdrop from '../../elements/Backdrop';
+import Button from '../../elements/Button';
+import Dropdown from '../../elements/Dropdown';
 import Toggler from '../../elements/Toggler';
 import Drawer from '../Drawer';
 import MobileMenu from '../MobileMenu';
 import styles from './Header.module.scss';
 
-const Header = ({ logoDark, togglerDark }) => {
+const Header = ({ logoDark, togglerDark, isAccount }) => {
   const [isToggleOn, setIsToggleOn] = useState(false);
   const [isScrollOn, setIsScrollOn] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
@@ -38,13 +42,65 @@ const Header = ({ logoDark, togglerDark }) => {
       isToggleOn && width <= 992 ? 'hidden' : 'auto';
   }, [width, isToggleOn]);
 
-  return (
+  // Render different versions of header
+  return isAccount ? (
+    <>
+      <header
+        className={[
+          styles.accountHeader,
+          isToggleOn && width <= 992 ? styles.mobileActive : ''
+        ].join(' ')}
+      >
+        <div className={styles.leftWrapper}>
+          <Link href="/">
+            <a>
+              <img className={styles.logo} src="/logo-dark.svg" />
+            </a>
+          </Link>
+          <div className={styles.dropdown}>
+            <Dropdown items={LANGS} />
+          </div>
+        </div>
+
+        <div className={styles.rightWrapper}>
+          <div className={styles.buttons}>
+            <Link href="/game">
+              <a>
+                <Button icon="play-cards" type="white" small>
+                  Play
+                </Button>
+              </a>
+            </Link>
+            <div className={styles.dropdown}>
+              <Dropdown name="Eyvaz" img="avatar" items={ACCOUNT_LINKS} />
+            </div>
+          </div>
+          <div className={styles.mobileButton}>
+            <Button
+              clicked={() => setIsToggleOn((prevState) => !prevState)}
+              img="avatar"
+              type="white"
+              style={{ border: 'none' }}
+            >
+              Eyvaz
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      <MobileMenu show={width <= 992} onClose={close} isActive={isToggleOn} />
+    </>
+  ) : (
     <>
       <header
         className={[
           styles.header,
           isToggleOn && width <= 992 ? styles.mobileActive : '',
-          isScrollOn ? styles.scrollOn : '',
+          isScrollOn
+            ? logoDark && togglerDark
+              ? styles.lightScrollOn
+              : styles.darkScrollOn
+            : '',
           isHidden ? styles.hidden : ''
         ].join(' ')}
       >

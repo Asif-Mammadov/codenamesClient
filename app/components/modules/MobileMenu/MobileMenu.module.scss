@@ -1,14 +1,16 @@
-@import 'app.scss';
+@import 'abstracts/variables';
 
 .menu {
   background-color: $color-grayish;
   position: fixed;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
   top: $header-height;
+  padding-top: 120px;
+  padding-bottom: 48px;
   right: -100%;
   width: 100%;
   height: calc(100% - #{$header-height});
@@ -21,10 +23,8 @@
   }
 
   &Options {
-    position: absolute;
-    bottom: 0;
     width: 100%;
-    padding: 0 24px 24px 24px;
+    margin-top: 48px;
 
     .langDropdown {
       margin-bottom: 36px;

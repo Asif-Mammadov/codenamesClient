@@ -42,7 +42,7 @@ const MobileMenu = ({ show, isActive, onClose }) => {
           </Link>
           <Link href="/register">
             <a>
-              <Button style={{ width: 140 }}>Login</Button>
+              <Button style={{ width: 140 }}>Register</Button>
             </a>
           </Link>
         </div>

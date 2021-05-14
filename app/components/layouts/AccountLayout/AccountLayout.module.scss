@@ -1,0 +1,16 @@
+@import 'abstracts/variables';
+
+.accountContent {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: calc(#{$header-height} + 48px) 20px 48px 20px;
+  background-color: $color-alabaster;
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .accountContent {
+    padding-top: calc(#{$header-height-lg} + 48px);
+    padding-left: calc(#{$sidebar-width} + 48px);
+  }
+}
