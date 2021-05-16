@@ -6,10 +6,12 @@ import styles from './Dropdown.module.scss';
 import DropdownItem from './DropdownItem';
 import utils from '../../../utils';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Dropdown = ({ items, name, icon, img }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
+  const [isOpen, setIsOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(items[0]);
   const [openUpward, setOpenUpward] = useState(false);
 
@@ -57,7 +59,7 @@ const Dropdown = ({ items, name, icon, img }) => {
             () =>
               items.map((item) => {
                 // If item is not a link
-                if (item.href == undefined) {
+                if (!item.href) {
                   // Don't add to menu if active
                   return item.name !== activeItem?.name ? (
                     <button
@@ -72,7 +74,10 @@ const Dropdown = ({ items, name, icon, img }) => {
                 return (
                   <Link href={item.href} key={item.name}>
                     <a
-                      className={styles.menuItem}
+                      className={[
+                        styles.menuItem,
+                        router.asPath === item.href ? styles.active : ''
+                      ].join(' ')}
                       onClick={() => setIsOpen(false)}
                     >
                       <DropdownItem>{item.name}</DropdownItem>
@@ -80,7 +85,7 @@ const Dropdown = ({ items, name, icon, img }) => {
                   </Link>
                 );
               }),
-            [items]
+            [activeItem]
           )}
         </div>
       </div>

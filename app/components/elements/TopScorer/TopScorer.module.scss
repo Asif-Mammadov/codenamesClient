@@ -1,0 +1,114 @@
+@import 'app.scss';
+
+.topScorer {
+  @extend .fw-800;
+  text-align: center;
+
+  &.me {
+    .imgWrapper {
+      img {
+        border: 4px solid $color-secondary;
+      }
+
+      // Place
+      span {
+        background-color: $color-white;
+        color: $color-secondary;
+        border: 1px solid $color-secondary;
+      }
+    }
+  }
+
+  &:not(:last-child) {
+    margin-right: 16px;
+  }
+
+  &.first {
+    .imgWrapper {
+      img {
+        max-width: 200px;
+        max-height: 200px;
+      }
+
+      span {
+        width: 48px;
+        height: 48px;
+      }
+    }
+  }
+
+  .imgWrapper {
+    position: relative;
+
+    img {
+      max-width: 150px;
+      max-height: 150px;
+      min-height: 90px;
+      width: 100%;
+      height: 100%;
+      border: 2px solid $color-secondary;
+      border-radius: 50px;
+    }
+
+    // Place
+    span {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: $color-secondary;
+      color: $color-white;
+      bottom: -10px;
+      // Horizontally center
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  // Name
+  h6 {
+    @extend .fs-lg-20;
+    @extend .fs-16;
+    @extend .lh-lg-24;
+    @extend .lh-20;
+    margin-top: 12px;
+    margin-bottom: 4px;
+  }
+
+  // Score
+  span {
+    @extend .fs-lg-18;
+    @extend .fs-14;
+    @extend .lh-lg-24;
+    @extend .lh-20;
+    display: block;
+    color: $color-secondary;
+  }
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .topScorer {
+    &:not(:last-child) {
+      margin-right: 48px;
+    }
+
+    &.first {
+      .imgWrapper {
+        span {
+          width: 64px;
+          height: 65px;
+        }
+      }
+    }
+
+    .imgWrapper {
+      span {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+}

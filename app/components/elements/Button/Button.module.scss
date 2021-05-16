@@ -32,6 +32,7 @@
 
   &.small {
     @extend .py-2;
+    @extend .fs-18;
   }
 
   &.shadow {

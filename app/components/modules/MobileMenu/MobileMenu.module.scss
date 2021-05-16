@@ -27,12 +27,18 @@
     margin-top: 48px;
 
     .langDropdown {
-      margin-bottom: 36px;
+      margin-bottom: 48px;
     }
 
-    .buttons {
+    .homeButtons {
       display: flex;
       justify-content: center;
+    }
+
+    .accountButtons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 }

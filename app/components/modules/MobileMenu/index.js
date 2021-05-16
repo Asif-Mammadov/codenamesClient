@@ -1,12 +1,13 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { ACCOUNT_LINKS } from '../../../data/links';
 import { HOME_LINKS, LANGS } from '../../../data/main';
 import Button from '../../elements/Button';
 import Dropdown from '../../elements/Dropdown';
 import NavLink from '../../elements/NavLink';
 import styles from './MobileMenu.module.scss';
 
-const MobileMenu = ({ show, isActive, onClose }) => {
+const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
   const classNames = [styles.menu];
 
   // Add active class if MobileMenu is active
@@ -17,11 +18,11 @@ const MobileMenu = ({ show, isActive, onClose }) => {
   return show ? (
     <section className={classNames.join(' ')}>
       <div>
-        {HOME_LINKS.map((link) => (
+        {(isAccount ? ACCOUNT_LINKS : HOME_LINKS).map((link) => (
           <NavLink
             key={link.name}
             clicked={() => onClose()}
-            href={`/#${link.href}`}
+            href={`${!isAccount ? '/#' : ''}${link.href}`}
           >
             {link.name}
           </NavLink>
@@ -32,20 +33,40 @@ const MobileMenu = ({ show, isActive, onClose }) => {
         <div className={styles.langDropdown}>
           <Dropdown items={LANGS} />
         </div>
-        <div className={styles.buttons}>
-          <Link href="/login">
-            <a>
-              <Button type="white" style={{ width: 140, marginRight: 24 }}>
-                Login
-              </Button>
-            </a>
-          </Link>
-          <Link href="/register">
-            <a>
-              <Button style={{ width: 140 }}>Register</Button>
-            </a>
-          </Link>
-        </div>
+
+        {isAccount ? (
+          <div className={styles.accountButtons}>
+            <Link href="/game">
+              <a style={{ marginBottom: 16 }}>
+                <Button icon="play-cards" type="white" small>
+                  Play
+                </Button>
+              </a>
+            </Link>
+            <Link href="/login">
+              <a>
+                <Button icon="sign-out" small>
+                  Sign Out
+                </Button>
+              </a>
+            </Link>
+          </div>
+        ) : (
+          <div className={styles.homeButtons}>
+            <Link href="/login">
+              <a>
+                <Button type="white" style={{ width: 140, marginRight: 24 }}>
+                  Login
+                </Button>
+              </a>
+            </Link>
+            <Link href="/register">
+              <a>
+                <Button style={{ width: 140 }}>Register</Button>
+              </a>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   ) : null;
