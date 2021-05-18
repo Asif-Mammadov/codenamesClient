@@ -88,7 +88,12 @@ const Header = ({ logoDark, togglerDark, isAccount }) => {
         </div>
       </header>
 
-      <MobileMenu show={width <= 992} onClose={close} isActive={isToggleOn} />
+      <MobileMenu
+        show={width <= 992}
+        onClose={close}
+        isActive={isToggleOn}
+        isAccount
+      />
     </>
   ) : (
     <>

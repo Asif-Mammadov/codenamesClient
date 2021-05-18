@@ -45,6 +45,7 @@
       cursor: pointer;
       transition: $transition;
 
+      &.active,
       &:hover {
         background-color: $color-primary;
 

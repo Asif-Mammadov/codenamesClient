@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import Header from '../../modules/Header';
 import Sidebar from '../../modules/Sidebar';

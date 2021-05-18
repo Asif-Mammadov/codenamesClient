@@ -37,7 +37,7 @@ const Account = () => {
           icon="envelope"
           style={{ marginBottom: 24 }}
         />
-        <Button>Save</Button>
+        <Button small>Save</Button>
       </TabPanel>
       <TabPanel className={styles.tabPanel}>
         <FormGroup
@@ -56,7 +56,7 @@ const Account = () => {
           icon="lock"
           style={{ marginBottom: 24 }}
         />
-        <Button>Save</Button>
+        <Button small>Save</Button>
       </TabPanel>
     </Tabs>
   );
