@@ -8,7 +8,12 @@ const FormGroup = ({ label, name, type, placeholder, icon, style }) => (
 
     <div className={styles.inputWrapper}>
       {icon ? <Icon name={icon} width="24" height="24" /> : null}
-      <input id={name} type={type} placeholder={placeholder} />
+      <input
+        id={name}
+        type={type}
+        placeholder={placeholder}
+        className={icon ? styles.hasIcon : ''}
+      />
     </div>
   </div>
 );

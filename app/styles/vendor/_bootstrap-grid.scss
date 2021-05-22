@@ -7,8 +7,6 @@
 
 .container {
   width: 100%;
-  padding-right: 20px;
-  padding-left: 20px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -949,10 +947,6 @@
 }
 
 @media (min-width: 992px) {
-  .container {
-    padding-right: 96px;
-    padding-left: 96px;
-  }
   .d-lg-none {
     display: none !important;
   }

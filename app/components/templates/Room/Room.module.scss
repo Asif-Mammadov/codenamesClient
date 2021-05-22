@@ -1,0 +1,109 @@
+@import 'app.scss';
+@import 'vendor/bootstrap-grid';
+
+.room {
+  &Container {
+    @extend .container;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &Body {
+    @extend .row;
+    width: 100%;
+    margin: 0;
+    flex-wrap: nowrap;
+    overflow: auto;
+
+    .cardWrapper {
+      @extend .col-lg-3;
+
+      &:first-child {
+        padding-left: 20px;
+      }
+
+      &:last-child {
+        padding-right: 20px;
+      }
+    }
+  }
+}
+
+.content {
+  @extend .col-lg-6;
+  @extend .d-lg-flex;
+  @extend .d-none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: $color-white;
+  padding: 0 20px;
+
+  &.mobile {
+    @extend .d-lg-none;
+    @extend .d-flex;
+
+    > p {
+      @extend .mb-5;
+    }
+
+    .gameLang {
+      @extend .mt-5;
+    }
+  }
+
+  > h1 {
+    @extend .fs-lg-44;
+    @extend .fs-32;
+    @extend .lh-lg-56;
+    @extend .lh-40;
+    @extend .fw-800;
+
+    span {
+      color: $color-secondary;
+    }
+  }
+
+  > p {
+    @extend .fs-lg-24;
+    @extend .fs-18;
+    @extend .lh-lg-32;
+    @extend .lh-24;
+    @extend .fw-800;
+    @extend .mb-lg-5;
+    @extend .mb-4;
+    text-shadow: $text-shadow;
+  }
+
+  .gameLang {
+    @extend .mb-lg-5;
+    @extend .mb-4;
+
+    h6 {
+      @extend .fs-24;
+      @extend .lh-32;
+      @extend .fw-800;
+      @extend .mb-3;
+      text-transform: uppercase;
+    }
+  }
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .room {
+    &Container {
+      flex-direction: row;
+      padding-left: 76px;
+      padding-right: 76px;
+    }
+
+    &Body {
+      flex-wrap: wrap;
+      padding: 0;
+    }
+  }
+}

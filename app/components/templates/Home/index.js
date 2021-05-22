@@ -1,5 +1,6 @@
+import Link from 'next/link';
 import React from 'react';
-import Fade from 'react-reveal/Fade';
+import Slide from 'react-reveal/Slide';
 import { TEAM_MEMBERS } from '../../../data/main';
 import Button from '../../elements/Button';
 import TeamMember from '../../elements/TeamMember';
@@ -11,7 +12,7 @@ const Home = () => (
     <section id="home" className={styles.page1}>
       <div className={styles.page1Bg}></div>
       <div className={styles.page1Body}>
-        <Fade delay={200} big>
+        <Slide bottom>
           <div className={styles.page1Content}>
             <h1>TOP SECRET WORD GAME</h1>
             <p>
@@ -21,11 +22,15 @@ const Home = () => (
               type and scrambled it to make a type specimen book. It has
               survived not only five centuries.
             </p>
-            <Button icon="cards" shadow style={{ marginTop: 24 }}>
-              Play now
-            </Button>
+            <Link href="/game">
+              <a style={{ marginTop: 24 }}>
+                <Button icon="cards" shadow>
+                  Play now
+                </Button>
+              </a>
+            </Link>
           </div>
-        </Fade>
+        </Slide>
       </div>
     </section>
 
@@ -33,7 +38,7 @@ const Home = () => (
     <section id="game-rules" className={styles.page2}>
       <div className={styles.page2Bg}></div>
       <div className={styles.page2Body}>
-        <Fade delay={200} big>
+        <Slide bottom>
           <div className={styles.page2Content}>
             <h2>GAME RULES</h2>
             <p>
@@ -57,7 +62,7 @@ const Home = () => (
               Learn more
             </Button>
           </div>
-        </Fade>
+        </Slide>
       </div>
     </section>
 
@@ -65,7 +70,7 @@ const Home = () => (
     <section id="about-us" className={styles.page3}>
       <div className={styles.page3Bg}></div>
       <div className={styles.page3Body}>
-        <Fade delay={200} big>
+        <Slide bottom>
           <div className={styles.page3Content}>
             <h2>ABOUT US</h2>
             <div className={styles.cardsContainer}>
@@ -81,7 +86,7 @@ const Home = () => (
               ))}
             </div>
           </div>
-        </Fade>
+        </Slide>
       </div>
     </section>
   </div>

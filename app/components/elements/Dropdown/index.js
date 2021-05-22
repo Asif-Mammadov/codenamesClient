@@ -1,28 +1,26 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ClickAwayListener from 'react-click-away-listener';
-
+import Link from 'next/link';
 import Icon from '../Icon';
 import styles from './Dropdown.module.scss';
 import DropdownItem from './DropdownItem';
 import utils from '../../../utils';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
+import colors from '../../../constants/colors';
 
-const Dropdown = ({ items, name, icon, img }) => {
+const Dropdown = ({ items, name, icon, img, upward, light }) => {
   const router = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(items[0]);
-  const [openUpward, setOpenUpward] = useState(false);
+  const [openUpward, setOpenUpward] = useState(null);
 
   const dropdownMenu = useRef(null);
 
-  useEffect(
-    () =>
-      // If menu is off screen, open it upward
-      setOpenUpward(!utils.isInViewport(dropdownMenu)),
-    [dropdownMenu]
-  );
+  useEffect(() => {
+    // If menu is off screen, open it upward
+    setOpenUpward(upward !== null ? upward : !utils.isInViewport(dropdownMenu));
+  }, [dropdownMenu, upward]);
 
   const onItemSelected = (item) => {
     setIsOpen(false);
@@ -38,10 +36,17 @@ const Dropdown = ({ items, name, icon, img }) => {
       <div className={[styles.dropdown, isOpen ? styles.open : ''].join(' ')}>
         {/* Dropdown button */}
         <div
-          className={styles.buttonWrapper}
+          className={[styles.buttonWrapper, light ? styles.light : ''].join(
+            ' '
+          )}
           onClick={() => setIsOpen((prevState) => !prevState)}
         >
-          <DropdownItem isButton icon={icon || activeItem?.icon} img={img}>
+          <DropdownItem
+            isButton
+            icon={icon || activeItem?.icon}
+            color={light ? 'white' : colors.primary}
+            img={img}
+          >
             {name || activeItem?.name}
           </DropdownItem>
           <Icon name="arrow-down" width="20" height="9" />

@@ -45,7 +45,7 @@ const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
             </Link>
             <Link href="/login">
               <a>
-                <Button icon="sign-out" small>
+                <Button icon="out" small>
                   Sign Out
                 </Button>
               </a>
@@ -54,8 +54,8 @@ const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
         ) : (
           <div className={styles.homeButtons}>
             <Link href="/login">
-              <a>
-                <Button type="white" style={{ width: 140, marginRight: 24 }}>
+              <a style={{ marginRight: 24 }}>
+                <Button type="white" style={{ width: 140 }}>
                   Login
                 </Button>
               </a>

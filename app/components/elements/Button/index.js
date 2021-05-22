@@ -5,6 +5,7 @@ import styles from './Button.module.scss';
 const Button = ({
   children,
   small,
+  extraSmall,
   big,
   shadow,
   icon,
@@ -16,8 +17,7 @@ const Button = ({
   let content;
   const mediaOptions = {
     width: small ? 24 : 32,
-    height: small ? 24 : 32,
-    style: { marginRight: 8 }
+    height: small ? 24 : 32
   };
 
   // Handle image and icons
@@ -34,6 +34,7 @@ const Button = ({
         styles.button,
         big ? styles.big : '',
         small ? styles.small : '',
+        extraSmall ? styles.extraSmall : '',
         type ? styles[type] : '',
         shadow ? styles.shadow : ''
       ].join(' ')}
@@ -41,7 +42,7 @@ const Button = ({
       onClick={clicked}
     >
       {content}
-      <span>{children}</span>
+      <span style={{ marginLeft: 8 }}>{children}</span>
     </button>
   );
 };

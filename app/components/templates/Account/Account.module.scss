@@ -1,20 +1,20 @@
 @import 'app.scss';
-@import 'vendor/react-tabs';
 
 // Override default styling
 .tabs {
-  @extend .react-tabs;
   -webkit-tap-highlight-color: transparent;
 
   .tabList {
-    @extend .react-tabs__tab-list;
+    list-style: none;
+    display: flex;
+    padding: 0;
     margin-bottom: 48px;
     border-bottom: none;
   }
 
   .tab {
-    @extend .react-tabs__tab;
     @extend .hover-dark;
+    cursor: pointer;
     transition: $transition;
     border: 1px solid $color-secondary;
     background-color: $color-white;
@@ -45,7 +45,6 @@
   }
 
   .tabPanel {
-    @extend .react-tabs__tab-panel;
     display: flex;
     flex-direction: column;
     align-items: center;

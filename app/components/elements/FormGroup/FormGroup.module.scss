@@ -6,11 +6,7 @@
   width: 100%;
 
   label {
-    @extend .fw-600;
-    margin-bottom: 8px;
-    color: $color-secondary;
-    display: block;
-    text-align: left;
+    @extend .group-label;
   }
 
   .inputWrapper {
@@ -31,10 +27,14 @@
       border-radius: $border-radius;
       background-color: $color-white;
       color: $color-primary;
-      padding: 16px 56px;
+      padding: 16px 56px 16px 16px;
 
       &::placeholder {
         color: rgba($color: $color-primary, $alpha: 0.3);
+      }
+
+      &.hasIcon {
+        padding-left: 56px;
       }
     }
   }
