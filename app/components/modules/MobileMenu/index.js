@@ -8,15 +8,8 @@ import NavLink from '../../elements/NavLink';
 import styles from './MobileMenu.module.scss';
 
 const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
-  const classNames = [styles.menu];
-
-  // Add active class if MobileMenu is active
-  if (isActive) {
-    classNames.push(styles.active);
-  }
-
   return show ? (
-    <section className={classNames.join(' ')}>
+    <section className={[styles.menu, isActive ? styles.active : ''].join(' ')}>
       <div>
         {(isAccount ? ACCOUNT_LINKS : HOME_LINKS).map((link) => (
           <NavLink

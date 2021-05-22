@@ -51,11 +51,13 @@ const AccountLayout = (props) => {
           <div className={styles.mobileButton}>
             <Button
               clicked={() => setIsToggleOn((prevState) => !prevState)}
-              img="avatar"
               type="white"
               style={{ border: 'none' }}
             >
-              Eyvaz
+              <div className={styles.user}>
+                <img src="/img/avatar.png" />
+                <span>Eyvaz</span>
+              </div>
             </Button>
           </div>
         </div>

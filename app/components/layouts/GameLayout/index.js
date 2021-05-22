@@ -13,41 +13,47 @@ const GameLayout = (props) => {
     );
   });
 
-   return <>
-    <header className={[styles.gameHeader, isScrollOn ? styles.darkScrollOn : ''].join(' ')}>
-      <Link href="/">
-        <a>
-          <img className={styles.logo} src="/logo-light.svg" />
-        </a>
-      </Link>
-
-      <div className={styles.buttons}>
-        <Button
-          icon="share"
-          type="room"
-          shadow
-          small
-          style={{ marginRight: 16 }}
-        >
-          <span className={styles.btnText}>Share Room</span>
-        </Button>
-
-        <Link href="/game">
+  return (
+    <>
+      <header
+        className={[
+          styles.gameHeader,
+          isScrollOn ? styles.darkScrollOn : ''
+        ].join(' ')}
+      >
+        <Link href="/">
           <a>
-            <Button icon="out" type="room-white" shadow small>
-              <span className={styles.btnText}>Leave Room</span>
-            </Button>
+            <img className={styles.logo} src="/logo-light.svg" />
           </a>
         </Link>
-      </div>
-    </header>
 
-    <main>
-      <div className={styles.gameBg}></div>
+        <div className={styles.buttons}>
+          <Button
+            icon="share"
+            type="room"
+            shadow
+            small
+            style={{ marginRight: 16 }}
+          >
+            <span className={styles.btnText}>Share Room</span>
+          </Button>
 
-      <section className={styles.gameContent}>{props.children}</section>
-    </main>
-  </>
-}
+          <Link href="/game">
+            <a>
+              <Button icon="out" type="room-white" shadow small>
+                <span className={styles.btnText}>Leave Room</span>
+              </Button>
+            </a>
+          </Link>
+        </div>
+      </header>
+
+      <main>
+        <div className={styles.gameBg}></div>
+        <section className={styles.gameContent}>{props.children}</section>
+      </main>
+    </>
+  );
+};
 
 export default GameLayout;

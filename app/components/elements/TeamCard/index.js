@@ -2,13 +2,13 @@ import React from 'react';
 import Button from '../Button';
 import styles from './TeamCard.module.scss';
 
-const TeamCard = ({ isRed }) => {
+const TeamCard = ({ isRed, gameMode }) => {
   return (
     <div className={[styles.teamCard, isRed ? styles.red : ''].join(' ')}>
       <img src={`/img/team-${isRed ? 'red' : 'blue'}.png`} />
 
       <div className={styles.teamCardContent}>
-        <h3>8</h3>
+        {gameMode ? <h3>8</h3> : null}
 
         <section className={styles.roleWrapper}>
           <h6>Operatives</h6>
@@ -25,7 +25,8 @@ const TeamCard = ({ isRed }) => {
               </div>
             ))}
           </div>
-          <Button extraSmall>Join as operative</Button>
+
+          {!gameMode ? <Button extraSmall>Join</Button> : null}
         </section>
 
         <section className={styles.roleWrapper}>
@@ -44,7 +45,7 @@ const TeamCard = ({ isRed }) => {
             ))}
           </div>
 
-          <Button extraSmall>Join as spymaster</Button>
+          {!gameMode ? <Button extraSmall>Join</Button> : null}
         </section>
       </div>
     </div>

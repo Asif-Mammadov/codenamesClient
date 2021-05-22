@@ -23,13 +23,15 @@
 
   &Content {
     // Avoid content from overlapping with header and footer
-    padding-top: calc(#{$header-height} + 48px);
+    padding-top: calc(#{$header-height} + 56px);
     padding-bottom: 48px;
   }
 }
 
 @media (min-width: map-get($breakpoints, lg)) {
-  .gameBg {
-    background-image: url('../../../../public/img/room-bg-lg.png');
+  .game {
+    &Bg {
+      background-image: url('../../../../public/img/room-bg-lg.png');
+    }
   }
 }

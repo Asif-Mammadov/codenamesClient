@@ -8,6 +8,7 @@ import styles from './Room.module.scss';
 const Room = () => {
   return (
     <div className={styles.roomContainer}>
+      {/* For module */}
       <section className={[styles.content, styles.mobile].join(' ')}>
         <h1>
           WELCOME TO THE <span>ROOM!</span>
@@ -39,6 +40,7 @@ const Room = () => {
         </section>
       </div>
 
+      {/* For module */}
       <section className={[styles.content, styles.mobile].join(' ')}>
         <div className={styles.gameLang}>
           <h6>Game language</h6>

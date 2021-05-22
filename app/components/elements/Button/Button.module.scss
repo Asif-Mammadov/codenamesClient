@@ -38,7 +38,7 @@
   &.extraSmall {
     @extend .py-1;
     @extend .px-3;
-    @extend .fs-12;
+    @extend .fs-14;
     @extend .lh-16;
   }
 
@@ -63,10 +63,9 @@
     @extend .fw-700;
     text-transform: capitalize;
 
-    // Content
-    span {
-      @extend .ml-lg-2;
-      @extend .ml-0;
+    svg {
+      @extend .mr-lg-2;
+      @extend .mr-0;
     }
   }
 

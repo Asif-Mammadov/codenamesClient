@@ -57,11 +57,12 @@
   }
 
   > h1 {
-    @extend .fs-lg-44;
+    @extend .fs-lg-40;
     @extend .fs-32;
     @extend .lh-lg-56;
     @extend .lh-40;
     @extend .fw-800;
+    text-shadow: $text-shadow;
 
     span {
       color: $color-secondary;
@@ -97,6 +98,7 @@
   .room {
     &Container {
       flex-direction: row;
+      // 96 - 20 for the container paddings
       padding-left: 76px;
       padding-right: 76px;
     }

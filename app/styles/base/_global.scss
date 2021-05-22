@@ -40,6 +40,24 @@
   text-align: left;
 }
 
+.user-avatar {
+  @extend .fs-14;
+  @extend .lh-24;
+  @extend .fw-600;
+  display: flex;
+  align-items: center;
+
+  &.me {
+    color: $color-secondary;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+  }
+}
+
 .hover-dark:hover {
   filter: brightness(90%);
 }

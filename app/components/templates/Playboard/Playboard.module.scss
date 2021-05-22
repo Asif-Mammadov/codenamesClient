@@ -1,0 +1,84 @@
+@import 'app.scss';
+@import 'vendor/bootstrap-grid';
+
+.board {
+  &Container {
+    @extend .container;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-left: 0;
+    padding-right: 0;
+
+    .clueForm {
+      @extend .mt-lg-5;
+      @extend .mt-4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: max-content;
+      margin: 0 auto;
+    }
+  }
+
+  &Row {
+    @extend .row;
+    width: 100%;
+    margin: 0;
+    flex-wrap: nowrap;
+    overflow: auto;
+
+    .cardWrapper {
+      @extend .col-lg-3;
+
+      &:first-child {
+        padding-left: 20px;
+      }
+
+      &:last-child {
+        padding-right: 20px;
+      }
+    }
+  }
+}
+
+.gameArea {
+  @extend .d-lg-flex;
+  @extend .d-none;
+  @extend .col-lg-6;
+  @extend .px-lg-0;
+  @extend .px-3;
+  flex-wrap: wrap;
+  width: 100%;
+
+  &.mobile {
+    @extend .d-lg-none;
+    @extend .d-flex;
+    @extend .mt-5;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .gameCard {
+    @extend .pb-lg-3;
+    @extend .pb-2;
+    @extend .px-lg-2;
+    @extend .px-1;
+    width: 20%;
+  }
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .board {
+    &Container {
+      // 96 - 20 for the container paddings
+      padding-left: 76px;
+      padding-right: 76px;
+    }
+
+    &Body {
+      flex-wrap: wrap;
+      padding: 0;
+    }
+  }
+}

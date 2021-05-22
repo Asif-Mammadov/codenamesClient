@@ -9,25 +9,11 @@ const Button = ({
   big,
   shadow,
   icon,
-  img,
   type,
   style,
   clicked
 }) => {
   let content;
-  const mediaOptions = {
-    width: small ? 24 : 32,
-    height: small ? 24 : 32
-  };
-
-  // Handle image and icons
-  if (icon) {
-    content = <Icon name={icon} {...mediaOptions} />;
-  }
-  if (img) {
-    content = <img src={`/img/${img}.png`} {...mediaOptions} />;
-  }
-
   return (
     <button
       className={[
@@ -42,7 +28,15 @@ const Button = ({
       onClick={clicked}
     >
       {content}
-      <span style={{ marginLeft: 8 }}>{children}</span>
+      {icon ? (
+        <Icon
+          name={icon}
+          style={{
+            marginRight: 8
+          }}
+        />
+      ) : null}
+      <span>{children}</span>
     </button>
   );
 };
