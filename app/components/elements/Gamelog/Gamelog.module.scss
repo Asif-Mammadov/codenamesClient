@@ -1,0 +1,27 @@
+@import 'app.scss';
+
+.gamelog {
+  @extend .box;
+
+  .record {
+    @extend .fs-14;
+    @extend .lh-24;
+    @extend .fw-600;
+
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+
+    // Player name
+    span {
+      color: $color-secondary;
+    }
+
+    // Clue
+    strong {
+      @extend .fw-700;
+      text-decoration: underline;
+      text-transform: uppercase;
+    }
+  }
+}

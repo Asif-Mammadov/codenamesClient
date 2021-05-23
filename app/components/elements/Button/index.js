@@ -31,9 +31,13 @@ const Button = ({
       {icon ? (
         <Icon
           name={icon}
-          style={{
-            marginRight: 8
-          }}
+          style={
+            children
+              ? {
+                  marginRight: 8
+                }
+              : null
+          }
         />
       ) : null}
       <span>{children}</span>

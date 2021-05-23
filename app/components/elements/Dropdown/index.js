@@ -19,7 +19,7 @@ const Dropdown = ({ items, name, icon, img, upward, light }) => {
 
   useEffect(() => {
     // If menu is off screen, open it upward
-    setOpenUpward(upward !== null ? upward : !utils.isInViewport(dropdownMenu));
+    setOpenUpward(upward || !utils.isInViewport(dropdownMenu));
   }, [dropdownMenu, upward]);
 
   const onItemSelected = (item) => {
