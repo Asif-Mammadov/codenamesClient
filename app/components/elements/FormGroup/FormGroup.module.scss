@@ -3,18 +3,16 @@
 .formGroup {
   @extend .fs-16;
   @extend .lh-24;
-  width: 100%;
 
   label {
-    @extend .fw-600;
-    margin-bottom: 8px;
-    color: $color-secondary;
-    display: block;
-    text-align: left;
+    @extend .group-label;
   }
 
   .inputWrapper {
+    display: flex;
+    align-items: center;
     position: relative;
+    height: 48px;
 
     svg {
       position: absolute;
@@ -23,19 +21,42 @@
       transform: translateY(-50%);
     }
 
-    input {
+    input,
+    textarea {
       @extend .ff-exo2;
       @extend .fw-500;
       width: 100%;
+      height: 100%;
       border: 1px solid $color-primary;
       border-radius: $border-radius;
       background-color: $color-white;
       color: $color-primary;
-      padding: 16px 56px;
+      padding: 15px 56px 15px 16px;
+      resize: none;
+
+      &[type='number'] {
+        text-align: center;
+        padding: 16px;
+        width: 48px;
+      }
 
       &::placeholder {
         color: rgba($color: $color-primary, $alpha: 0.3);
       }
+
+      &.hasIcon {
+        padding-left: 56px;
+      }
+
+      &.chat {
+        border: none;
+        border-top: 1px solid $color-grayish;
+        border-radius: 0;
+      }
+    }
+
+    textarea {
+      padding-right: 72px;
     }
   }
 }

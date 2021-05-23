@@ -1,0 +1,61 @@
+@import 'app.scss';
+
+.chat {
+  @extend .box;
+  position: relative;
+
+  .boxContent {
+    // 112px for sticky elements
+    min-height: calc(100% - 112px);
+
+    .message {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 16px;
+
+      &.me {
+        align-items: flex-end;
+
+        p {
+          background-color: $color-secondary;
+          color: $color-white;
+        }
+      }
+
+      // Author
+      div {
+        @extend .user-avatar;
+        margin-bottom: 4px;
+      }
+
+      // Content
+      p {
+        @extend .fs-12;
+        @extend .lh-16;
+        @extend .fw-500;
+        width: max-content;
+        min-width: 60px;
+        max-width: 100%;
+        background-color: $color-grayish;
+        border-radius: $border-radius;
+        padding: 8px;
+      }
+    }
+  }
+
+  // Chat form
+  form {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    box-shadow: $shadow;
+
+    .btnWrapper {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}

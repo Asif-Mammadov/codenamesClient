@@ -4,14 +4,15 @@
 .authContainer {
   @extend .row;
   @extend .no-gutters;
-  height: 100vh;
+  overflow: hidden;
+  min-height: 100vh;
 
   .pageBg {
     @extend .col-lg-7;
     // Not visible on mobile
     @extend .d-lg-block;
     @extend .d-none;
-    height: 100%;
+    height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

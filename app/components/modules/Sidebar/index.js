@@ -15,7 +15,7 @@ const Sidebar = ({ show }) => {
         ))}
       </div>
 
-      <SidebarLink href="/login" icon="sign-out">
+      <SidebarLink href="/login" icon="out">
         Sign Out
       </SidebarLink>
     </section>

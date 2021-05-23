@@ -1,0 +1,37 @@
+@import 'app.scss';
+@import 'vendor/bootstrap-grid';
+
+.game {
+  &Header {
+    @extend .header;
+
+    .buttons {
+      display: flex;
+      align-items: center;
+
+      .btnText {
+        @extend .d-lg-block;
+        @extend .d-none;
+      }
+    }
+  }
+
+  &Bg {
+    @extend .bg-img;
+    background-image: url('../../../../public/img/room-bg.png');
+  }
+
+  &Content {
+    // Avoid content from overlapping with header and footer
+    padding-top: calc(#{$header-height} + 56px);
+    padding-bottom: 48px;
+  }
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .game {
+    &Bg {
+      background-image: url('../../../../public/img/room-bg-lg.png');
+    }
+  }
+}

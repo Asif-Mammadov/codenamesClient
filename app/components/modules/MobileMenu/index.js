@@ -8,15 +8,8 @@ import NavLink from '../../elements/NavLink';
 import styles from './MobileMenu.module.scss';
 
 const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
-  const classNames = [styles.menu];
-
-  // Add active class if MobileMenu is active
-  if (isActive) {
-    classNames.push(styles.active);
-  }
-
   return show ? (
-    <section className={classNames.join(' ')}>
+    <section className={[styles.menu, isActive ? styles.active : ''].join(' ')}>
       <div>
         {(isAccount ? ACCOUNT_LINKS : HOME_LINKS).map((link) => (
           <NavLink
@@ -45,7 +38,7 @@ const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
             </Link>
             <Link href="/login">
               <a>
-                <Button icon="sign-out" small>
+                <Button icon="out" small>
                   Sign Out
                 </Button>
               </a>
@@ -54,8 +47,8 @@ const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
         ) : (
           <div className={styles.homeButtons}>
             <Link href="/login">
-              <a>
-                <Button type="white" style={{ width: 140, marginRight: 24 }}>
+              <a style={{ marginRight: 24 }}>
+                <Button type="white" style={{ width: 140 }}>
                   Login
                 </Button>
               </a>

@@ -1,0 +1,64 @@
+@import 'app.scss';
+
+.teamCard {
+  overflow: hidden;
+  border: 1px solid $color-secondary;
+  border-radius: $border-radius;
+  color: $color-white;
+  min-width: 270px;
+  // Blue by default
+  background: rgba($color: $color-blue, $alpha: 0.8);
+
+  &.red {
+    background: rgba($color: $color-red, $alpha: 0.8);
+  }
+
+  h3 {
+    @extend .fs-48;
+    @extend .lh-64;
+    @extend .fw-800;
+    text-align: center;
+    text-shadow: $text-shadow;
+    margin-bottom: 8px;
+  }
+
+  img {
+    height: 135px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &Content {
+    padding: 16px;
+
+    .roleWrapper {
+      &:not(:last-child) {
+        margin-bottom: 24px;
+      }
+
+      > h6 {
+        @extend .fs-16;
+        @extend .lh-24;
+        @extend .fw-700;
+      }
+
+      > div {
+        margin-top: 8px;
+        display: flex;
+        flex-wrap: wrap;
+
+        .player {
+          @extend .user-avatar;
+          margin-right: 16px;
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .teamCard {
+    min-width: auto;
+  }
+}

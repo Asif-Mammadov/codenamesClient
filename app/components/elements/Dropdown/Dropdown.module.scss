@@ -11,6 +11,14 @@
     display: flex;
     align-items: center;
 
+    &.light {
+      color: $color-white;
+
+      svg[name='arrow-down'] * {
+        fill: $color-white;
+      }
+    }
+
     svg[name='arrow-down'] {
       transition: $transition;
     }

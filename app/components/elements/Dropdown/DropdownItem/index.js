@@ -3,7 +3,7 @@ import React from 'react';
 import Icon from '../../Icon';
 import styles from './DropdownItem.module.scss';
 
-const DropdownItem = ({ children, icon, img, isButton }) => {
+const DropdownItem = ({ children, icon, img, isButton, color }) => {
   let content;
   const mediaOptions = {
     width: 24,
@@ -24,6 +24,7 @@ const DropdownItem = ({ children, icon, img, isButton }) => {
       className={[styles.dropdownItem, isButton ? styles.isButton : ''].join(
         ' '
       )}
+      style={{ color: color }}
     >
       {content}
       <span>{children}</span>

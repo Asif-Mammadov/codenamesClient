@@ -35,17 +35,47 @@
     @extend .fs-18;
   }
 
+  &.extraSmall {
+    @extend .py-1;
+    @extend .px-3;
+    @extend .fs-14;
+    @extend .lh-16;
+  }
+
   &.shadow {
     box-shadow: 0px 3px 6px #1b1f2a;
   }
 
   //Button types
   &.white {
-    background-color: white;
+    background-color: $color-white;
     color: $color-secondary;
 
     svg * {
       fill: $color-secondary;
+    }
+  }
+
+  &.room,
+  &.room-white {
+    @extend .px-lg-4;
+    @extend .p-2;
+    @extend .fw-700;
+    text-transform: capitalize;
+
+    svg {
+      @extend .mr-lg-2;
+      @extend .mr-0;
+    }
+  }
+
+  &.room-white {
+    background-color: $color-white;
+    color: $color-primary;
+    border: 1px solid $color-primary;
+
+    svg * {
+      fill: $color-primary;
     }
   }
 }
