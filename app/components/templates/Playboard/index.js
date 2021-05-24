@@ -7,6 +7,39 @@ import Gamelog from '../../elements/Gamelog';
 import styles from './Playboard.module.scss';
 import Chat from '../../elements/Chat';
 
+const ClueForm = ({ isMobile }) => {
+  return (
+    <form
+      className={[styles.clueForm, isMobile ? styles.mobile : ''].join(' ')}
+      onSubmit={submitHandler}
+    >
+      <div>
+        <FormGroup
+          name="clue"
+          type="text"
+          placeholder="Your clue"
+          style={{ width: '100%', marginRight: 8 }}
+        />
+        <FormGroup name="count" type="number" placeholder="0" />
+      </div>
+
+      <Button shadow small style={{ marginTop: 8, width: '100%' }}>
+        Give clue
+      </Button>
+    </form>
+  );
+};
+
+const GameArea = ({ isMobile }) => (
+  <div className={[styles.gameArea, isMobile ? styles.mobile : ''].join(' ')}>
+    {Array.from({ length: 25 }).map((item) => (
+      <div key={item} className={styles.gameCard}>
+        <GameCard />
+      </div>
+    ))}
+  </div>
+);
+
 const Playboard = () => {
   return (
     <div className={styles.boardContainer}>
@@ -16,13 +49,7 @@ const Playboard = () => {
           <TeamCard isRed gameMode />
         </section>
 
-        <section className={styles.gameArea}>
-          {Array.from({ length: 25 }).map((item) => (
-            <div key={item} className={styles.gameCard}>
-              <GameCard />
-            </div>
-          ))}
-        </section>
+        <GameArea />
 
         <section className={styles.sectionWrapper}>
           <TeamCard gameMode />
@@ -30,29 +57,10 @@ const Playboard = () => {
       </div>
 
       {/* Game area for mobile */}
-      <div className={[styles.gameArea, styles.mobile].join(' ')}>
-        {Array.from({ length: 25 }).map((item) => (
-          <div key={item} className={styles.gameCard}>
-            <GameCard />
-          </div>
-        ))}
-      </div>
+      <GameArea isMobile />
 
       {/* Clue form for mobile */}
-      <form className={[styles.clueForm, styles.mobile].join(' ')}>
-        <div>
-          <FormGroup
-            name="clue"
-            type="text"
-            placeholder="Your clue"
-            style={{ marginRight: 8 }}
-          />
-          <FormGroup name="count" type="number" placeholder="0" />
-        </div>
-        <Button shadow small style={{ marginTop: 8, width: '100%' }}>
-          Give clue
-        </Button>
-      </form>
+      <ClueForm isMobile />
 
       {/* Log, chat, clue sections */}
       <div className={styles.boardRow}>
@@ -60,20 +68,7 @@ const Playboard = () => {
           <Gamelog />
         </section>
 
-        <form className={styles.clueForm}>
-          <div>
-            <FormGroup
-              name="clue"
-              type="text"
-              placeholder="Your clue"
-              style={{ marginRight: 8 }}
-            />
-            <FormGroup name="count" type="number" placeholder="0" />
-          </div>
-          <Button shadow small style={{ marginTop: 8, width: '100%' }}>
-            Give clue
-          </Button>
-        </form>
+        <ClueForm />
 
         <section className={styles.sectionWrapper}>
           <Chat />

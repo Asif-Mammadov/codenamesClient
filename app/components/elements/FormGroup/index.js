@@ -19,9 +19,9 @@ const FormGroup = ({
     placeholder,
     value,
     className: [
-      error !== '' ? styles.invalid : '',
+      error ? styles.invalid : '',
       icon ? styles.hasIcon : '',
-      isChat ? styles.isChat : ''
+      isChat ? styles.chat : ''
     ].join(' '),
     onChange: changed
   };
@@ -38,7 +38,7 @@ const FormGroup = ({
           <input type={type} {...defaults} />
         )}
       </div>
-      {error !== '' ? (
+      {error ? (
         <small>
           <Icon name="alert" style={{ marginRight: 8 }} />
           <span>{error}</span>

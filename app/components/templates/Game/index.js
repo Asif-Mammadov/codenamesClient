@@ -6,6 +6,107 @@ import FormGroup from '../../elements/FormGroup';
 import Dropdown from '../../elements/Dropdown';
 import Popup from '../../elements/Popup';
 import { LANGS } from '../../../data/main';
+import utils from '../../../utils';
+
+const RoomForm = ({ isCreate }) => {
+  // Initialize the join form
+  const [form, setForm] = useState({
+    controls: {
+      nickname: {
+        name: 'nickname',
+        label: 'Nickname',
+        type: 'text',
+        value: '',
+        placeholder: 'eyvazahmadzada',
+        validation: {
+          required: true
+        },
+        valid: false,
+        touched: false,
+        error: ''
+      },
+      roomId: {
+        name: 'roomId',
+        label: 'Room ID',
+        type: 'text',
+        value: '',
+        placeholder: '12345678',
+        validation: {
+          required: true,
+          id: true
+        },
+        valid: false,
+        touched: false,
+        error: ''
+      }
+    },
+    valid: false,
+    error: ''
+  });
+
+  // No need for room id in create form
+  if (isCreate) {
+    delete form.controls.roomId;
+  }
+
+  // Create an array containing the form elements
+  const formElements = [];
+  for (const key in form.controls) {
+    formElements.push({
+      id: key,
+      config: form.controls[key]
+    });
+  }
+
+  // Handle value change of a control
+  const onValueChange = (itemId, value) => {
+    const { updatedForm, formValid } = utils.valueChangedHandler(
+      form.controls,
+      itemId,
+      value
+    );
+
+    setForm({ controls: updatedForm, valid: formValid });
+  };
+
+  // Handle form submit
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    if (form.valid) {
+      console.log(form.controls);
+    }
+  };
+
+  return (
+    <form onSubmit={submitHandler} style={{ width: '100%' }}>
+      {formElements.map((el) => (
+        <FormGroup
+          key={el.id}
+          name={el.config.name}
+          label={el.config.label}
+          type={el.config.type}
+          value={el.config.value}
+          placeholder={el.config.placeholder}
+          error={el.config.touched && !el.config.valid ? el.config.error : ''}
+          changed={(e) => onValueChange(el.id, e.target.value)}
+          style={{ width: '100%', marginBottom: 24 }}
+        />
+      ))}
+
+      {isCreate ? (
+        <div className={styles.popupLangGroup}>
+          <label>Select Game Language</label>
+          <Dropdown items={LANGS} upward />
+        </div>
+      ) : null}
+
+      <Button disabled={!form.valid} style={{ margin: '0 auto' }}>
+        {isCreate ? 'Create' : 'Join'} Room
+      </Button>
+    </form>
+  );
+};
 
 const Game = () => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -39,18 +140,7 @@ const Game = () => {
         onClose={() => setIsCreateOpen(false)}
         title="Create Room"
       >
-        <FormGroup
-          label="Nickname"
-          name="nickname"
-          placeholder="eyvazahmadzada"
-          type="text"
-        />
-        <div className={styles.modalLangGroup}>
-          <label>Select Game Language</label>
-          <Dropdown items={LANGS} upward />
-        </div>
-
-        <Button>Create Room</Button>
+        <RoomForm isCreate />
       </Popup>
 
       {/* Join room popup */}
@@ -59,22 +149,7 @@ const Game = () => {
         onClose={() => setIsJoinOpen(false)}
         title="Join Room"
       >
-        <FormGroup
-          label="Nickname"
-          name="nickname"
-          placeholder="eyvazahmadzada"
-          type="text"
-          style={{ marginBottom: 24 }}
-        />
-        <FormGroup
-          label="Room ID"
-          name="roomId"
-          placeholder="12345678"
-          type="text"
-          style={{ marginBottom: 36 }}
-        />
-
-        <Button>Join Room</Button>
+        <RoomForm />
       </Popup>
     </div>
   );

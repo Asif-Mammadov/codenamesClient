@@ -69,6 +69,7 @@ const Dropdown = ({ items, name, icon, img, upward, light }) => {
                   return item.name !== activeItem?.name ? (
                     <button
                       onClick={() => onItemSelected(item)}
+                      type="button"
                       key={item.name}
                       className={styles.menuItem}
                     >

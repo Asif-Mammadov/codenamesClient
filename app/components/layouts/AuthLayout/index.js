@@ -2,10 +2,11 @@ import Link from 'next/link';
 import React from 'react';
 import Fade from 'react-reveal/Fade';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
+import Icon from '../../elements/Icon';
 import Header from '../../modules/Header';
 import styles from './AuthLayout.module.scss';
 
-const AuthLayout = ({ isLogin, children, submitted }) => {
+const AuthLayout = ({ children, isLogin, submitted, error }) => {
   // Get window width
   const { width } = useWindowDimensions();
 
@@ -29,6 +30,13 @@ const AuthLayout = ({ isLogin, children, submitted }) => {
               enjoy <span>codenames</span>
             </h2>
             <form onSubmit={submitted}>
+              <div
+                className={[styles.error, error ? styles.show : ''].join(' ')}
+              >
+                <Icon name="cross" style={{ marginRight: 8 }} />
+                {error}
+              </div>
+
               {children}
 
               {/* Bottom link */}

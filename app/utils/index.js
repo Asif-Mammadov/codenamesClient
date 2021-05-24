@@ -43,6 +43,12 @@ class Utils {
       error = 'Please enter a valid email';
     }
 
+    if (rules.id) {
+      const pattern = /^[0-9]+$/;
+      isValid = pattern.test(value) && isValid;
+      error = 'Please enter a valid ID';
+    }
+
     if (rules.min) {
       isValid = value.trim().length > rules.min && isValid;
       error = `Password length must be greater than ${rules.min}`;

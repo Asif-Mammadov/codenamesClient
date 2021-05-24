@@ -7,82 +7,88 @@ import AuthLayout from '../../layouts/AuthLayout';
 const Register = () => {
   // Initialize the register form
   const [registerForm, setRegisterForm] = useState({
-    fullName: {
-      name: 'fullName',
-      type: 'text',
-      placeholder: 'Full Name',
-      icon: 'user',
-      validation: {
-        required: true
+    controls: {
+      fullName: {
+        name: 'fullName',
+        type: 'text',
+        placeholder: 'Full Name',
+        icon: 'user',
+        validation: {
+          required: true
+        },
+        value: '',
+        valid: false,
+        touched: false,
+        error: ''
       },
-      value: '',
-      valid: false,
-      touched: false,
-      error: ''
+      email: {
+        name: 'email',
+        type: 'email',
+        placeholder: 'Email',
+        icon: 'envelope',
+        validation: {
+          required: true,
+          email: true
+        },
+        value: '',
+        valid: false,
+        touched: false,
+        error: ''
+      },
+      password: {
+        name: 'password',
+        type: 'password',
+        placeholder: 'Password',
+        icon: 'lock',
+        validation: {
+          required: true,
+          min: 6
+        },
+        value: '',
+        valid: false,
+        touched: false,
+        error: ''
+      }
     },
-    email: {
-      name: 'email',
-      type: 'email',
-      placeholder: 'Email',
-      icon: 'envelope',
-      validation: {
-        required: true,
-        email: true
-      },
-      value: '',
-      valid: false,
-      touched: false,
-      error: ''
-    },
-    password: {
-      name: 'password',
-      type: 'password',
-      placeholder: 'Password',
-      icon: 'lock',
-      validation: {
-        required: true,
-        min: 6
-      },
-      value: '',
-      valid: false,
-      touched: false,
-      error: ''
-    }
+    valid: false
   });
-  const [isFormValid, setIsFormValid] = useState(false);
 
   // Create an array containing the form elements
   const formElements = [];
-  for (const key in registerForm) {
+  for (const key in registerForm.controls) {
     formElements.push({
       id: key,
-      config: registerForm[key]
+      config: registerForm.controls[key]
     });
   }
 
   // Handle value change of a control
   const onValueChange = (itemId, value) => {
     const { updatedForm, formValid } = utils.valueChangedHandler(
-      registerForm,
+      registerForm.controls,
       itemId,
       value
     );
 
-    setRegisterForm(updatedForm);
-    setIsFormValid(formValid);
+    setRegisterForm({ controls: updatedForm, valid: formValid });
   };
 
   // Handle form submit
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if (isFormValid) {
+    if (registerForm.valid) {
       console.log(registerForm);
+
+      setRegisterForm({ ...registerForm, error: 'Invalid credentials' });
+
+      // Clear error after some time
+      setTimeout(() => setRegisterForm({ ...registerForm, error: '' }), 2000);
     }
   };
 
   return (
-    <AuthLayout submitted={submitHandler}>
+    <AuthLayout submitted={submitHandler} error={registerForm.error}>
       {formElements.map((el) => (
         <FormGroup
           key={el.id}
@@ -97,7 +103,7 @@ const Register = () => {
         />
       ))}
 
-      <Button disabled={!isFormValid}>Register</Button>
+      <Button disabled={!registerForm.valid}>Register</Button>
     </AuthLayout>
   );
 };

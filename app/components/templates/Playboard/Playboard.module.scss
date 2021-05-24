@@ -62,7 +62,7 @@
   }
 }
 
-// 'Give clue' form
+// Give clue form
 .clueForm {
   @extend .d-lg-flex;
   @extend .d-none;
@@ -82,7 +82,8 @@
   }
 
   > div {
-    display: inline-flex;
+    display: flex;
+    width: 100%;
   }
 }
 

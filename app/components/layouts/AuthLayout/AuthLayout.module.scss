@@ -57,6 +57,10 @@
       flex-direction: column;
       align-items: center;
 
+      .error {
+        @extend .form-error;
+      }
+
       .bottomLink {
         @extend .fs-16;
         @extend .lh-24;
