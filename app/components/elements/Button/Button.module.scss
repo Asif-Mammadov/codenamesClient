@@ -22,8 +22,18 @@
   @extend .px-4;
   @extend .py-3;
 
+  &:disabled {
+    opacity: 0.8;
+    cursor: default;
+  }
+
   svg * {
     fill: $color-white;
+  }
+
+  // For links
+  a {
+    color: $color-white;
   }
 
   &.big {

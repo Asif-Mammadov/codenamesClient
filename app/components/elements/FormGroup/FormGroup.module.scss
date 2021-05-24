@@ -3,6 +3,7 @@
 .formGroup {
   @extend .fs-16;
   @extend .lh-24;
+  text-align: left;
 
   label {
     @extend .group-label;
@@ -31,7 +32,7 @@
       border-radius: $border-radius;
       background-color: $color-white;
       color: $color-primary;
-      padding: 15px 56px 15px 16px;
+      padding: 15px 16px;
       resize: none;
 
       &[type='number'] {
@@ -42,6 +43,10 @@
 
       &::placeholder {
         color: rgba($color: $color-primary, $alpha: 0.3);
+      }
+
+      &.invalid {
+        border: 1px solid red;
       }
 
       &.hasIcon {
@@ -58,5 +63,14 @@
     textarea {
       padding-right: 72px;
     }
+  }
+
+  small {
+    @extend .fs-13;
+    @extend .lh-16;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    color: red;
   }
 }

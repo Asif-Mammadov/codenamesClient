@@ -58,7 +58,29 @@
   }
 }
 
-.hover-dark:hover {
+.form-error {
+  @extend .fs-16;
+  @extend .lh-20;
+  @extend .fw-500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $border-radius;
+  background-color: #ff6961;
+  color: $color-white;
+  opacity: 0;
+  height: 0;
+  transition: $transition;
+
+  &.show {
+    opacity: 1;
+    height: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+}
+
+.hover-dark:not(:disabled):hover {
   filter: brightness(90%);
 }
 /* Utility classes end */
@@ -150,13 +172,16 @@
   }
 
   .tab {
-    @extend .hover-dark;
     cursor: pointer;
     transition: $transition;
     border: 1px solid $color-secondary;
     background-color: $color-white;
     color: $color-secondary;
     padding: 16px 20px;
+
+    &:not(.tabSelected) {
+      @extend .hover-dark;
+    }
 
     &.tabSelected {
       background-color: $color-secondary;

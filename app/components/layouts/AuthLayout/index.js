@@ -5,7 +5,7 @@ import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import Header from '../../modules/Header';
 import styles from './AuthLayout.module.scss';
 
-const AuthLayout = ({ isLogin, children }) => {
+const AuthLayout = ({ isLogin, children, submitted }) => {
   // Get window width
   const { width } = useWindowDimensions();
 
@@ -28,7 +28,7 @@ const AuthLayout = ({ isLogin, children }) => {
             <h2>
               enjoy <span>codenames</span>
             </h2>
-            <form>
+            <form onSubmit={submitted}>
               {children}
 
               {/* Bottom link */}

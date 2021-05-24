@@ -23,7 +23,7 @@ const Home = () => (
               survived not only five centuries.
             </p>
             <Link href="/game">
-              <a style={{ marginTop: 24 }}>
+              <a style={{ marginTop: 24, width: 'max-content' }}>
                 <Button icon="cards" shadow>
                   Play now
                 </Button>
@@ -58,9 +58,15 @@ const Home = () => (
               type and scrambled it to make a type specimen book. It has
               survived not only five centuries.
             </p>
-            <Button icon="info" shadow style={{ marginTop: 24 }}>
-              Learn more
-            </Button>
+            <a
+              href="https://cdn.1j1ju.com/medias/89/5e/99-codenames-rule.pdf"
+              target="_blank"
+              style={{ marginTop: 24, width: 'max-content' }}
+            >
+              <Button icon="info" shadow>
+                Learn more
+              </Button>
+            </a>
           </div>
         </Slide>
       </div>

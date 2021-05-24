@@ -36,7 +36,7 @@ const Chat = () => {
           name="chat-input"
           type="textarea"
           placeholder="Type something..."
-          chat
+          isChat
         />
 
         <div className={styles.btnWrapper}>

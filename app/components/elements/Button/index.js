@@ -11,6 +11,7 @@ const Button = ({
   icon,
   type,
   style,
+  disabled,
   clicked
 }) => {
   let content;
@@ -26,6 +27,7 @@ const Button = ({
       ].join(' ')}
       style={style}
       onClick={clicked}
+      disabled={disabled}
     >
       {content}
       {icon ? (
