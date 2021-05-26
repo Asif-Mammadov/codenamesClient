@@ -8,18 +8,22 @@ const Chat = () => {
     value: '',
     valid: false
   });
+  const [isGlobal, setIsGlobal] = useState(true);
 
   const chat = useRef(null);
 
-  useEffect(() => {
-    // Scroll to the bottom of the chat
-    chat.current.scrollTop = chat.current.scrollHeight;
-  }, []);
+  useEffect(
+    () =>
+      // Scroll to the bottom of the chat
+      (chat.current.scrollTop = chat.current.scrollHeight),
+    []
+  );
 
   // Handle chatbox value change
   const onValueChanged = (e) =>
     setChatBox({ value: e.target.value, valid: e.target.value.trim() !== '' });
 
+  // Handle form submission
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -31,8 +35,10 @@ const Chat = () => {
   return (
     <div className={styles.chat} ref={chat}>
       <div className={styles.boxHeader}>
-        <h3>Global</h3>
-        <Button extraSmall>Switch</Button>
+        <h3>{isGlobal ? 'Global' : 'Team'}</h3>
+        <Button extraSmall clicked={() => setIsGlobal((prev) => !prev)}>
+          Switch
+        </Button>
       </div>
 
       <div className={styles.boxContent}>

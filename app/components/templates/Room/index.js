@@ -5,7 +5,7 @@ import Dropdown from '../../elements/Dropdown';
 import TeamCard from '../../elements/TeamCard';
 import styles from './Room.module.scss';
 
-const Room = () => {
+const Room = ({ gameStarted }) => {
   return (
     <div className={styles.roomContainer}>
       {/* For module */}
@@ -32,7 +32,9 @@ const Room = () => {
             <Dropdown items={LANGS} light />
           </div>
 
-          <Button shadow>Start Game</Button>
+          <Button shadow clicked={gameStarted}>
+            Start Game
+          </Button>
         </section>
 
         <section className={styles.cardWrapper}>

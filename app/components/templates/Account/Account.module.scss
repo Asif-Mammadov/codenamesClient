@@ -6,10 +6,6 @@
   .tabPanel {
     form {
       width: 100%;
-
-      .error {
-        @extend .form-error;
-      }
     }
   }
 }

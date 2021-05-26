@@ -4,9 +4,17 @@ import Playboard from '../../app/components/templates/Playboard';
 import Room from '../../app/components/templates/Room';
 
 const RoomPage = () => {
-  const [isGameStarted, setIsGameStarted] = useState(true);
+  const [isGameStarted, setIsGameStarted] = useState(false);
 
-  return <GameLayout>{isGameStarted ? <Playboard /> : <Room />}</GameLayout>;
+  return (
+    <GameLayout>
+      {isGameStarted ? (
+        <Playboard />
+      ) : (
+        <Room gameStarted={() => setIsGameStarted(true)} />
+      )}
+    </GameLayout>
+  );
 };
 
 export default RoomPage;

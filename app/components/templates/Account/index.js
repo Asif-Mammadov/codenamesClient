@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel, resetIdCounter } from 'react-tabs';
 import utils from '../../../utils';
 import Button from '../../elements/Button';
+import FormError from '../../elements/FormError';
 import FormGroup from '../../elements/FormGroup';
 import Icon from '../../elements/Icon';
 import styles from './Account.module.scss';
@@ -171,14 +172,7 @@ const Account = () => {
   // Render current form
   const renderForm = () => (
     <form onSubmit={submitHandler}>
-      <div
-        className={[styles.error, currentForm.error ? styles.show : ''].join(
-          ' '
-        )}
-      >
-        <Icon name="cross" style={{ marginRight: 8 }} />
-        {currentForm.error}
-      </div>
+      {currentForm.error ? <FormError error={currentForm.error} /> : null}
 
       {formElements.map((el) => (
         <FormGroup
