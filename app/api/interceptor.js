@@ -39,27 +39,30 @@ service.interceptors.request.use(
 // API response interceptor
 service.interceptors.response.use((response) => {
   const res = response.data;
-  if (res.status.succeeded) {
+
+  // Get response status code
+  const statusCode = res.status.code;
+
+  if (statusCode === 200) {
     return { response: res.response, successMessage: res.status.text };
   } else {
     // Remove token and redirect
-    const statusCode = res.status.code;
     if (statusCode === 400 || statusCode === 408) {
-      notification.error({
-        message: 'Authentication Fail',
-        description: 'Please login again'
-      });
+      // notification.error({
+      //   message: 'Authentication Fail',
+      //   description: 'Please login again'
+      // });
       localStorage.removeItem(AUTH_TOKEN);
       Router.push(ENTRY_ROUTE);
       Router.reload();
     }
 
     if (statusCode === 409) {
-      notification.error({ message: 'Bad request' });
+      // notification.error({ message: 'Bad request' });
     }
 
     if (statusCode === 410) {
-      notification.error({ message: 'Internal Server Error' });
+      // notification.error({ message: 'Internal Server Error' });
     }
 
     return Promise.reject(Object.values(res.errors)); //Errors object to array

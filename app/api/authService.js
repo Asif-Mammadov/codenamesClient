@@ -1,8 +1,8 @@
 import fetch from './interceptor';
 
-const AuthService = {};
+const authService = {};
 
-AuthService.login = function (data) {
+authService.login = function (data) {
   return fetch({
     url: '/admin/account/login',
     method: 'post',
@@ -13,7 +13,7 @@ AuthService.login = function (data) {
   });
 };
 
-AuthService.logout = function () {
+authService.logout = function () {
   return fetch({
     url: '/admin/account/logout',
     method: 'put',
@@ -23,4 +23,4 @@ AuthService.logout = function () {
   });
 };
 
-export default AuthService;
+export default authService;

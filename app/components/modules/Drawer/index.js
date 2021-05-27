@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { HOME_LINKS, LANGS } from '../../../data/main';
 import Button from '../../elements/Button';
@@ -8,6 +9,8 @@ import NavLink from '../../elements/NavLink';
 import styles from './Drawer.module.scss';
 
 const Drawer = ({ show, isActive, onClose }) => {
+  const { locale, asPath, push } = useRouter();
+
   const classNames = [styles.drawer];
 
   // Add active class if drawer is active
@@ -50,7 +53,7 @@ const Drawer = ({ show, isActive, onClose }) => {
       </div>
 
       <div className={styles.drawerLangDropdown}>
-        <Dropdown items={LANGS} />
+        <Dropdown items={LANGS} onChange={onClose} lang />
       </div>
     </section>
   ) : null;

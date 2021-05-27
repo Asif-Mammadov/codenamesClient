@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import Button from '../../elements/Button';
 import FormGroup from '../../elements/FormGroup';
 import utils from '../../../utils';
 import AuthLayout from '../../layouts/AuthLayout';
+import { signIn } from '../../../store/actions';
 
-const Login = () => {
+const Login = ({ signIn }) => {
   // Initialize the login form
   const [loginForm, setLoginForm] = useState({
     controls: {
@@ -96,4 +98,9 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapStateToProps = ({ auth }) => {
+  const { loading, errorMessages } = auth;
+  return { loading, errorMessages };
+};
+
+export default connect(mapStateToProps, { signIn })(Login);

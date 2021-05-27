@@ -1,5 +1,5 @@
+import React from 'react';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
 import { ACCOUNT_LINKS } from '../../../data/links';
 import { HOME_LINKS, LANGS } from '../../../data/main';
 import Button from '../../elements/Button';
@@ -24,7 +24,7 @@ const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
 
       <div className={styles.menuOptions}>
         <div className={styles.langDropdown}>
-          <Dropdown items={LANGS} />
+          <Dropdown items={LANGS} onChange={onClose} lang />
         </div>
 
         {isAccount ? (

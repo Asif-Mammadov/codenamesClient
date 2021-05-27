@@ -5,7 +5,7 @@
   @extend .fs-14;
   @extend .lh-20;
   @extend .fw-500;
-  position: absolute;
+  position: fixed;
   z-index: 10;
   top: -200px;
   right: 50%;
@@ -29,7 +29,6 @@
 
   &.show {
     top: 0;
-    transform: (50%, 200px);
   }
 }
 

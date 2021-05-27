@@ -31,7 +31,7 @@ const AccountLayout = (props) => {
             </a>
           </Link>
           <div className={styles.dropdown}>
-            <Dropdown items={LANGS} />
+            <Dropdown items={LANGS} lang />
           </div>
         </div>
 
