@@ -3,7 +3,7 @@ import Button from '../Button';
 import FormGroup from '../FormGroup';
 import styles from './Chat.module.scss';
 
-const Chat = () => {
+const Chat = ({ translate }) => {
   const [chatBox, setChatBox] = useState({
     value: '',
     valid: false
@@ -35,9 +35,9 @@ const Chat = () => {
   return (
     <div className={styles.chat} ref={chat}>
       <div className={styles.boxHeader}>
-        <h3>{isGlobal ? 'Global' : 'Team'}</h3>
+        <h3>{translate(isGlobal ? 'global' : 'team')}</h3>
         <Button extraSmall clicked={() => setIsGlobal((prev) => !prev)}>
-          Switch
+          {translate('switch')}
         </Button>
       </div>
 
@@ -58,14 +58,14 @@ const Chat = () => {
         <FormGroup
           name="chatBox"
           type="textarea"
-          placeholder="Type something..."
+          placeholder={translate('type_smth')}
           value={chatBox.value}
           changed={onValueChanged}
           isChat
         />
 
         <div className={styles.btnWrapper}>
-          <Button icon="send" extraSmall disabled={!chatBox.valid}></Button>
+          <Button icon="send" extraSmall disabled={!chatBox.valid} />
         </div>
       </form>
     </div>

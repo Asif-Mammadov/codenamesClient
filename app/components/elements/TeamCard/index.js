@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../Button';
 import styles from './TeamCard.module.scss';
 
-const TeamCard = ({ isRed, gameMode }) => {
+const TeamCard = ({ isRed, gameMode, translate }) => {
   return (
     <div className={[styles.teamCard, isRed ? styles.red : ''].join(' ')}>
       <img src={`/img/team-${isRed ? 'red' : 'blue'}.png`} />
@@ -11,7 +11,7 @@ const TeamCard = ({ isRed, gameMode }) => {
         {gameMode ? <h3>8</h3> : null}
 
         <section className={styles.roleWrapper}>
-          <h6>Operatives</h6>
+          <h6>{translate('operatives')}</h6>
           <div>
             {[0, 1, 2, 3].map((item) => (
               <div
@@ -26,11 +26,11 @@ const TeamCard = ({ isRed, gameMode }) => {
             ))}
           </div>
 
-          {!gameMode ? <Button extraSmall>Join</Button> : null}
+          {!gameMode ? <Button extraSmall>{translate('join')}</Button> : null}
         </section>
 
         <section className={styles.roleWrapper}>
-          <h6>Spymasters</h6>
+          <h6>{translate('spymasters')}</h6>
           <div>
             {[0, 1, 2, 3].map((item) => (
               <div
@@ -45,7 +45,7 @@ const TeamCard = ({ isRed, gameMode }) => {
             ))}
           </div>
 
-          {!gameMode ? <Button extraSmall>Join</Button> : null}
+          {!gameMode ? <Button extraSmall>{translate('join')}</Button> : null}
         </section>
       </div>
     </div>

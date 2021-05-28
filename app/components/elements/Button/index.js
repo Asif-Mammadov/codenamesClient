@@ -42,7 +42,7 @@ const Button = ({
           }
         />
       ) : null}
-      <span>{children}</span>
+      <span>{children || ''}</span>
     </button>
   );
 };

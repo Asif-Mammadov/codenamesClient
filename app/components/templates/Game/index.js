@@ -7,14 +7,15 @@ import Dropdown from '../../elements/Dropdown';
 import Popup from '../../elements/Popup';
 import { LANGS } from '../../../data/main';
 import utils from '../../../utils';
+import DefaultLayout from '../../layouts/DefaultLayout';
 
-const RoomForm = ({ isCreate }) => {
+const RoomForm = ({ isCreate, translate }) => {
   // Initialize the join form
   const [form, setForm] = useState({
     controls: {
       nickname: {
         name: 'nickname',
-        label: 'Nickname',
+        label: translate('nickname'),
         type: 'text',
         value: '',
         placeholder: 'eyvazahmadzada',
@@ -27,7 +28,7 @@ const RoomForm = ({ isCreate }) => {
       },
       roomId: {
         name: 'roomId',
-        label: 'Room ID',
+        label: translate('room_id'),
         type: 'text',
         value: '',
         placeholder: '12345678',
@@ -89,6 +90,7 @@ const RoomForm = ({ isCreate }) => {
           value={el.config.value}
           placeholder={el.config.placeholder}
           error={el.config.touched && !el.config.valid ? el.config.error : ''}
+          translate={translate}
           changed={(e) => onValueChange(el.id, e.target.value)}
           style={{ width: '100%', marginBottom: 24 }}
         />
@@ -96,62 +98,66 @@ const RoomForm = ({ isCreate }) => {
 
       {isCreate ? (
         <div className={styles.popupLangGroup}>
-          <label>Select Game Language</label>
+          <label>{translate('select_lang')}</label>
           <Dropdown items={LANGS} upward />
         </div>
       ) : null}
 
       <Button disabled={!form.valid} style={{ margin: '0 auto' }}>
-        {isCreate ? 'Create' : 'Join'} Room
+        {translate(isCreate ? 'create_room' : 'join_room')}
       </Button>
     </form>
   );
 };
 
-const Game = () => {
+const Game = ({ translate }) => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isJoinOpen, setIsJoinOpen] = useState(false);
 
   return (
-    <div className={styles.game}>
-      <div className={styles.gameBg}></div>
+    <DefaultLayout translate={translate}>
+      <div className={styles.game}>
+        <div className={styles.gameBg}></div>
 
-      <section className={styles.gameBody}>
-        <Slide bottom>
-          <div className={styles.gameContent}>
-            <h1>
-              WELCOME TO THE <span>GAME!</span>
-            </h1>
-            <div className={styles.buttonsWrapper}>
-              <Button shadow clicked={() => setIsJoinOpen(true)}>
-                Join Room
-              </Button>
-              <Button shadow type="white" clicked={() => setIsCreateOpen(true)}>
-                Create Room
-              </Button>
+        <section className={styles.gameBody}>
+          <Slide bottom>
+            <div className={styles.gameContent}>
+              <h1>{translate('welcome_game')}</h1>
+              <div className={styles.buttonsWrapper}>
+                <Button shadow clicked={() => setIsJoinOpen(true)}>
+                  {translate('join_room')}
+                </Button>
+                <Button
+                  shadow
+                  type="white"
+                  clicked={() => setIsCreateOpen(true)}
+                >
+                  {translate('create_room')}
+                </Button>
+              </div>
             </div>
-          </div>
-        </Slide>
-      </section>
+          </Slide>
+        </section>
 
-      {/* Create room popup */}
-      <Popup
-        open={isCreateOpen}
-        onClose={() => setIsCreateOpen(false)}
-        title="Create Room"
-      >
-        <RoomForm isCreate />
-      </Popup>
+        {/* Create room popup */}
+        <Popup
+          open={isCreateOpen}
+          onClose={() => setIsCreateOpen(false)}
+          title={translate('create_room')}
+        >
+          <RoomForm translate={translate} isCreate />
+        </Popup>
 
-      {/* Join room popup */}
-      <Popup
-        open={isJoinOpen}
-        onClose={() => setIsJoinOpen(false)}
-        title="Join Room"
-      >
-        <RoomForm />
-      </Popup>
-    </div>
+        {/* Join room popup */}
+        <Popup
+          open={isJoinOpen}
+          onClose={() => setIsJoinOpen(false)}
+          title={translate('join_room')}
+        >
+          <RoomForm translate={translate} />
+        </Popup>
+      </div>
+    </DefaultLayout>
   );
 };
 

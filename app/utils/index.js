@@ -32,7 +32,7 @@ class Utils {
 
     if (rules.required) {
       isValid = value.trim() !== '' && isValid;
-      error = 'This field is required';
+      error = 'field_required';
       // No need to check other rules if empty
       if (!isValid) return { isValid, error };
     }
@@ -40,18 +40,18 @@ class Utils {
     if (rules.email) {
       const pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
       isValid = pattern.test(value) && isValid;
-      error = 'Please enter a valid email';
+      error = 'email_invalid';
     }
 
     if (rules.id) {
       const pattern = /^[0-9]+$/;
       isValid = pattern.test(value) && isValid;
-      error = 'Please enter a valid ID';
+      error = 'id_invalid';
     }
 
     if (rules.min) {
       isValid = value.trim().length > rules.min && isValid;
-      error = `Password length must be greater than ${rules.min}`;
+      error = 'password_invalid';
     }
 
     return { isValid, error };

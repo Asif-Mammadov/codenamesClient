@@ -63,6 +63,7 @@
     @extend .lh-40;
     @extend .fw-800;
     text-shadow: $text-shadow;
+    text-transform: uppercase;
 
     span {
       color: $color-secondary;

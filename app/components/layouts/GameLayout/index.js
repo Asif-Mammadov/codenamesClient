@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Button from '../../elements/Button';
 import styles from './GameLayout.module.scss';
-import Icon from '../../elements/Icon';
 import Message from '../../elements/Message';
 
-const GameLayout = (props) => {
+const GameLayout = ({ children, translate }) => {
   const [isScrollOn, setIsScrollOn] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
@@ -58,13 +57,15 @@ const GameLayout = (props) => {
             style={{ marginRight: 16 }}
             clicked={onShareRoom}
           >
-            <span className={styles.btnText}>Share Room</span>
+            <span className={styles.btnText}>{translate('share_room')}</span>
           </Button>
 
           <Link href="/game">
             <a>
               <Button icon="out" type="room-white" shadow small>
-                <span className={styles.btnText}>Leave Room</span>
+                <span className={styles.btnText}>
+                  {translate('leave_room')}
+                </span>
               </Button>
             </a>
           </Link>
@@ -72,13 +73,10 @@ const GameLayout = (props) => {
       </header>
 
       <main className={styles.game}>
-        <Message
-          show={isCopied}
-          msg="Room link has been copied to the clipboard!"
-        />
+        <Message show={isCopied} msg={translate('room_copied')} />
 
         <div className={styles.gameBg}></div>
-        <section className={styles.gameContent}>{props.children}</section>
+        <section className={styles.gameContent}>{children}</section>
       </main>
     </>
   );

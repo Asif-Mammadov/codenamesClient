@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Button from '../../elements/Button';
 import FormGroup from '../../elements/FormGroup';
@@ -6,14 +6,14 @@ import utils from '../../../utils';
 import AuthLayout from '../../layouts/AuthLayout';
 import { signIn } from '../../../store/actions';
 
-const Login = ({ signIn }) => {
+const Login = ({ translate, signIn }) => {
   // Initialize the login form
   const [loginForm, setLoginForm] = useState({
     controls: {
       email: {
         name: 'email',
         type: 'email',
-        placeholder: 'Email',
+        placeholder: translate('email'),
         icon: 'envelope',
         validation: {
           required: true,
@@ -27,7 +27,7 @@ const Login = ({ signIn }) => {
       password: {
         name: 'password',
         type: 'password',
-        placeholder: 'Password',
+        placeholder: translate('password'),
         icon: 'lock',
         validation: {
           required: true,
@@ -78,7 +78,12 @@ const Login = ({ signIn }) => {
   };
 
   return (
-    <AuthLayout isLogin submitted={submitHandler} error={loginForm.error}>
+    <AuthLayout
+      translate={translate}
+      isLogin
+      submitted={submitHandler}
+      error={loginForm.error}
+    >
       {formElements.map((el) => (
         <FormGroup
           key={el.id}
@@ -88,12 +93,13 @@ const Login = ({ signIn }) => {
           placeholder={el.config.placeholder}
           icon={el.config.icon}
           error={el.config.touched && !el.config.valid ? el.config.error : ''}
+          translate={translate}
           changed={(e) => onValueChange(el.id, e.target.value)}
           style={{ width: '100%', marginBottom: 24 }}
         />
       ))}
 
-      <Button disabled={!loginForm.valid}>Login</Button>
+      <Button disabled={!loginForm.valid}>{translate('login')}</Button>
     </AuthLayout>
   );
 };

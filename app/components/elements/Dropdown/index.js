@@ -16,23 +16,23 @@ const Dropdown = ({
   upward,
   light,
   lang,
-  onChange
+  onChange,
+  translate
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState(items[0]);
   const [openUpward, setOpenUpward] = useState(null);
   const { locale, asPath, push } = useRouter();
+
+  const [activeItem, setActiveItem] = useState(
+    lang ? items.find((item) => item.icon === locale) : items[0]
+  );
 
   const dropdownMenu = useRef(null);
 
   useEffect(() => {
     // If menu is off screen, open it upward
     setOpenUpward(upward || !utils.isInViewport(dropdownMenu));
-
-    if (lang) {
-      setActiveItem(items.find((item) => item.icon === locale));
-    }
-  }, [dropdownMenu, upward, lang]);
+  }, [dropdownMenu, upward]);
 
   const onItemSelected = (item) => {
     setIsOpen(false);
@@ -108,7 +108,7 @@ const Dropdown = ({
                       ].join(' ')}
                       onClick={() => setIsOpen(false)}
                     >
-                      <DropdownItem>{item.name}</DropdownItem>
+                      <DropdownItem>{translate(item.name)}</DropdownItem>
                     </a>
                   </Link>
                 );

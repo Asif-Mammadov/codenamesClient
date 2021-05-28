@@ -4,14 +4,14 @@ import Button from '../../elements/Button';
 import FormGroup from '../../elements/FormGroup';
 import AuthLayout from '../../layouts/AuthLayout';
 
-const Register = () => {
+const Register = ({ translate }) => {
   // Initialize the register form
   const [registerForm, setRegisterForm] = useState({
     controls: {
       fullName: {
         name: 'fullName',
         type: 'text',
-        placeholder: 'Full Name',
+        placeholder: translate('full_name'),
         icon: 'user',
         validation: {
           required: true
@@ -24,7 +24,7 @@ const Register = () => {
       email: {
         name: 'email',
         type: 'email',
-        placeholder: 'Email',
+        placeholder: translate('email'),
         icon: 'envelope',
         validation: {
           required: true,
@@ -38,7 +38,7 @@ const Register = () => {
       password: {
         name: 'password',
         type: 'password',
-        placeholder: 'Password',
+        placeholder: translate('password'),
         icon: 'lock',
         validation: {
           required: true,
@@ -88,7 +88,11 @@ const Register = () => {
   };
 
   return (
-    <AuthLayout submitted={submitHandler} error={registerForm.error}>
+    <AuthLayout
+      submitted={submitHandler}
+      error={registerForm.error}
+      translate={translate}
+    >
       {formElements.map((el) => (
         <FormGroup
           key={el.id}
@@ -98,12 +102,13 @@ const Register = () => {
           placeholder={el.config.placeholder}
           icon={el.config.icon}
           error={el.config.touched && !el.config.valid ? el.config.error : ''}
+          translate={translate}
           changed={(e) => onValueChange(el.id, e.target.value)}
           style={{ width: '100%', marginBottom: 24 }}
         />
       ))}
 
-      <Button disabled={!registerForm.valid}>Register</Button>
+      <Button disabled={!registerForm.valid}>{translate('register')}</Button>
     </AuthLayout>
   );
 };

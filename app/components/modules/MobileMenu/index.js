@@ -7,7 +7,7 @@ import Dropdown from '../../elements/Dropdown';
 import NavLink from '../../elements/NavLink';
 import styles from './MobileMenu.module.scss';
 
-const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
+const MobileMenu = ({ show, isActive, onClose, isAccount, translate }) => {
   return show ? (
     <section className={[styles.menu, isActive ? styles.active : ''].join(' ')}>
       <div>
@@ -17,14 +17,19 @@ const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
             clicked={() => onClose()}
             href={`${!isAccount ? '/#' : ''}${link.href}`}
           >
-            {link.name}
+            {translate(link.name)}
           </NavLink>
         ))}
       </div>
 
       <div className={styles.menuOptions}>
         <div className={styles.langDropdown}>
-          <Dropdown items={LANGS} onChange={onClose} lang />
+          <Dropdown
+            items={LANGS}
+            onChange={onClose}
+            translate={translate}
+            lang
+          />
         </div>
 
         {isAccount ? (
@@ -32,14 +37,14 @@ const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
             <Link href="/game">
               <a style={{ marginBottom: 16 }}>
                 <Button icon="play-cards" type="white" small>
-                  Play
+                  {translate('play')}
                 </Button>
               </a>
             </Link>
             <Link href="/login">
               <a>
                 <Button icon="out" small>
-                  Sign Out
+                  {translate('sign_out')}
                 </Button>
               </a>
             </Link>
@@ -49,13 +54,13 @@ const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
             <Link href="/login">
               <a style={{ marginRight: 24 }}>
                 <Button type="white" style={{ width: 140 }}>
-                  Login
+                  {translate('login')}
                 </Button>
               </a>
             </Link>
             <Link href="/register">
               <a>
-                <Button style={{ width: 140 }}>Register</Button>
+                <Button style={{ width: 140 }}>{translate('register')}</Button>
               </a>
             </Link>
           </div>

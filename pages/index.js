@@ -1,22 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import DefaultLayout from '../app/components/layouts/DefaultLayout';
 import Home from '../app/components/templates/Home';
 
 const HomePage = () => {
   const { t } = useTranslation();
 
-  return (
-    <DefaultLayout>
-      <Home translate={t} />
-    </DefaultLayout>
-  );
+  return <Home translate={t} />;
 };
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common', 'footer']))
+    ...(await serverSideTranslations(locale, ['common']))
   }
 });
 

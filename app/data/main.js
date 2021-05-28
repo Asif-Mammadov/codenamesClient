@@ -6,9 +6,9 @@ export const HOME_LINKS = [
 
 export const LANGS = [
   { name: 'English', icon: 'en' },
-  { name: 'Azerbaijani', icon: 'az' },
-  { name: 'French', icon: 'fr' },
-  { name: 'Arabic', icon: 'ar' }
+  { name: 'Azərbaycanca', icon: 'az' },
+  { name: 'Français', icon: 'fr' },
+  { name: 'عربى', icon: 'ar' }
 ];
 
 export const TEAM_MEMBERS = [

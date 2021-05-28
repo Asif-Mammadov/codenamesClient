@@ -12,6 +12,7 @@ const FormGroup = ({
   error,
   icon,
   isChat,
+  translate,
   style
 }) => {
   const defaults = {
@@ -41,7 +42,7 @@ const FormGroup = ({
       {error ? (
         <small>
           <Icon name="alert" style={{ marginRight: 8 }} />
-          <span>{error}</span>
+          <span>{translate(error)}</span>
         </small>
       ) : null}
     </div>

@@ -3,17 +3,16 @@ import React from 'react';
 import Fade from 'react-reveal/Fade';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import FormError from '../../elements/FormError';
-import Icon from '../../elements/Icon';
 import Header from '../../modules/Header';
 import styles from './AuthLayout.module.scss';
 
-const AuthLayout = ({ children, isLogin, submitted, error }) => {
+const AuthLayout = ({ children, translate, isLogin, submitted, error }) => {
   // Get window width
   const { width } = useWindowDimensions();
 
   return (
     <>
-      <Header logoDark={width <= 992} togglerDark />
+      <Header logoDark={width <= 992} togglerDark translate={translate} />
 
       <main className={styles.authContainer}>
         {/* Left part in desktop */}
@@ -31,19 +30,17 @@ const AuthLayout = ({ children, isLogin, submitted, error }) => {
               enjoy <span>codenames</span>
             </h2>
             <form onSubmit={submitted}>
-              <FormError error={error} />
+              <FormError error={translate(error)} />
 
               {children}
 
               {/* Bottom link */}
               <div className={styles.bottomLink}>
                 <span>
-                  {isLogin
-                    ? "Don't have an account? "
-                    : 'Already have an account? '}
+                  {translate(isLogin ? 'no_account' : 'have_account')}
                 </span>
                 <Link href={isLogin ? '/register' : '/login'}>
-                  <a>{isLogin ? 'Sign Up' : 'Sign In'}</a>
+                  <a> {translate(isLogin ? 'sign_up' : 'sign_in')}</a>
                 </Link>
               </div>
             </form>

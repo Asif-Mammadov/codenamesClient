@@ -8,7 +8,7 @@ import Drawer from '../Drawer';
 import MobileMenu from '../MobileMenu';
 import styles from './Header.module.scss';
 
-const Header = ({ logoDark, togglerDark }) => {
+const Header = ({ logoDark, togglerDark, translate }) => {
   const [isToggleOn, setIsToggleOn] = useState(false);
   const [isScrollOn, setIsScrollOn] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
@@ -70,8 +70,18 @@ const Header = ({ logoDark, togglerDark }) => {
         />
       </header>
 
-      <Drawer show={width > 992} onClose={close} isActive={isToggleOn} />
-      <MobileMenu show={width <= 992} onClose={close} isActive={isToggleOn} />
+      <Drawer
+        show={width > 992}
+        onClose={close}
+        isActive={isToggleOn}
+        translate={translate}
+      />
+      <MobileMenu
+        show={width <= 992}
+        onClose={close}
+        isActive={isToggleOn}
+        translate={translate}
+      />
 
       {isToggleOn ? <Backdrop onClose={close} /> : null}
     </>

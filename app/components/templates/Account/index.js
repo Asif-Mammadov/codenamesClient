@@ -4,10 +4,10 @@ import utils from '../../../utils';
 import Button from '../../elements/Button';
 import FormError from '../../elements/FormError';
 import FormGroup from '../../elements/FormGroup';
-import Icon from '../../elements/Icon';
+import AccountLayout from '../../layouts/AccountLayout';
 import styles from './Account.module.scss';
 
-const Account = () => {
+const Account = ({ translate }) => {
   /* Make sure ids that get generated on the server match that of the browser */
   resetIdCounter();
 
@@ -17,7 +17,7 @@ const Account = () => {
       fullName: {
         name: 'fullName',
         type: 'text',
-        label: 'Full Name',
+        label: translate('full_name'),
         placeholder: 'Eyvaz Ahmadzada',
         icon: 'user',
         validation: {
@@ -31,7 +31,7 @@ const Account = () => {
       email: {
         name: 'email',
         type: 'email',
-        label: 'Email',
+        label: translate('email'),
         placeholder: 'eyvaz.ahmedzade.12@gmail.com',
         icon: 'envelope',
         validation: {
@@ -54,8 +54,8 @@ const Account = () => {
       newPassword: {
         name: 'newPassword',
         type: 'password',
-        label: 'New Password',
-        placeholder: 'Password',
+        label: translate('new_password'),
+        placeholder: translate('password'),
         icon: 'lock',
         validation: {
           required: true,
@@ -69,8 +69,8 @@ const Account = () => {
       confirmPassword: {
         name: 'confirmPassword',
         type: 'password',
-        label: 'Confirm Password',
-        placeholder: 'Password',
+        label: translate('confirm_password'),
+        placeholder: translate('password'),
         icon: 'lock',
         validation: {
           required: true,
@@ -159,7 +159,7 @@ const Account = () => {
         ) {
           console.log(currentForm);
         } else {
-          error = "Passwords didn't match!";
+          error = translate('pass_no_match');
         }
       }
 
@@ -172,7 +172,9 @@ const Account = () => {
   // Render current form
   const renderForm = () => (
     <form onSubmit={submitHandler}>
-      {currentForm.error ? <FormError error={currentForm.error} /> : null}
+      {currentForm.error ? (
+        <FormError error={translate(currentForm.error)} />
+      ) : null}
 
       {formElements.map((el) => (
         <FormGroup
@@ -184,35 +186,38 @@ const Account = () => {
           label={el.config.label}
           icon={el.config.icon}
           error={el.config.touched && !el.config.valid ? el.config.error : ''}
+          translate={translate}
           style={{ width: '100%', marginBottom: 24 }}
           changed={(e) => onValueChange(el.id, e.target.value)}
         />
       ))}
 
       <Button small disabled={!currentForm.valid} style={{ margin: '0 auto' }}>
-        Save
+        {translate('save')}
       </Button>
     </form>
   );
 
   return (
-    <Tabs
-      className={styles.tabs}
-      onSelect={(index) => onTabChange(index)}
-      tabIndex={currentIndex}
-    >
-      <TabList className={styles.tabList}>
-        <Tab className={styles.tab} selectedClassName={styles.tabSelected}>
-          Account Details
-        </Tab>
-        <Tab className={styles.tab} selectedClassName={styles.tabSelected}>
-          Reset Password
-        </Tab>
-      </TabList>
+    <AccountLayout translate={translate}>
+      <Tabs
+        className={styles.tabs}
+        onSelect={(index) => onTabChange(index)}
+        tabIndex={currentIndex}
+      >
+        <TabList className={styles.tabList}>
+          <Tab className={styles.tab} selectedClassName={styles.tabSelected}>
+            {translate('account_details')}
+          </Tab>
+          <Tab className={styles.tab} selectedClassName={styles.tabSelected}>
+            {translate('reset_password')}
+          </Tab>
+        </TabList>
 
-      <TabPanel className={styles.tabPanel}>{renderForm()}</TabPanel>
-      <TabPanel className={styles.tabPanel}>{renderForm()}</TabPanel>
-    </Tabs>
+        <TabPanel className={styles.tabPanel}>{renderForm()}</TabPanel>
+        <TabPanel className={styles.tabPanel}>{renderForm()}</TabPanel>
+      </Tabs>
+    </AccountLayout>
   );
 };
 

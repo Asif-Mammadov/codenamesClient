@@ -8,13 +8,13 @@ import styles from './Playboard.module.scss';
 import Chat from '../../elements/Chat';
 import utils from '../../../utils';
 
-const ClueForm = ({ isMobile }) => {
+const ClueForm = ({ isMobile, translate }) => {
   const [clueForm, setClueForm] = useState({
     controls: {
       clue: {
         name: 'clue',
         type: 'text',
-        placeholder: 'Your clue',
+        placeholder: translate('your_clue'),
         value: '',
         validation: {
           required: true
@@ -77,6 +77,7 @@ const ClueForm = ({ isMobile }) => {
             name={el.config.name}
             type={el.config.type}
             placeholder={el.config.placeholder}
+            translate={translate}
             style={el.config?.style}
             changed={(e) => onValueChange(el.id, e.target.value)}
           />
@@ -89,7 +90,7 @@ const ClueForm = ({ isMobile }) => {
         disabled={!clueForm.valid}
         style={{ marginTop: 8, width: '100%' }}
       >
-        Give clue
+        {translate('give_clue')}
       </Button>
     </form>
   );
@@ -105,19 +106,19 @@ const GameArea = ({ isMobile }) => (
   </div>
 );
 
-const Playboard = () => {
+const Playboard = ({ translate }) => {
   return (
     <div className={styles.boardContainer}>
       {/* Game section */}
       <div className={styles.boardRow}>
         <section className={styles.sectionWrapper}>
-          <TeamCard isRed gameMode />
+          <TeamCard translate={translate} isRed gameMode />
         </section>
 
         <GameArea />
 
         <section className={styles.sectionWrapper}>
-          <TeamCard gameMode />
+          <TeamCard translate={translate} gameMode />
         </section>
       </div>
 
@@ -125,18 +126,18 @@ const Playboard = () => {
       <GameArea isMobile />
 
       {/* Clue form for mobile */}
-      <ClueForm isMobile />
+      <ClueForm translate={translate} isMobile />
 
       {/* Log, chat, clue sections */}
       <div className={styles.boardRow}>
         <section className={styles.sectionWrapper}>
-          <Gamelog />
+          <Gamelog translate={translate} />
         </section>
 
-        <ClueForm />
+        <ClueForm translate={translate} />
 
         <section className={styles.sectionWrapper}>
-          <Chat />
+          <Chat translate={translate} />
         </section>
       </div>
     </div>

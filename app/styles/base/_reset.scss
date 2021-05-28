@@ -21,6 +21,32 @@ body {
   font-style: normal;
   position: relative;
   color: $color-primary;
+
+  // For arabic
+  &.rtl {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    input,
+    textarea,
+    small {
+      direction: rtl;
+    }
+
+    a,
+    small {
+      // Move all links and text to right
+      margin-right: auto;
+    }
+
+    label {
+      text-align: right;
+    }
+  }
 }
 
 h1,
