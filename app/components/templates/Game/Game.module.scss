@@ -1,0 +1,76 @@
+@import 'app.scss';
+@import 'vendor/bootstrap-grid';
+
+.game {
+  @extend .container; //Use paddings and grid system
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 100vh;
+
+  // Avoid content from overlapping with header
+  padding-top: calc(#{$header-height} + 48px);
+  padding-bottom: 48px;
+
+  &Bg {
+    @extend .bg-img;
+    background-image: url('../../../../public/img/game-bg.png');
+  }
+
+  &Body {
+    @extend .row;
+    width: 100%;
+    justify-content: center;
+  }
+
+  // Page content style
+  &Content {
+    @extend .col-xl-6;
+    @extend .col-lg-8;
+    text-align: center;
+
+    > h1 {
+      @extend .headline;
+      @extend .mb-5;
+
+      span {
+        color: $color-secondary;
+      }
+    }
+
+    .buttonsWrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      button:first-child {
+        @extend .mr-lg-4;
+        @extend .mb-lg-0;
+        @extend .mb-3;
+      }
+    }
+  }
+}
+
+.modalLangGroup {
+  margin-top: 24px;
+  margin-bottom: 48px;
+
+  label {
+    @extend .group-label;
+  }
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .gameBg {
+    background-image: url('../../../../public/img/game-bg-lg.png');
+  }
+
+  .gameContent {
+    .buttonsWrapper {
+      flex-direction: row;
+    }
+  }
+}

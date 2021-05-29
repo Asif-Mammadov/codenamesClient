@@ -1,4 +1,4 @@
-@import 'app.scss';
+@import 'abstracts/variables';
 
 .togglerBox {
   width: 50px;
@@ -12,9 +12,10 @@
 .togglerInner {
   display: block;
   width: 40px;
-  top: 50%;
-  transform: translateY(-50%);
+  // top: 50%;
+  // transform: translateY(-50%);
 }
+
 .togglerInner,
 .togglerInner::before,
 .togglerInner::after {
@@ -27,16 +28,19 @@
   transition-duration: 0.15s;
   transition-timing-function: ease;
 }
+
 .togglerInner::before,
 .togglerInner::after {
   content: '';
   display: block;
   background-color: inherit;
 }
+
 .togglerInner::before {
   width: 50px;
   top: -11px;
 }
+
 .togglerInner::after {
   width: 30px;
   bottom: -11px;
@@ -46,13 +50,16 @@
   transition-duration: 0.075s;
   transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
+
 .togglerSqueeze .togglerInner::before {
   transition: top 0.075s 0.12s ease, opacity 0.075s ease;
 }
+
 .togglerSqueeze .togglerInner::after {
   transition: bottom 0.075s 0.12s ease,
     transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
+
 .togglerSqueeze.active .togglerInner {
   background-color: $color-primary;
   width: 40px;
@@ -60,11 +67,17 @@
   transition-delay: 0.12s;
   transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
 }
+
+.togglerSqueeze.dark .togglerInner {
+  background-color: $color-primary;
+}
+
 .togglerSqueeze.active .togglerInner::before {
   top: 0;
   opacity: 0;
   transition: top 0.075s ease, opacity 0.075s 0.12s ease;
 }
+
 .togglerSqueeze.active .togglerInner::after {
   width: 40px;
   bottom: 0;
@@ -88,15 +101,19 @@
   overflow: visible;
   cursor: pointer;
 }
+
 .toggler > * {
   pointer-events: none;
 }
+
 .toggler:hover {
   opacity: 0.8;
 }
+
 .toggler.active:hover {
   opacity: 0.8;
 }
+
 .toggler.active.toggler-hover-no:hover,
 .toggler-hover-no:hover {
   opacity: 1;

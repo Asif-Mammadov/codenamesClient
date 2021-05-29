@@ -1,10 +1,9 @@
-import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
+import React from 'react';
 import styles from './NavLink.module.scss';
 
-const NavLink = ({ children, href }) => {
+const NavLink = ({ children, href, clicked }) => {
   const router = useRouter();
 
   const classNames = [styles.navLink];
@@ -16,7 +15,9 @@ const NavLink = ({ children, href }) => {
 
   return (
     <Link href={href}>
-      <a className={classNames.join(' ')}>{children}</a>
+      <a onClick={clicked} className={classNames.join(' ')}>
+        {children}
+      </a>
     </Link>
   );
 };

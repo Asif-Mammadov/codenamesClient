@@ -1,0 +1,130 @@
+@import 'app.scss';
+@import 'vendor/bootstrap-grid';
+
+.homeContainer {
+  color: $color-white;
+}
+
+// Generate page classes dynamically
+@for $i from 1 through 3 {
+  .page#{$i} {
+    @extend .container; //Use paddings and grid system
+    position: relative;
+
+    &Bg {
+      @extend .bg-img;
+      background-image: url('../../../../public/img/home-bg-#{$i}.png');
+    }
+
+    &Body {
+      @extend .row;
+      @extend .py-lg-5;
+      @extend .py-4;
+      overflow: hidden;
+      min-height: 100vh;
+    }
+  }
+}
+
+// Common content style
+.pageContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  > h1,
+  > h2 {
+    @extend .headline;
+    @extend .mb-lg-4;
+    @extend .mb-3;
+  }
+
+  > p {
+    @extend .text;
+    @extend .mb-lg-4;
+    @extend .mb-3;
+  }
+}
+
+// Special stylings for each page
+.page1Content {
+  @extend .pageContent;
+  @extend .col-lg-6; // Grid config
+
+  // Avoid content from overlapping with header
+  padding-top: $header-height;
+}
+
+.page2Content {
+  @extend .pageContent;
+  @extend .col-lg-6; // Grid config
+  @extend .offset-lg-6;
+}
+
+.page3Body {
+  margin-right: -20px;
+  margin-left: -20px;
+  min-height: auto;
+
+  .page3Content {
+    @extend .pageContent;
+    justify-content: flex-start;
+    text-align: center;
+    width: 100%;
+    // Avoid content from overlapping with footer
+    padding-bottom: $footer-height;
+
+    > h2 {
+      @extend .mb-lg-5;
+    }
+
+    .cardsContainer {
+      @extend .row;
+      @extend .mt-5;
+
+      // Mobile slider
+      flex-wrap: nowrap;
+      overflow: auto;
+
+      .cardWrapper {
+        @extend .col-xl-2;
+        @extend .col-lg-4;
+        @extend .col;
+        @extend .mb-lg-4;
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+    }
+  }
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  @for $i from 1 through 3 {
+    .page#{$i} {
+      &Bg {
+        background-image: url('../../../../public/img/home-bg-#{$i}-lg.png');
+      }
+    }
+  }
+
+  .page1Content {
+    padding-top: $header-height-lg;
+  }
+
+  .page3Body {
+    margin-left: 0;
+    margin-right: 0;
+
+    .page3Content {
+      .cardsContainer {
+        flex-wrap: wrap;
+
+        .cardWrapper {
+          margin-right: 0;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+    }
+  }
+}

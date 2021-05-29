@@ -1,0 +1,50 @@
+@import 'app.scss';
+@import 'vendor/bootstrap-grid';
+
+.scorer {
+  background-color: $color-secondary;
+  color: $color-white;
+  border-radius: $border-radius;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: $shadow;
+  @extend .px-3;
+  @extend .py-2;
+
+  &.me {
+    background-color: $color-white;
+    color: $color-secondary;
+
+    svg * {
+      fill: $color-secondary;
+    }
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 16px;
+  }
+
+  > * {
+    @extend .fs-14;
+    @extend .lh-24;
+    @extend .fw-800;
+  }
+
+  .imgWrapper {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 40px;
+      height: 40px;
+      margin-right: 8px;
+      border-radius: 50%;
+    }
+  }
+
+  .scoreWrapper {
+    display: flex;
+    align-items: center;
+  }
+}

@@ -1,0 +1,28 @@
+@import 'app.scss';
+
+.popup {
+  h2 {
+    @extend .fs-24;
+    @extend .fs-lg-32;
+    @extend .lh-32;
+    @extend .lh-lg-40;
+    @extend .fw-700;
+    text-transform: uppercase;
+  }
+
+  &Content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 48px;
+  }
+}
+
+@media (min-width: map-get($breakpoints, lg)) {
+  .popupContent {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

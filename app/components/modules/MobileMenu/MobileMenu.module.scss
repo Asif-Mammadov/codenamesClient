@@ -1,16 +1,19 @@
-@import 'app.scss';
+@import 'abstracts/variables';
 
 .menu {
   background-color: $color-grayish;
   position: fixed;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
+  top: $header-height;
+  padding-top: 120px;
+  padding-bottom: 48px;
   right: -100%;
   width: 100%;
-  height: calc(100% - 90px); // 90px for header
+  height: calc(100% - #{$header-height});
   overflow-y: auto;
   z-index: 10;
   transition: $transition;
@@ -20,18 +23,22 @@
   }
 
   &Options {
-    position: absolute;
-    bottom: 0;
     width: 100%;
-    padding: 48px 24px;
+    margin-top: 48px;
 
     .langDropdown {
       margin-bottom: 48px;
     }
 
-    .buttons {
+    .homeButtons {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
+    }
+
+    .accountButtons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 }

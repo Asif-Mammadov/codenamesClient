@@ -1,28 +1,5 @@
 @import 'app.scss';
 
-.header {
-  @extend .container; // horizontal paddings
-  background-color: $color-primary;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 90px;
-  transition: $transition;
-
-  .logo {
-    width: 140px;
-    height: 50px;
-  }
-
-  &.mobileActive {
-    background-color: $color-grayish;
-    position: relative;
-    z-index: 10;
-  }
-}
-
-@media (min-width: map-get($breakpoints, lg)) {
-  .header {
-    height: 106px;
-  }
+.mainHeader {
+  @extend .header;
 }

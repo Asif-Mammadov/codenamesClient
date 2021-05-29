@@ -1,8 +1,11 @@
 import React from 'react';
-import Default from '../app/components/layouts/Default';
+import DefaultLayout from '../app/components/layouts/DefaultLayout';
+import Home from '../app/components/templates/Home';
 
-const Home = () => {
-  return <Default></Default>;
-};
+const HomePage = () => (
+  <DefaultLayout>
+    <Home />
+  </DefaultLayout>
+);
 
-export default Home;
+export default HomePage;

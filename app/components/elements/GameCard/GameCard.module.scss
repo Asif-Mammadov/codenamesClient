@@ -1,0 +1,37 @@
+@import 'app.scss';
+@import 'vendor/bootstrap-grid';
+
+.gameCard {
+  @extend .p-lg-2;
+  @extend .p-1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid $color-secondary;
+  border-radius: $border-radius;
+  background-color: #f2e1c5;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  transition: $transition;
+  max-height: 125px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  h6 {
+    @extend .fs-12;
+    @extend .lh-16;
+    @extend .mt-2;
+    @extend .p-lg-2;
+    @extend .p-1;
+    width: 100%;
+    background-color: $color-white;
+    color: $color-secondary;
+    border-radius: $border-radius;
+    text-transform: uppercase;
+  }
+}

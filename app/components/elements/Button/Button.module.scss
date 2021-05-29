@@ -1,0 +1,81 @@
+@import 'app.scss';
+@import 'vendor/bootstrap-grid';
+
+.button {
+  background-color: $color-secondary;
+  color: $color-white;
+  border-radius: $border-radius;
+  transition: $transition;
+  text-transform: uppercase;
+  width: max-content;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $color-secondary;
+  @extend .hover-dark;
+  @extend .ff-exo2;
+  @extend .fs-20;
+  @extend .lh-24;
+  @extend .fw-600;
+  @extend .px-lg-5;
+  @extend .px-4;
+  @extend .py-3;
+
+  svg * {
+    fill: $color-white;
+  }
+
+  &.big {
+    @extend .py-4;
+  }
+
+  &.small {
+    @extend .py-2;
+    @extend .fs-18;
+  }
+
+  &.extraSmall {
+    @extend .py-1;
+    @extend .px-3;
+    @extend .fs-14;
+    @extend .lh-16;
+  }
+
+  &.shadow {
+    box-shadow: 0px 3px 6px #1b1f2a;
+  }
+
+  //Button types
+  &.white {
+    background-color: $color-white;
+    color: $color-secondary;
+
+    svg * {
+      fill: $color-secondary;
+    }
+  }
+
+  &.room,
+  &.room-white {
+    @extend .px-lg-4;
+    @extend .p-2;
+    @extend .fw-700;
+    text-transform: capitalize;
+
+    svg {
+      @extend .mr-lg-2;
+      @extend .mr-0;
+    }
+  }
+
+  &.room-white {
+    background-color: $color-white;
+    color: $color-primary;
+    border: 1px solid $color-primary;
+
+    svg * {
+      fill: $color-primary;
+    }
+  }
+}
