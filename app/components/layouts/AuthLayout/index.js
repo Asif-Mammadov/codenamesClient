@@ -40,7 +40,7 @@ const AuthLayout = ({ children, translate, isLogin, submitted, error }) => {
                   {translate(isLogin ? 'no_account' : 'have_account')}
                 </span>
                 <Link href={isLogin ? '/register' : '/login'}>
-                  <a> {translate(isLogin ? 'sign_up' : 'sign_in')}</a>
+                  <a> {translate(isLogin ? 'register' : 'login')}</a>
                 </Link>
               </div>
             </form>

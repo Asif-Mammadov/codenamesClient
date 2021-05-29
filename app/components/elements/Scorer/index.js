@@ -2,11 +2,11 @@ import React from 'react';
 import Icon from '../Icon';
 import styles from './Scorer.module.scss';
 
-const Scorer = ({ img, name, place, score, me }) => (
+const Scorer = ({ img, name, place, score, me, translate }) => (
   <section className={[styles.scorer, me ? styles.me : ''].join(' ')}>
     <div className={styles.imgWrapper}>
       <img src={`/img/${img}.png`} />
-      <span>{me ? 'You' : name}</span>
+      <span>{me ? translate('you') : name}</span>
     </div>
 
     <div className={styles.scoreWrapper}>

@@ -60,7 +60,10 @@ const Home = ({ translate }) => {
             <Slide bottom>
               <div className={styles.page3Content}>
                 <h2>{translate('about_us')}</h2>
-                <div className={styles.cardsContainer}>
+                <div
+                  className={styles.cardsContainer}
+                  data-cy={'team-member-cards'}
+                >
                   {TEAM_MEMBERS.map((member) => (
                     <div className={styles.cardWrapper} key={member.name}>
                       <TeamMember

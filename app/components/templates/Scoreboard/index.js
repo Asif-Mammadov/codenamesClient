@@ -30,6 +30,7 @@ const Scoreboard = ({ translate }) => {
               img="eyvazahmadzada"
               score="12456"
               place={scorer}
+              translate={translate}
               me={scorer === 6}
             />
           ))}

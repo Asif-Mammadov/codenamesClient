@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { ACCOUNT_LINKS } from '../../../data/links';
-import { HOME_LINKS, LANGS } from '../../../data/main';
+import { HOME_LINKS, ACCOUNT_LINKS } from '../../../data/links';
+import { LANGS } from '../../../data/main';
 import Button from '../../elements/Button';
 import Dropdown from '../../elements/Dropdown';
 import NavLink from '../../elements/NavLink';
@@ -53,14 +53,12 @@ const MobileMenu = ({ show, isActive, onClose, isAccount, translate }) => {
           <div className={styles.homeButtons}>
             <Link href="/login">
               <a style={{ marginRight: 24 }}>
-                <Button type="white" style={{ width: 140 }}>
-                  {translate('login')}
-                </Button>
+                <Button type="white">{translate('login')}</Button>
               </a>
             </Link>
             <Link href="/register">
-              <a>
-                <Button style={{ width: 140 }}>{translate('register')}</Button>
+              <a style={{ marginRight: 0 }}>
+                <Button>{translate('register')}</Button>
               </a>
             </Link>
           </div>

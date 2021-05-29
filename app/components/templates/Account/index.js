@@ -172,9 +172,7 @@ const Account = ({ translate }) => {
   // Render current form
   const renderForm = () => (
     <form onSubmit={submitHandler}>
-      {currentForm.error ? (
-        <FormError error={translate(currentForm.error)} />
-      ) : null}
+      <FormError error={translate(currentForm.error)} />
 
       {formElements.map((el) => (
         <FormGroup

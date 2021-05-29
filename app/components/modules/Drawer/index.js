@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { HOME_LINKS, LANGS } from '../../../data/main';
+import { HOME_LINKS } from '../../../data/links';
+import { LANGS } from '../../../data/main';
 import Button from '../../elements/Button';
 import Dropdown from '../../elements/Dropdown';
 import Icon from '../../elements/Icon';
