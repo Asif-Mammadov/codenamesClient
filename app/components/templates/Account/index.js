@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel, resetIdCounter } from 'react-tabs';
+import withAuth from '../../../hoc/withAuth';
 import utils from '../../../utils';
 import Button from '../../elements/Button';
 import FormError from '../../elements/FormError';
@@ -219,4 +220,4 @@ const Account = ({ translate }) => {
   );
 };
 
-export default Account;
+export default withAuth(Account);

@@ -10,12 +10,32 @@ const RoomPage = () => {
 
   const [isGameStarted, setIsGameStarted] = useState(false);
 
+  // Game info
+  const [player, setPlayer] = useState({
+    name: '',
+    team: '',
+    isSpymaster: false,
+    yourTurn: false,
+    canGuess: false
+  });
+  const [players, setPlayers] = useState();
+
+  // Common config for game pages
+  const gameConfig = {
+    translate: t,
+    updatePlayers: (updatedPlayers) =>
+      setPlayers({ ...updatedPlayers, ...players }),
+    updatePlayer: (updatedPlayer) => setPlayer({ ...updatedPlayer, ...player }),
+    player,
+    players
+  };
+
   return (
     <GameLayout translate={t}>
       {isGameStarted ? (
-        <Playboard translate={t} />
+        <Playboard {...gameConfig} />
       ) : (
-        <Room translate={t} gameStarted={() => setIsGameStarted(true)} />
+        <Room gameStarted={() => setIsGameStarted(true)} {...gameConfig} />
       )}
     </GameLayout>
   );

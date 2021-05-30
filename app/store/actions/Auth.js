@@ -1,13 +1,18 @@
 import {
   AUTHENTICATED,
-  HIDE_AUTH_MESSAGES,
+  GET_DETAILS,
+  GET_DETAILS_SUCCESS,
+  HIDE_AUTH_MESSAGE,
+  RESET_PASSWORD_SUCCESS,
   SHOW_AUTH_LOADING,
-  SHOW_AUTH_MESSAGES,
+  SHOW_AUTH_MESSAGE,
   SIGNIN,
   SIGNOUT,
   SIGNOUT_SUCCESS,
   SIGNUP,
-  SIGNUP_SUCCESS
+  SIGNUP_SUCCESS,
+  UPDATE_DETAILS,
+  UPDATE_DETAILS_SUCCESS
 } from '../constants/Auth';
 
 export const signIn = (user) => {
@@ -17,9 +22,10 @@ export const signIn = (user) => {
   };
 };
 
-export const authenticated = (token) => {
+export const authenticated = (userId, token) => {
   return {
     type: AUTHENTICATED,
+    userId,
     token
   };
 };
@@ -50,16 +56,55 @@ export const signUpSuccess = (token) => {
   };
 };
 
-export const showAuthMessages = (messages) => {
+export const getDetails = () => {
   return {
-    type: SHOW_AUTH_MESSAGES,
-    messages
+    type: GET_DETAILS
   };
 };
 
-export const hideAuthMessages = () => {
+export const getDetailsSuccess = (data) => {
   return {
-    type: HIDE_AUTH_MESSAGES
+    type: GET_DETAILS_SUCCESS,
+    details: data
+  };
+};
+
+export const updateDetails = (data) => {
+  return {
+    type: UPDATE_DETAILS,
+    data
+  };
+};
+
+export const updateDetailsSuccess = () => {
+  return {
+    type: UPDATE_DETAILS_SUCCESS
+  };
+};
+
+export const resetPassword = (data) => {
+  return {
+    type: UPDATE_DETAILS,
+    data
+  };
+};
+
+export const resetPasswordSuccess = () => {
+  return {
+    type: RESET_PASSWORD_SUCCESS
+  };
+};
+
+export const showAuthMessage = (message) => {
+  return {
+    type: SHOW_AUTH_MESSAGE,
+    message
+  };
+};
+
+export const hideAuthMessage = () => {
+  return {
+    type: HIDE_AUTH_MESSAGE
   };
 };
 

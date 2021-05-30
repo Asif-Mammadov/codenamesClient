@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Slide from 'react-reveal/Slide';
 import Button from '../../elements/Button';
 import styles from './Game.module.scss';
@@ -8,6 +8,8 @@ import Popup from '../../elements/Popup';
 import { LANGS } from '../../../data/main';
 import utils from '../../../utils';
 import DefaultLayout from '../../layouts/DefaultLayout';
+import { useRouter } from 'next/router';
+import { SocketContext } from '../../../socket';
 
 const RoomForm = ({ isCreate, translate }) => {
   // Initialize the join form
@@ -44,6 +46,10 @@ const RoomForm = ({ isCreate, translate }) => {
     valid: false,
     error: ''
   });
+  const router = useRouter();
+
+  // Get socket connection
+  const socket = useContext(SocketContext);
 
   // No need for room id in create form
   if (isCreate) {
@@ -75,7 +81,23 @@ const RoomForm = ({ isCreate, translate }) => {
     e.preventDefault();
 
     if (form.valid) {
-      console.log(form.controls);
+      // Tell server to join a room
+      socket.emit('join');
+
+      // Get room id from the server
+      socket.on('room', (room) => {
+        // Emit player nickname
+        socket.emit('sendNickname', form.controls.nickname);
+
+        socket.on('nicknameChecked', (isValid) => {
+          if (!isValid) {
+            setForm({ ...form, error: 'This nickname is already being used' });
+          } else {
+            // Navigate to the room page
+            router.push([`game/${room}`]);
+          }
+        });
+      });
     }
   };
 

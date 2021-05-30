@@ -3,6 +3,7 @@ import Scorer from '../../elements/Scorer';
 import TopScorer from '../../elements/TopScorer';
 import AccountLayout from '../../layouts/AccountLayout';
 import styles from './Scoreboard.module.scss';
+import withAuth from '../../../hoc/withAuth';
 
 const Scoreboard = ({ translate }) => {
   return (
@@ -40,4 +41,4 @@ const Scoreboard = ({ translate }) => {
   );
 };
 
-export default Scoreboard;
+export default withAuth(Scoreboard);

@@ -4,22 +4,55 @@ const authService = {};
 
 authService.login = function (data) {
   return fetch({
-    url: '/admin/account/login',
+    url: '/login',
     method: 'post',
     headers: {
       'public-request': 'true'
     },
-    data: data
+    data
   });
 };
 
-authService.logout = function () {
+authService.register = function (data) {
   return fetch({
-    url: '/admin/account/logout',
-    method: 'put',
+    url: '/register',
+    method: 'post',
+    headers: {
+      'public-request': 'true'
+    },
+    data
+  });
+};
+
+authService.getDetails = function (id) {
+  return fetch({
+    url: `/${id}/details`,
+    method: 'get',
     headers: {
       'public-request': 'true'
     }
+  });
+};
+
+authService.resetPassword = function (id, data) {
+  return fetch({
+    url: `/${id}/password`,
+    method: 'put',
+    headers: {
+      'public-request': 'true'
+    },
+    data
+  });
+};
+
+authService.updateDetails = function (id, data) {
+  return fetch({
+    url: `/${id}/details`,
+    method: 'put',
+    headers: {
+      'public-request': 'true'
+    },
+    data
   });
 };
 

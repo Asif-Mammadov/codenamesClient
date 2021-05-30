@@ -1,140 +1,177 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../elements/Button';
-import FormGroup from '../../elements/FormGroup';
-import GameCard from '../../elements/GameCard';
 import TeamCard from '../../elements/TeamCard';
 import Gamelog from '../../elements/Gamelog';
 import styles from './Playboard.module.scss';
 import Chat from '../../elements/Chat';
-import utils from '../../../utils';
+import GameArea from '../../elements/GameArea';
+import ClueForm from '../../elements/ClueForm';
 
-const ClueForm = ({ isMobile, translate }) => {
-  const [clueForm, setClueForm] = useState({
-    controls: {
-      clue: {
-        name: 'clue',
-        type: 'text',
-        placeholder: translate('your_clue'),
-        value: '',
-        validation: {
-          required: true
-        },
-        style: {
-          width: '100%',
-          marginRight: 8
-        }
-      },
-      count: {
-        name: 'count',
-        type: 'number',
-        placeholder: '0',
-        validation: {
-          required: true
-        },
-        value: ''
-      }
-    },
-    valid: false
+const Playboard = ({
+  translate,
+  player,
+  updatePlayer,
+  players,
+  updatePlayers
+}) => {
+  // Get socket connection
+  const socket = useContext(SocketContext);
+
+  // Store game state
+  const [game, setGame] = useState({
+    blueFirst: false,
+    board: [],
+    labels: [],
+    enterClue: false,
+    clues: []
   });
 
-  // Create an array containing the form elements
-  const formElements = [];
-  for (const key in clueForm.controls) {
-    formElements.push({
-      id: key,
-      config: clueForm.controls[key]
-    });
-  }
-
-  // Handle value change of a control
-  const onValueChange = (itemId, value) => {
-    const { updatedForm, formValid } = utils.valueChangedHandler(
-      clueForm.controls,
-      itemId,
-      value
+  useEffect(() => {
+    // Check if blue starts the game
+    socket.on('gameStarted', (blueStarts) =>
+      setGame({ ...game, blueFirst: blueStarts })
     );
 
-    setClueForm({ controls: updatedForm, valid: formValid });
-  };
+    // Get player info and update player
+    socket.on('updateRole', (playerInfo) => updatePlayer(playerInfo));
 
-  // Handle form submit
-  const submitHandler = (e) => {
-    e.preventDefault();
+    // Get all players info
+    socket.on('updatePlayers', (playersInfo) => updatePlayers(playersInfo));
 
-    if (clueForm.valid) {
-      console.log(clueForm);
+    // If not player's turn
+    socket.on('notYourTurn', (team, isSpymaster) => {
+      if (player.team === team && player.isSpymaster === isSpymaster) {
+        updatePlayer({ ...player, yourTurn: false });
+      }
+    });
+
+    // Get labels for spymaster
+    socket.on('getLabels', (socketID, labels) => {
+      if (socketID == socket.id) {
+        setGame({ ...game, labels: labels });
+      }
+    });
+
+    // Get board for operatives
+    socket.on('getBoard', (boardValues) => {
+      setGame({ ...game, board: boardValues });
+    });
+
+    // Start enter clue mode
+    socket.on('enterClue', (socketID) => {
+      if (socketID === socket.id) {
+        setGame({ ...game, enterClue: true });
+      }
+    });
+
+    // Get clues
+    socket.on('getClues', (clues) => {
+      setGame({ ...game, clues });
+    });
+
+    // Blue spy turn
+    socket.on('turnBlueSpy', (socketID) => {
+      if (socket.id === socketID) {
+        updatePlayer({ ...player, yourTurn: true });
+      }
+    });
+
+    // Red spy turn
+    socket.on('turnRedSpy', (socketID) => {
+      if (socket.id === socketID) {
+        updatePlayer({ ...player, yourTurn: true });
+      }
+    });
+
+    // On choose card
+    socket.on('chooseCard', (team, isSpymaster) => {
+      if (player.team === team && player.isSpymaster === isSpymaster) {
+        updatePlayer({ ...player, yourTurn: true });
+      }
+    });
+  }, [socket]);
+
+  // Select a card
+  const onCardSelected = (id) => {
+    if (player.yourTurn && !player.isSpymaster) {
+      socket.emit('cardChosen', id);
     }
   };
 
-  return (
-    <form
-      className={[styles.clueForm, isMobile ? styles.mobile : ''].join(' ')}
-      onSubmit={submitHandler}
-    >
-      <div>
-        {formElements.map((el) => (
-          <FormGroup
-            name={el.config.name}
-            type={el.config.type}
-            placeholder={el.config.placeholder}
-            translate={translate}
-            style={el.config?.style}
-            changed={(e) => onValueChange(el.id, e.target.value)}
-          />
-        ))}
-      </div>
+  // End turn
+  const onEndTurn = () => {
+    if (player.yourTurn && !player.isSpymaster) {
+      updatePlayer({ ...player, yourTurn: false });
+      socket.emit('endTurn');
+    }
+  };
 
-      <Button
-        shadow
-        small
-        disabled={!clueForm.valid}
-        style={{ marginTop: 8, width: '100%' }}
-      >
-        {translate('give_clue')}
-      </Button>
-    </form>
-  );
-};
+  // Enter clue
+  const onClueEntered = (clue, count) => {
+    socket.emit('clueEntered', clue, count, player.name);
+    updatePlayer({ ...player, yourTurn: false });
+  };
 
-const GameArea = ({ isMobile }) => (
-  <div className={[styles.gameArea, isMobile ? styles.mobile : ''].join(' ')}>
-    {Array.from({ length: 25 }).map((item) => (
-      <div key={item} className={styles.gameCard}>
-        <GameCard />
-      </div>
-    ))}
-  </div>
-);
-
-const Playboard = ({ translate }) => {
   return (
     <div className={styles.boardContainer}>
       {/* Game section */}
       <div className={styles.boardRow}>
         <section className={styles.sectionWrapper}>
-          <TeamCard translate={translate} isRed gameMode />
+          <TeamCard
+            translate={translate}
+            startFirst={!game.blueFirst}
+            operatives={players.redOps}
+            spymaster={players.redSpy}
+            gameMode
+            isRed
+          />
         </section>
 
-        <GameArea />
+        <GameArea
+          spymaster={player.isSpymaster}
+          board={game.board}
+          labels={game.labels}
+          selectCard={onCardSelected}
+        />
 
         <section className={styles.sectionWrapper}>
-          <TeamCard translate={translate} gameMode />
+          <TeamCard
+            translate={translate}
+            startFirst={game.blueFirst}
+            operatives={players.blueOps}
+            spymaster={players.blueSpy}
+            gameMode
+          />
         </section>
       </div>
 
       {/* Game area for mobile */}
-      <GameArea isMobile />
+      <GameArea
+        isMobile
+        spymaster={player.isSpymaster}
+        board={game.board}
+        labels={game.labels}
+        selectCard={onCardSelected}
+      />
 
       {/* Clue form for mobile */}
-      <ClueForm translate={translate} isMobile />
+      {enterClue ? (
+        <ClueForm translate={translate} enterClue={onClueEntered} isMobile />
+      ) : (
+        <Button clicked={onEndTurn}>End Turn</Button>
+      )}
 
       {/* Log, chat, clue sections */}
       <div className={styles.boardRow}>
         <section className={styles.sectionWrapper}>
-          <Gamelog translate={translate} />
+          <Gamelog translate={translate} clues={game.clues} />
         </section>
 
-        <ClueForm translate={translate} />
+        {enterClue ? (
+          <ClueForm translate={translate} enterClue={onClueEntered} />
+        ) : (
+          <Button clicked={onEndTurn}>End Turn</Button>
+        )}
 
         <section className={styles.sectionWrapper}>
           <Chat translate={translate} />

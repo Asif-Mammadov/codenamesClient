@@ -3,6 +3,7 @@ import { DefaultSeo } from 'next-seo';
 import { appWithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { wrapper } from '../app/store';
+import { socket, SocketContext } from '../app/socket';
 
 // Add global reset styles
 import '../app/styles/base/_reset.scss';
@@ -45,10 +46,10 @@ function MyApp({ Component, pageProps }) {
   }, [locale]);
 
   return (
-    <>
+    <SocketContext.Provider value={socket}>
       <DefaultSeo {...seoConfig} />
       <Component {...pageProps} />
-    </>
+    </SocketContext.Provider>
   );
 }
 

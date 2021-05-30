@@ -3,14 +3,24 @@ import React from 'react';
 import Fade from 'react-reveal/Fade';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import FormError from '../../elements/FormError';
+import Spinner from '../../elements/Spinner';
 import Header from '../../modules/Header';
 import styles from './AuthLayout.module.scss';
 
-const AuthLayout = ({ children, translate, isLogin, submitted, error }) => {
+const AuthLayout = ({
+  children,
+  translate,
+  isLogin,
+  submitted,
+  error,
+  loading
+}) => {
   // Get window width
   const { width } = useWindowDimensions();
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <>
       <Header logoDark={width <= 992} togglerDark translate={translate} />
 

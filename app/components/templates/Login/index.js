@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Button from '../../elements/Button';
 import FormGroup from '../../elements/FormGroup';
 import utils from '../../../utils';
 import AuthLayout from '../../layouts/AuthLayout';
-import { signIn } from '../../../store/actions';
+import { showAuthLoading, signIn } from '../../../store/actions/Auth';
+import { useRouter } from 'next/router';
+import WithoutAuth from '../../../hoc/WithoutAuth';
 
-const Login = ({ translate, signIn }) => {
+const Login = ({
+  translate,
+  signIn,
+  showAuthLoading,
+  loading,
+  errorMessage,
+  showMessage,
+  token,
+  redirect
+}) => {
   // Initialize the login form
   const [loginForm, setLoginForm] = useState({
     controls: {
@@ -42,6 +53,7 @@ const Login = ({ translate, signIn }) => {
     valid: false,
     error: ''
   });
+  const router = useRouter();
 
   // Create an array containing the form elements
   const formElements = [];
@@ -51,6 +63,18 @@ const Login = ({ translate, signIn }) => {
       config: loginForm.controls[key]
     });
   }
+
+  useEffect(() => {
+    if (token !== null) {
+      router.push([redirect]);
+    }
+    if (showMessage) {
+      setLoginForm({ ...loginForm, error: errorMessage });
+
+      // Clear error after some time
+      setTimeout(() => setLoginForm({ ...loginForm, error: '' }), 2000);
+    }
+  }, [token, showMessage]);
 
   // Handle value change of a control
   const onValueChange = (itemId, value) => {
@@ -68,12 +92,11 @@ const Login = ({ translate, signIn }) => {
     e.preventDefault();
 
     if (loginForm.valid) {
-      console.log(loginForm);
-
-      setLoginForm({ ...loginForm, error: 'Invalid credentials' });
-
-      // Clear error after some time
-      setTimeout(() => setLoginForm({ ...loginForm, error: '' }), 2000);
+      showAuthLoading();
+      signIn({
+        email: loginForm.controls.email.value,
+        password: loginForm.controls.password.value
+      });
     }
   };
 
@@ -83,6 +106,7 @@ const Login = ({ translate, signIn }) => {
       isLogin
       submitted={submitHandler}
       error={loginForm.error}
+      loading={loading}
     >
       {formElements.map((el) => (
         <FormGroup
@@ -105,8 +129,10 @@ const Login = ({ translate, signIn }) => {
 };
 
 const mapStateToProps = ({ auth }) => {
-  const { loading, errorMessages } = auth;
-  return { loading, errorMessages };
+  const { loading, errorMessage, showMessage, token, redirect } = auth;
+  return { loading, errorMessage, showMessage, token, redirect };
 };
 
-export default connect(mapStateToProps, { signIn })(Login);
+export default connect(mapStateToProps, { signIn, showAuthLoading })(
+  WithoutAuth(Login)
+);

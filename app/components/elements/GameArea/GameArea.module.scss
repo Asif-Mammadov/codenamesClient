@@ -1,0 +1,27 @@
+@import 'app.scss';
+@import 'vendor/bootstrap-grid';
+
+.gameArea {
+  @extend .d-lg-flex;
+  @extend .d-none;
+  @extend .col-lg-6;
+  @extend .px-lg-0;
+  @extend .px-3;
+  flex-wrap: wrap;
+  width: 100%;
+
+  &.mobile {
+    @extend .d-lg-none;
+    @extend .d-flex;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .gameCard {
+    @extend .pb-lg-3;
+    @extend .pb-2;
+    @extend .px-lg-2;
+    @extend .px-1;
+    width: 20%;
+  }
+}

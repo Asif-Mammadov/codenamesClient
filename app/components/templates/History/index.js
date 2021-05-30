@@ -1,9 +1,10 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
 import colors from '../../../constants/colors';
+import withAuth from '../../../hoc/withAuth';
 import AccountLayout from '../../layouts/AccountLayout';
 
-const History = ({ translate }) => {
+const History = ({ translate, isAuth }) => {
   const columns = [
     {
       id: 'name',
@@ -83,4 +84,4 @@ const History = ({ translate }) => {
   );
 };
 
-export default History;
+export default withAuth(History);

@@ -1,6 +1,6 @@
 export const SHOW_AUTH_LOADING = 'SHOW_AUTH_LOADING';
-export const SHOW_AUTH_MESSAGES = 'SHOW_AUTH_MESSAGES';
-export const HIDE_AUTH_MESSAGES = 'HIDE_AUTH_MESSAGES';
+export const SHOW_AUTH_MESSAGE = 'SHOW_AUTH_MESSAGE';
+export const HIDE_AUTH_MESSAGE = 'HIDE_AUTH_MESSAGE';
 
 export const SIGNIN = 'SIGNIN';
 export const AUTHENTICATED = 'AUTHENTICATED';
@@ -11,4 +11,14 @@ export const SIGNOUT_SUCCESS = 'SIGNOUT_SUCCESS';
 export const SIGNUP = 'SIGNUP';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 
+export const GET_DETAILS = 'GET_DETAILS';
+export const GET_DETAILS_SUCCESS = 'GET_DETAILS_SUCCESS';
+
+export const RESET_PASSWORD = 'RESET_PASSWORD';
+export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
+
+export const UPDATE_DETAILS = 'UPDATE_DETAILS';
+export const UPDATE_DETAILS_SUCCESS = 'UPDATE_DETAILS_SUCCESS';
+
 export const AUTH_TOKEN = 'auth_token';
+export const USER_ID = 'user_id';
