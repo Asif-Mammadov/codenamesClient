@@ -1,13 +1,15 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import Slide from 'react-reveal/Slide';
 import { TEAM_MEMBERS } from '../../../data/main';
+import WithoutAuth from '../../../hoc/WithoutAuth';
 import Button from '../../elements/Button';
 import TeamMember from '../../elements/TeamMember';
 import DefaultLayout from '../../layouts/DefaultLayout';
 import styles from './Home.module.scss';
 
-const Home = ({ translate }) => {
+const Home = ({ translate, isAuth }) => {
   return (
     <DefaultLayout translate={translate}>
       <div className={styles.homeContainer}>
@@ -84,4 +86,4 @@ const Home = ({ translate }) => {
   );
 };
 
-export default Home;
+export default WithoutAuth(Home);
