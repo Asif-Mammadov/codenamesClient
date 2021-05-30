@@ -10,7 +10,7 @@ import Sidebar from '../../modules/Sidebar';
 
 import styles from './AccountLayout.module.scss';
 
-const AccountLayout = (props) => {
+const AccountLayout = ({ children, translate }) => {
   const [isToggleOn, setIsToggleOn] = useState(false);
 
   // Get window width
@@ -31,7 +31,7 @@ const AccountLayout = (props) => {
             </a>
           </Link>
           <div className={styles.dropdown}>
-            <Dropdown items={LANGS} />
+            <Dropdown items={LANGS} lang />
           </div>
         </div>
 
@@ -40,12 +40,17 @@ const AccountLayout = (props) => {
             <Link href="/game">
               <a>
                 <Button icon="play-cards" type="white" small>
-                  Play
+                  {translate('play')}
                 </Button>
               </a>
             </Link>
             <div className={styles.dropdown}>
-              <Dropdown name="Eyvaz" img="avatar" items={ACCOUNT_LINKS} />
+              <Dropdown
+                name="Eyvaz"
+                img="avatar"
+                items={ACCOUNT_LINKS}
+                translate={translate}
+              />
             </div>
           </div>
           <div className={styles.mobileButton}>
@@ -67,10 +72,11 @@ const AccountLayout = (props) => {
         show={width <= 992}
         onClose={() => setIsToggleOn(false)}
         isActive={isToggleOn}
+        translate={translate}
         isAccount
       />
-      <Sidebar show={width > 992} />
-      <main className={styles.accountContent}>{props.children}</main>
+      <Sidebar show={width > 992} translate={translate} />
+      <main className={styles.accountContent}>{children}</main>
     </>
   );
 };

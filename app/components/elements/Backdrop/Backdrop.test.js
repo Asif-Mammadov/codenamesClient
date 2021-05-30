@@ -1,7 +1,10 @@
+import React from 'react';
+import { render } from '@testing-library/react';
 import Backdrop from '.';
-import renderer from 'react-test-renderer';
 
-it('renders correctly', () => {
-  const BackdropComponent = renderer.create(<Backdrop />).toJSON();
-  expect(BackdropComponent).toMatchSnapshot();
+describe('Backdrop element', () => {
+  it('should render component', () => {
+    const backdrop = render(<Backdrop />);
+    expect(backdrop).toMatchSnapshot();
+  });
 });

@@ -1,22 +1,19 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
-import { HOME_LINKS, LANGS } from '../../../data/main';
+import { HOME_LINKS } from '../../../data/links';
+import { LANGS } from '../../../data/main';
 import Button from '../../elements/Button';
 import Dropdown from '../../elements/Dropdown';
 import Icon from '../../elements/Icon';
 import NavLink from '../../elements/NavLink';
 import styles from './Drawer.module.scss';
 
-const Drawer = ({ show, isActive, onClose }) => {
-  const classNames = [styles.drawer];
-
-  // Add active class if drawer is active
-  if (isActive) {
-    classNames.push(styles.active);
-  }
-
+const Drawer = ({ show, isActive, onClose, translate }) => {
   return show ? (
-    <section className={classNames.join(' ')}>
+    <section
+      className={[styles.drawer, isActive ? styles.active : ''].join(' ')}
+    >
       <div className={styles.drawerButtons}>
         <button onClick={() => onClose()} className={styles.closeButton}>
           <Icon name="close" width="40" height="40" />
@@ -25,13 +22,13 @@ const Drawer = ({ show, isActive, onClose }) => {
           <Link href="/login">
             <a>
               <Button type="white" style={{ marginRight: 24 }}>
-                Login
+                {translate('login')}
               </Button>
             </a>
           </Link>
           <Link href="/register">
             <a>
-              <Button>Register</Button>
+              <Button>{translate('register')}</Button>
             </a>
           </Link>
         </div>
@@ -44,13 +41,13 @@ const Drawer = ({ show, isActive, onClose }) => {
             href={`/#${link.href}`}
             clicked={() => onClose()}
           >
-            {link.name}
+            {translate(link.name)}
           </NavLink>
         ))}
       </div>
 
       <div className={styles.drawerLangDropdown}>
-        <Dropdown items={LANGS} />
+        <Dropdown items={LANGS} onChange={onClose} lang />
       </div>
     </section>
   ) : null;

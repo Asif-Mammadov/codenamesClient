@@ -37,55 +37,6 @@
   }
 }
 
-.gameArea {
-  @extend .d-lg-flex;
-  @extend .d-none;
-  @extend .col-lg-6;
-  @extend .px-lg-0;
-  @extend .px-3;
-  flex-wrap: wrap;
-  width: 100%;
-
-  &.mobile {
-    @extend .d-lg-none;
-    @extend .d-flex;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .gameCard {
-    @extend .pb-lg-3;
-    @extend .pb-2;
-    @extend .px-lg-2;
-    @extend .px-1;
-    width: 20%;
-  }
-}
-
-// 'Give clue' form
-.clueForm {
-  @extend .d-lg-flex;
-  @extend .d-none;
-  @extend .col-lg-3;
-  flex-direction: column;
-  align-items: center;
-  width: max-content;
-  margin: 0 auto;
-
-  &.mobile {
-    @extend .d-lg-none;
-    @extend .d-flex;
-    @extend .mt-4;
-    @extend .mb-5;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  > div {
-    display: inline-flex;
-  }
-}
-
 @media (min-width: map-get($breakpoints, lg)) {
   .board {
     &Container {

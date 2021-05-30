@@ -1,17 +1,21 @@
 import React from 'react';
 import styles from './Gamelog.module.scss';
 
-const Gamelog = () => (
+const Gamelog = ({ translate, clues }) => (
   <div className={styles.gamelog}>
     <div className={styles.boxHeader}>
-      <h3>Gamelog</h3>
+      <h3>{translate('gamelog')}</h3>
     </div>
 
     <div className={styles.boxContent}>
-      {Array.from({ length: 25 }).map((item) => (
+      {clues.map((item) => (
         <div key={item} className={styles.record}>
-          <span>Eyvaz </span>gives clue
-          <strong> My Clue-1</strong>
+          <span>{item.name} </span>
+          {translate('gives_clue')}
+          <strong>
+            {' '}
+            {item.clueWord}-{item.clueNum}
+          </strong>
         </div>
       ))}
     </div>

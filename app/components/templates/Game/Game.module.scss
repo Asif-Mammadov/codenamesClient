@@ -33,6 +33,7 @@
     > h1 {
       @extend .headline;
       @extend .mb-5;
+      text-transform: uppercase;
 
       span {
         color: $color-secondary;
@@ -54,12 +55,13 @@
   }
 }
 
-.modalLangGroup {
+.popupLangGroup {
   margin-top: 24px;
   margin-bottom: 48px;
 
   label {
     @extend .group-label;
+    text-align: center !important;
   }
 }
 

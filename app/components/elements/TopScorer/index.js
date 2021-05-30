@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './TopScorer.module.scss';
 
-const TopScorer = ({ img, name, score, place, me }) => (
+const TopScorer = ({ img, name, score, place, me, translate }) => (
   <div
     className={[
       styles.topScorer,
@@ -14,7 +14,7 @@ const TopScorer = ({ img, name, score, place, me }) => (
       <img src={`/img/${img}.png`} />
       <span>{place}</span>
     </div>
-    <h6>{me ? 'You' : name}</h6>
+    <h6>{me ? translate('you') : name}</h6>
     <span>{score}</span>
   </div>
 );

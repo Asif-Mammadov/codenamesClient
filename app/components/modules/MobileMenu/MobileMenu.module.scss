@@ -33,12 +33,15 @@
     .homeButtons {
       display: flex;
       justify-content: center;
+      align-items: center;
     }
 
     .accountButtons {
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: max-content;
+      margin: 0 auto;
     }
   }
 }
