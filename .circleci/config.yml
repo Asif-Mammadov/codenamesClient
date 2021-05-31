@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   node: circleci/node@1.1
-  cypress: cypress-io/cypress@1
 jobs:
   build:
     working_directory: ~/repo
@@ -24,6 +23,3 @@ jobs:
       - run:
           name: Run unit tests
           command: npm run test:unit
-      - run:
-          name: Run integration tests
-          command: npm run cypress

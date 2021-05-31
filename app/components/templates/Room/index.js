@@ -23,7 +23,6 @@ const Room = ({
   useEffect(() => {
     // Send room to the server to check if it's valid
     socket.emit('checkRoom', router.query.id);
-
     // Get result
     socket.on('roomChecked', (isValid) => {
       // If not valid, navigate to game page
@@ -49,14 +48,13 @@ const Room = ({
     socket.emit('startGame');
   };
 
-  return (
+  return players ? (
     <div className={styles.roomContainer}>
-      {/* For mobile */}
+      For mobile
       <section className={[styles.content, styles.mobile].join(' ')}>
         <h1>{translate('welcome_room')}</h1>
         <p>{translate('choose_team')}</p>
       </section>
-
       <div className={styles.roomBody}>
         <section className={styles.cardWrapper}>
           <TeamCard
@@ -93,7 +91,6 @@ const Room = ({
           />
         </section>
       </div>
-
       {/* For mobile */}
       <section className={[styles.content, styles.mobile].join(' ')}>
         <div className={styles.gameLang}>
@@ -106,7 +103,7 @@ const Room = ({
         </Button>
       </section>
     </div>
-  );
+  ) : null;
 };
 
 export default Room;

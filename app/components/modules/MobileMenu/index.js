@@ -6,8 +6,17 @@ import Button from '../../elements/Button';
 import Dropdown from '../../elements/Dropdown';
 import NavLink from '../../elements/NavLink';
 import styles from './MobileMenu.module.scss';
+import { signOut } from '../../../store/actions/Auth';
+import { connect } from 'react-redux';
 
-const MobileMenu = ({ show, isActive, onClose, isAccount, translate }) => {
+const MobileMenu = ({
+  show,
+  isActive,
+  onClose,
+  isAccount,
+  translate,
+  signOut
+}) => {
   return show ? (
     <section className={[styles.menu, isActive ? styles.active : ''].join(' ')}>
       <div>
@@ -43,7 +52,7 @@ const MobileMenu = ({ show, isActive, onClose, isAccount, translate }) => {
             </Link>
             <Link href="/login">
               <a>
-                <Button icon="out" small>
+                <Button icon="out" clicked={() => signOut()} small>
                   {translate('sign_out')}
                 </Button>
               </a>
@@ -68,4 +77,4 @@ const MobileMenu = ({ show, isActive, onClose, isAccount, translate }) => {
   ) : null;
 };
 
-export default MobileMenu;
+export default connect(null, { signOut })(MobileMenu);

@@ -4,7 +4,7 @@ import Button from '../../elements/Button';
 import styles from './GameLayout.module.scss';
 import Message from '../../elements/Message';
 
-const GameLayout = ({ children, translate }) => {
+const GameLayout = ({ children, translate, onLeaveRoom }) => {
   const [isScrollOn, setIsScrollOn] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
@@ -62,7 +62,13 @@ const GameLayout = ({ children, translate }) => {
 
           <Link href="/game">
             <a>
-              <Button icon="out" type="room-white" shadow small>
+              <Button
+                icon="out"
+                type="room-white"
+                shadow
+                small
+                clicked={onLeaveRoom}
+              >
                 <span className={styles.btnText}>
                   {translate('leave_room')}
                 </span>

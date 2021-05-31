@@ -56,4 +56,14 @@ authService.updateDetails = function (id, data) {
   });
 };
 
+authService.getScoreboard = function (id) {
+  return fetch({
+    url: `/${id}/scoreboard`,
+    method: 'get',
+    headers: {
+      'public-request': 'true'
+    }
+  });
+};
+
 export default authService;

@@ -67,6 +67,7 @@ const RoomForm = ({ isCreate, translate }) => {
 
   // Handle value change of a control
   const onValueChange = (itemId, value) => {
+    console.log(socket);
     const { updatedForm, formValid } = utils.valueChangedHandler(
       form.controls,
       itemId,
@@ -76,28 +77,54 @@ const RoomForm = ({ isCreate, translate }) => {
     setForm({ controls: updatedForm, valid: formValid });
   };
 
+  // Check nickname and navigate to room
+  const enterRoom = (nickname, roomId) => {
+    // Emit player nickname
+    socket.emit('sendNickname', nickname);
+
+    socket.on('nicknameChecked', (isValid) => {
+      if (!isValid) {
+        setForm({
+          ...form,
+          error: 'This nickname is already being used'
+        });
+      } else {
+        // Navigate to the room page
+        router.push([`game/${roomId}`]);
+      }
+    });
+  };
+
   // Handle form submit
   const submitHandler = (e) => {
     e.preventDefault();
 
     if (form.valid) {
-      // Tell server to join a room
-      socket.emit('join');
+      if (isCreate) {
+        // Tell server to create a room
+        socket.emit('create');
+        // Get room id from the server
+        socket.on('room', (room) => {
+          console.log(room);
+          // Tell server to join a room
+          socket.emit('join', room);
+          console.log('test');
 
-      // Get room id from the server
-      socket.on('room', (room) => {
-        // Emit player nickname
-        socket.emit('sendNickname', form.controls.nickname);
+          enterRoom(form.controls.nickname, room);
+        });
+      } else {
+        // Tell server to join a room
+        socket.emit('join', form.controls.roomId);
 
-        socket.on('nicknameChecked', (isValid) => {
+        // Check room
+        socket.on('roomChecked', (isValid) => {
           if (!isValid) {
-            setForm({ ...form, error: 'This nickname is already being used' });
+            setForm({ ...form, error: "This room doesn't exist" });
           } else {
-            // Navigate to the room page
-            router.push([`game/${room}`]);
+            enterRoom(form.controls.nickname, form.controls.roomId);
           }
         });
-      });
+      }
     }
   };
 

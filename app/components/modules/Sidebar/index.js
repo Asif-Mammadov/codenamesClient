@@ -1,10 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { ACCOUNT_LINKS } from '../../../data/links';
 import SidebarLink from '../../elements/SidebarLink';
-
+import { signOut } from '../../../store/actions/Auth';
 import styles from './Sidebar.module.scss';
 
-const Sidebar = ({ show, translate }) => {
+const Sidebar = ({ show, translate, signOut }) => {
   return show ? (
     <section className={styles.sidebar}>
       <div className={styles.links}>
@@ -15,11 +16,11 @@ const Sidebar = ({ show, translate }) => {
         ))}
       </div>
 
-      <SidebarLink href="/login" icon="out">
+      <SidebarLink href="/login" clicked={() => signOut()} icon="out">
         {translate('sign_out')}
       </SidebarLink>
     </section>
   ) : null;
 };
 
-export default Sidebar;
+export default connect(null, { signOut })(Sidebar);

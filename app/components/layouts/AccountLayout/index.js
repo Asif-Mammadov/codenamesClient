@@ -1,20 +1,42 @@
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { ACCOUNT_LINKS } from '../../../data/links';
 import { LANGS } from '../../../data/main';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
+import {
+  getDetails,
+  showAuthLoading,
+  getScoreboard
+} from '../../../store/actions/Auth';
 import Button from '../../elements/Button';
 import Dropdown from '../../elements/Dropdown';
 import MobileMenu from '../../modules/MobileMenu';
 import Sidebar from '../../modules/Sidebar';
-
+import Spinner from '../../elements/Spinner';
 import styles from './AccountLayout.module.scss';
 
-const AccountLayout = ({ children, translate }) => {
+const AccountLayout = ({
+  children,
+  translate,
+  getDetails,
+  getScoreboard,
+  showAuthLoading,
+  loading,
+  details,
+  name
+}) => {
   const [isToggleOn, setIsToggleOn] = useState(false);
 
   // Get window width
   const { width } = useWindowDimensions();
+
+  useEffect(() => {
+    // Get user details and scoreboard
+    showAuthLoading();
+    getDetails();
+    getScoreboard();
+  }, []);
 
   return (
     <>
@@ -46,7 +68,9 @@ const AccountLayout = ({ children, translate }) => {
             </Link>
             <div className={styles.dropdown}>
               <Dropdown
-                name="Eyvaz"
+                name={
+                  name || (details ? details[0].Username.split(' ')[0] : '')
+                }
                 img="avatar"
                 items={ACCOUNT_LINKS}
                 translate={translate}
@@ -61,7 +85,9 @@ const AccountLayout = ({ children, translate }) => {
             >
               <div className={styles.user}>
                 <img src="/img/avatar.png" />
-                <span>Eyvaz</span>
+                <span>
+                  {name || (details ? details[0].Username.split(' ')[0] : '')}
+                </span>
               </div>
             </Button>
           </div>
@@ -76,9 +102,20 @@ const AccountLayout = ({ children, translate }) => {
         isAccount
       />
       <Sidebar show={width > 992} translate={translate} />
-      <main className={styles.accountContent}>{children}</main>
+      <main className={styles.accountContent}>
+        {loading ? <Spinner /> : children}
+      </main>
     </>
   );
 };
 
-export default AccountLayout;
+const mapStateToProps = ({ auth }) => {
+  const { details, loading } = auth;
+  return { details, loading };
+};
+
+export default connect(mapStateToProps, {
+  getDetails,
+  getScoreboard,
+  showAuthLoading
+})(AccountLayout);

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import GameLayout from '../../app/components/layouts/GameLayout';
 import Playboard from '../../app/components/templates/Playboard';
 import Room from '../../app/components/templates/Room';
+import { SocketContext } from '../../app/socket';
 
 const RoomPage = () => {
   const { t } = useTranslation();
@@ -16,9 +17,18 @@ const RoomPage = () => {
     team: '',
     isSpymaster: false,
     yourTurn: false,
-    canGuess: false
+    canGuess: false,
+    roomId: ''
   });
   const [players, setPlayers] = useState();
+
+  // Get socket connection
+  const socket = useContext(SocketContext);
+
+  // Handle leave room
+  const handleLeaveRoom = () => {
+    socket.emit('exitRoom', player);
+  };
 
   // Common config for game pages
   const gameConfig = {
@@ -26,12 +36,12 @@ const RoomPage = () => {
     updatePlayers: (updatedPlayers) =>
       setPlayers({ ...updatedPlayers, ...players }),
     updatePlayer: (updatedPlayer) => setPlayer({ ...updatedPlayer, ...player }),
-    player,
-    players
+    player: player,
+    players: players
   };
 
   return (
-    <GameLayout translate={t}>
+    <GameLayout translate={t} onLeaveRoom={handleLeaveRoom}>
       {isGameStarted ? (
         <Playboard {...gameConfig} />
       ) : (

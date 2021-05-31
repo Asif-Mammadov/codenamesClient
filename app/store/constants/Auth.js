@@ -20,5 +20,8 @@ export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
 export const UPDATE_DETAILS = 'UPDATE_DETAILS';
 export const UPDATE_DETAILS_SUCCESS = 'UPDATE_DETAILS_SUCCESS';
 
+export const GET_SCOREBOARD = 'GET_SCOREBOARD';
+export const GET_SCOREBOARD_SUCCESS = 'GET_SCOREBOARD_SUCCESS';
+
 export const AUTH_TOKEN = 'auth_token';
 export const USER_ID = 'user_id';
