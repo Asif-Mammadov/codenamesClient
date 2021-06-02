@@ -5,7 +5,7 @@ import Dropdown from '../../elements/Dropdown';
 import TeamCard from '../../elements/TeamCard';
 import styles from './Room.module.scss';
 import { useRouter } from 'next/router';
-import { SocketContext } from '../../../socket';
+import { useSocket } from '../../../contexts/SocketProvider';
 
 const Room = ({
   translate,
@@ -18,7 +18,7 @@ const Room = ({
   const router = useRouter();
 
   // Get socket connection
-  const socket = useContext(SocketContext);
+  const socket = useSocket();
 
   useEffect(() => {
     // Send room to the server to check if it's valid

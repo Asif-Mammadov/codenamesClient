@@ -3,13 +3,13 @@ import { DefaultSeo } from 'next-seo';
 import { appWithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { wrapper } from '../app/store';
-import { socket, SocketContext } from '../app/socket';
 
 // Add global reset styles
 import '../app/styles/base/_reset.scss';
 // Vendor styles
 import 'react-responsive-modal/styles.css';
 import 'react-tabs/style/react-tabs.css';
+import { SocketProvider } from '../app/contexts/SocketProvider';
 
 // SEO configuration
 const seoConfig = {
@@ -19,8 +19,8 @@ const seoConfig = {
   openGraph: {
     type: 'website',
     url: 'https://example.com/',
-    title: 'ASSMI Trans Logistika Mərkəzi',
-    description: 'ASSMI Trans Logistika Mərkəzi',
+    title: 'Codenames',
+    description: 'Codenames',
     images: [
       {
         url: 'https://example.com/img/home-bg-1.png',
@@ -46,10 +46,10 @@ function MyApp({ Component, pageProps }) {
   }, [locale]);
 
   return (
-    <SocketContext.Provider value={socket}>
+    <SocketProvider>
       <DefaultSeo {...seoConfig} />
       <Component {...pageProps} />
-    </SocketContext.Provider>
+    </SocketProvider>
   );
 }
 

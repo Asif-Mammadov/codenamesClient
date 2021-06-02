@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import Slide from 'react-reveal/Slide';
 import { TEAM_MEMBERS } from '../../../data/main';
-import WithoutAuth from '../../../hoc/WithoutAuth';
+import withoutAuth from '../../../hoc/withoutAuth';
 import Button from '../../elements/Button';
 import TeamMember from '../../elements/TeamMember';
 import DefaultLayout from '../../layouts/DefaultLayout';
@@ -86,4 +86,4 @@ const Home = ({ translate, isAuth }) => {
   );
 };
 
-export default WithoutAuth(Home);
+export default withoutAuth(Home);

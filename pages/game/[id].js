@@ -4,7 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import GameLayout from '../../app/components/layouts/GameLayout';
 import Playboard from '../../app/components/templates/Playboard';
 import Room from '../../app/components/templates/Room';
-import { SocketContext } from '../../app/socket';
+import { useSocket } from '../../../contexts/SocketProvider';
 
 const RoomPage = () => {
   const { t } = useTranslation();
@@ -23,7 +23,7 @@ const RoomPage = () => {
   const [players, setPlayers] = useState();
 
   // Get socket connection
-  const socket = useContext(SocketContext);
+  const socket = useSocket();
 
   // Handle leave room
   const handleLeaveRoom = () => {

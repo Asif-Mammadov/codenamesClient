@@ -9,7 +9,7 @@ import { LANGS } from '../../../data/main';
 import utils from '../../../utils';
 import DefaultLayout from '../../layouts/DefaultLayout';
 import { useRouter } from 'next/router';
-import { SocketContext } from '../../../socket';
+import { useSocket } from '../../../contexts/SocketProvider';
 
 const RoomForm = ({ isCreate, translate }) => {
   // Initialize the join form
@@ -49,7 +49,7 @@ const RoomForm = ({ isCreate, translate }) => {
   const router = useRouter();
 
   // Get socket connection
-  const socket = useContext(SocketContext);
+  const socket = useSocket();
 
   // No need for room id in create form
   if (isCreate) {

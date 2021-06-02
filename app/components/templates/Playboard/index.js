@@ -6,6 +6,7 @@ import styles from './Playboard.module.scss';
 import Chat from '../../elements/Chat';
 import GameArea from '../../elements/GameArea';
 import ClueForm from '../../elements/ClueForm';
+import { useSocket } from '../../../contexts/SocketProvider';
 
 const Playboard = ({
   translate,
@@ -15,7 +16,7 @@ const Playboard = ({
   updatePlayers
 }) => {
   // Get socket connection
-  const socket = useContext(SocketContext);
+  const socket = useSocket();
 
   // Store game state
   const [game, setGame] = useState({
