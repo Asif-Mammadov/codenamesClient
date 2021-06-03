@@ -86,6 +86,7 @@ const RoomForm = ({ isCreate, translate }) => {
       });
     } else {
       // Navigate to the room page
+      console.log('Joined to room : ', room);
       router.push([`game/${room}`]);
     }
   };
@@ -116,7 +117,7 @@ const RoomForm = ({ isCreate, translate }) => {
 
         // Check nickname
         socket.on('nicknameChecked', (isValid) => {
-            handleEnterRoom(isValid, form.controls.roomId.value);
+          handleEnterRoom(isValid, form.controls.roomId.value);
         });
       }
     }
