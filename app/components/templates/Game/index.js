@@ -33,7 +33,7 @@ const RoomForm = ({ isCreate, translate }) => {
         label: translate('room_id'),
         type: 'text',
         value: '',
-        placeholder: '12345678',
+        placeholder: 'codenames-room',
         validation: {
           required: true
         },
@@ -76,22 +76,18 @@ const RoomForm = ({ isCreate, translate }) => {
     setForm({ controls: updatedForm, valid: formValid });
   };
 
-  // Enter room on server and navigate to room
-  const enterRoom = (nickname, roomId) => {
-    // Tell server to join a room
-    socket.emit('join', (nickname, roomId));
-
-    socket.on('nicknameChecked', (isValid) => {
-      if (!isValid) {
-        setForm({
-          ...form,
-          error: 'This nickname is already being used'
-        });
-      } else {
-        // Navigate to the room page
-        router.push([`game/${roomId}`]);
-      }
-    });
+  // Check nickname on join or create
+  const handleEnterRoom = (nicknameValid, room) => {
+    // If not valid
+    if (!nicknameValid) {
+      setForm({
+        ...form,
+        error: 'This nickname is already being used'
+      });
+    } else {
+      // Navigate to the room page
+      router.push([`game/${room}`]);
+    }
   };
 
   // Handle form submit
@@ -101,20 +97,26 @@ const RoomForm = ({ isCreate, translate }) => {
     if (form.valid) {
       if (isCreate) {
         // Tell server to create a room
-        socket.emit('create');
+        socket.emit('create', form.controls.nickname.value);
+
         // Get room id from the server
         socket.on('room', (room) => {
-          // Enter the room
-          enterRoom(form.controls.nickname, room);
+          // Check nickname
+          socket.on('nicknameChecked', (isValid) => {
+            handleEnterRoom(isValid, room);
+          });
         });
       } else {
-        // Check room
-        socket.on('roomChecked', (isValid) => {
-          if (!isValid) {
-            setForm({ ...form, error: "This room doesn't exist" });
-          } else {
-            enterRoom(form.controls.nickname.value, form.controls.roomId.value);
-          }
+        // Tell server to join a room
+        socket.emit(
+          'join',
+          form.controls.nickname.value,
+          form.controls.roomId.value
+        );
+
+        // Check nickname
+        socket.on('nicknameChecked', (isValid) => {
+            handleEnterRoom(isValid, form.controls.roomId.value);
         });
       }
     }
