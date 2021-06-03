@@ -35,8 +35,7 @@ const RoomForm = ({ isCreate, translate }) => {
         value: '',
         placeholder: '12345678',
         validation: {
-          required: true,
-          id: true
+          required: true
         },
         valid: false,
         touched: false,
@@ -77,10 +76,10 @@ const RoomForm = ({ isCreate, translate }) => {
     setForm({ controls: updatedForm, valid: formValid });
   };
 
-  // Check nickname and navigate to room
+  // Enter room on server and navigate to room
   const enterRoom = (nickname, roomId) => {
-    // Emit player nickname
-    socket.emit('sendNickname', nickname);
+    // Tell server to join a room
+    socket.emit('join', (nickname, roomId));
 
     socket.on('nicknameChecked', (isValid) => {
       if (!isValid) {
@@ -105,23 +104,16 @@ const RoomForm = ({ isCreate, translate }) => {
         socket.emit('create');
         // Get room id from the server
         socket.on('room', (room) => {
-          console.log(room);
-          // Tell server to join a room
-          socket.emit('join', room);
-          console.log('test');
-
+          // Enter the room
           enterRoom(form.controls.nickname, room);
         });
       } else {
-        // Tell server to join a room
-        socket.emit('join', form.controls.roomId);
-
         // Check room
         socket.on('roomChecked', (isValid) => {
           if (!isValid) {
             setForm({ ...form, error: "This room doesn't exist" });
           } else {
-            enterRoom(form.controls.nickname, form.controls.roomId);
+            enterRoom(form.controls.nickname.value, form.controls.roomId.value);
           }
         });
       }
