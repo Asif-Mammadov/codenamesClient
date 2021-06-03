@@ -1,68 +1,73 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LANGS } from '../../../data/main';
 import Button from '../../elements/Button';
 import Dropdown from '../../elements/Dropdown';
 import TeamCard from '../../elements/TeamCard';
 import styles from './Room.module.scss';
 import { useRouter } from 'next/router';
-import { useSocket } from '../../../contexts/SocketProvider';
 
-const Room = ({
-  translate,
-  gameStarted,
-  player,
-  updatePlayer,
-  players,
-  updatePlayers
-}) => {
+const Room = ({ translate, gameStarted, socket }) => {
+  // Game info
+  const [player, setPlayer] = useState();
+  const [players, setPlayers] = useState();
   const router = useRouter();
 
-  // Get socket connection
-  const socket = useSocket();
-
   useEffect(() => {
-    // Send room to the server to check if it's valid
-    socket.emit('checkRoom', router.query.id);
-    // Get result
-    socket.on('roomChecked', (isValid) => {
-      // If not valid, navigate to game page
-      if (!isValid) {
-        router.push(['/game']);
-      }
-    });
+    if (socket) {
+      // Send room to the server to check if it's valid
+      socket.emit('checkRoom', router.query.id);
+      // Get result
+      socket.on('roomChecked', (isValid) => {
+        // If not valid, navigate to game page
+        if (!isValid) {
+          router.push('/game');
+        }
+      });
 
-    // Get player info and update player
-    socket.on('updateRole', (playerInfo) => updatePlayer(playerInfo));
+      // Get player info and update player
+      socket.on('updateRole', (playerInfo) => {
+        console.log(playerInfo);
+        // setPlayer(playerInfo);
+        setPlayer('test');
+      });
 
-    // Get all players info
-    socket.on('updatePlayers', (players) => updatePlayers(players));
-  }, [socket]);
+      // Get all players info
+      socket.on('updatePlayers', (playersInfo) => {
+        console.log(playersInfo);
+        setPlayers(playersInfo);
+      });
+    }
+  });
 
   const onLangChange = (lang) => {
     // Send game language to server
-    socket.emit('sendLang', lang.name); // name = Azerbaijani, French...
+    socket.emit('sendLang', lang.icon); // icon = az, fr, ar, en
   };
 
   const onStartGame = () => {
     // Notify server that game starts
     socket.emit('startGame');
+    gameStarted();
   };
 
-  return players ? (
+  const onJoin = () => console.log(player);
+
+  return (
     <div className={styles.roomContainer}>
-      For mobile
+      {/* For mobile */}
       <section className={[styles.content, styles.mobile].join(' ')}>
         <h1>{translate('welcome_room')}</h1>
         <p>{translate('choose_team')}</p>
       </section>
+
       <div className={styles.roomBody}>
         <section className={styles.cardWrapper}>
           <TeamCard
             translate={translate}
             isRed
-            operatives={players.redOps}
-            spymaster={players.redSpy}
-            joinAsOps={() => socket.emit('joinedRedOps', player)}
+            operatives={players ? players.redOps : []}
+            spymasters={players ? players.redSpy : []}
+            joinAsOps={onJoin}
             joinAsSpy={() => socket.emit('joinedRedSpy', player)}
           />
         </section>
@@ -76,7 +81,7 @@ const Room = ({
             <Dropdown items={LANGS} light onChange={onLangChange} />
           </div>
 
-          <Button shadow clicked={gameStarted} clicked={onStartGame}>
+          <Button shadow clicked={onStartGame}>
             {translate('start_game')}
           </Button>
         </section>
@@ -84,8 +89,8 @@ const Room = ({
         <section className={styles.cardWrapper}>
           <TeamCard
             translate={translate}
-            operatives={players.blueOps}
-            spymaster={players.blueSpy}
+            operatives={players ? players.blueOps : []}
+            spymasters={players ? players.blueSpy : []}
             joinAsOps={() => socket.emit('joinedBlueOps', player)}
             joinAsSpy={() => socket.emit('joinedBlueSpy', player)}
           />
@@ -103,7 +108,7 @@ const Room = ({
         </Button>
       </section>
     </div>
-  ) : null;
+  );
 };
 
 export default Room;

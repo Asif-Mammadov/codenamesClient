@@ -7,7 +7,7 @@ const TeamCard = ({
   gameMode,
   translate,
   operatives,
-  spymaster,
+  spymasters,
   joinAsOps,
   joinAsSpy,
   startFirst
@@ -22,17 +22,20 @@ const TeamCard = ({
         <section className={styles.roleWrapper}>
           <h6>{translate('operatives')}</h6>
           <div>
-            {operatives.map((item) => (
-              <div
-                key={item.username}
-                className={[styles.player, item == 0 ? styles.me : ''].join(
-                  ' '
-                )}
-              >
-                <img src="/img/avatar.png" />
-                <span>{item.username}</span>
-              </div>
-            ))}
+            {operatives
+              ? operatives.map((item) => (
+                  <div
+                    key={item.username}
+                    className={[
+                      styles.player,
+                      item === 0 ? styles.me : ''
+                    ].join(' ')}
+                  >
+                    <img src="/img/avatar.png" />
+                    <span>{item.username}</span>
+                  </div>
+                ))
+              : null}
           </div>
 
           {!gameMode ? (
@@ -45,13 +48,19 @@ const TeamCard = ({
         <section className={styles.roleWrapper}>
           <h6>{translate('spymasters')}</h6>
           <div>
-            <div
-              key={item}
-              className={[styles.player, item == 0 ? styles.me : ''].join(' ')}
-            >
-              <img src="/img/avatar.png" />
-              <span>{spymaster.username}</span>
-            </div>
+            {spymasters
+              ? spymasters.map((item) => (
+                  <div
+                    key={item}
+                    className={[styles.player, item == 0 ? styles.me : ''].join(
+                      ' '
+                    )}
+                  >
+                    <img src="/img/avatar.png" />
+                    <span>{spymaster.username}</span>
+                  </div>
+                ))
+              : null}
           </div>
 
           {!gameMode ? (

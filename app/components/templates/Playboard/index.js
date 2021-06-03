@@ -6,18 +6,15 @@ import styles from './Playboard.module.scss';
 import Chat from '../../elements/Chat';
 import GameArea from '../../elements/GameArea';
 import ClueForm from '../../elements/ClueForm';
-import { useSocket } from '../../../contexts/SocketProvider';
 
 const Playboard = ({
   translate,
   player,
   updatePlayer,
   players,
-  updatePlayers
+  updatePlayers,
+  socket
 }) => {
-  // Get socket connection
-  const socket = useSocket();
-
   // Store game state
   const [game, setGame] = useState({
     blueFirst: false,
@@ -121,8 +118,8 @@ const Playboard = ({
           <TeamCard
             translate={translate}
             startFirst={!game.blueFirst}
-            operatives={players.redOps}
-            spymaster={players.redSpy}
+            operatives={players ? players.redOps : []}
+            spymaster={players ? players.redSpy : []}
             gameMode
             isRed
           />
@@ -139,8 +136,8 @@ const Playboard = ({
           <TeamCard
             translate={translate}
             startFirst={game.blueFirst}
-            operatives={players.blueOps}
-            spymaster={players.blueSpy}
+            operatives={players ? players.blueOps : []}
+            spymaster={players ? players.blueSpy : []}
             gameMode
           />
         </section>

@@ -55,16 +55,6 @@
   }
 }
 
-.popupLangGroup {
-  margin-top: 24px;
-  margin-bottom: 48px;
-
-  label {
-    @extend .group-label;
-    text-align: center !important;
-  }
-}
-
 @media (min-width: map-get($breakpoints, lg)) {
   .gameBg {
     background-image: url('../../../../public/img/game-bg-lg.png');

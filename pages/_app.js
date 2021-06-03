@@ -46,10 +46,12 @@ function MyApp({ Component, pageProps }) {
   }, [locale]);
 
   return (
-    <SocketProvider>
+    <>
       <DefaultSeo {...seoConfig} />
-      <Component {...pageProps} />
-    </SocketProvider>
+      <SocketProvider>
+        <Component {...pageProps} />
+      </SocketProvider>
+    </>
   );
 }
 

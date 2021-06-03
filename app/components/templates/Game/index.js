@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Slide from 'react-reveal/Slide';
 import Button from '../../elements/Button';
 import styles from './Game.module.scss';
@@ -10,6 +10,7 @@ import utils from '../../../utils';
 import DefaultLayout from '../../layouts/DefaultLayout';
 import { useRouter } from 'next/router';
 import { useSocket } from '../../../contexts/SocketProvider';
+import FormError from '../../elements/FormError';
 
 const RoomForm = ({ isCreate, translate }) => {
   // Initialize the join form
@@ -64,9 +65,20 @@ const RoomForm = ({ isCreate, translate }) => {
     });
   }
 
+  useEffect(() => {
+    // Clear form error after some time
+    const errorTimeout = setTimeout(
+      () => setForm({ ...form, error: '' }),
+      2000
+    );
+
+    return () => {
+      clearTimeout(errorTimeout);
+    };
+  }, [form.error]);
+
   // Handle value change of a control
   const onValueChange = (itemId, value) => {
-    console.log(socket);
     const { updatedForm, formValid } = utils.valueChangedHandler(
       form.controls,
       itemId,
@@ -87,7 +99,7 @@ const RoomForm = ({ isCreate, translate }) => {
     } else {
       // Navigate to the room page
       console.log('Joined to room : ', room);
-      router.push([`game/${room}`]);
+      router.push(`game/${room}`);
     }
   };
 
@@ -102,6 +114,7 @@ const RoomForm = ({ isCreate, translate }) => {
 
         // Get room id from the server
         socket.on('room', (room) => {
+          socket.emit('join', room, form.controls.nickname.value);
           // Check nickname
           socket.on('nicknameChecked', (isValid) => {
             handleEnterRoom(isValid, room);
@@ -115,9 +128,20 @@ const RoomForm = ({ isCreate, translate }) => {
           form.controls.roomId.value
         );
 
-        // Check nickname
-        socket.on('nicknameChecked', (isValid) => {
-          handleEnterRoom(isValid, form.controls.roomId.value);
+        // Check room
+        socket.on('roomChecked', (isValid) => {
+          // If not valid
+          if (!isValid) {
+            setForm({
+              ...form,
+              error: 'This room ID is not valid'
+            });
+          } else {
+            // Check nickname
+            socket.on('nicknameChecked', (isValid) => {
+              handleEnterRoom(isValid, form.controls.roomId.value);
+            });
+          }
         });
       }
     }
@@ -125,6 +149,8 @@ const RoomForm = ({ isCreate, translate }) => {
 
   return (
     <form onSubmit={submitHandler} style={{ width: '100%' }}>
+      <FormError error={form.error} />
+
       {formElements.map((el) => (
         <FormGroup
           key={el.id}
@@ -139,13 +165,6 @@ const RoomForm = ({ isCreate, translate }) => {
           style={{ width: '100%', marginBottom: 24 }}
         />
       ))}
-
-      {isCreate ? (
-        <div className={styles.popupLangGroup}>
-          <label>{translate('select_lang')}</label>
-          <Dropdown items={LANGS} upward />
-        </div>
-      ) : null}
 
       <Button disabled={!form.valid} style={{ margin: '0 auto' }}>
         {translate(isCreate ? 'create_room' : 'join_room')}
