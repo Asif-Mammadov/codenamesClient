@@ -1,43 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { LANGS } from '../../../data/main';
 import Button from '../../elements/Button';
 import Dropdown from '../../elements/Dropdown';
 import TeamCard from '../../elements/TeamCard';
 import styles from './Room.module.scss';
-import { useRouter } from 'next/router';
 
-const Room = ({ translate, gameStarted, socket }) => {
-  // Game info
-  const [player, setPlayer] = useState();
-  const [players, setPlayers] = useState();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (socket) {
-      // Send room to the server to check if it's valid
-      socket.emit('checkRoom', router.query.id);
-      // Get result
-      socket.on('roomChecked', (isValid) => {
-        // If not valid, navigate to game page
-        if (!isValid) {
-          router.push('/game');
-        }
-      });
-
-      // Get player info and update player
-      socket.on('updateRole', (playerInfo) => {
-        console.log(playerInfo);
-        // setPlayer(playerInfo);
-        setPlayer('test');
-      });
-
-      // Get all players info
-      socket.on('updatePlayers', (playersInfo) => {
-        console.log(playersInfo);
-        setPlayers(playersInfo);
-      });
-    }
-  });
+const Room = ({ translate, gameStarted, socket, player, players }) => {
+  useEffect(() => console.log(player), [player]);
 
   const onLangChange = (lang) => {
     // Send game language to server
@@ -45,14 +14,12 @@ const Room = ({ translate, gameStarted, socket }) => {
   };
 
   const onStartGame = () => {
+    gameStarted();
     // Notify server that game starts
     socket.emit('startGame');
-    gameStarted();
   };
 
-  const onJoin = () => console.log(player);
-
-  return (
+  return player && players ? (
     <div className={styles.roomContainer}>
       {/* For mobile */}
       <section className={[styles.content, styles.mobile].join(' ')}>
@@ -65,9 +32,9 @@ const Room = ({ translate, gameStarted, socket }) => {
           <TeamCard
             translate={translate}
             isRed
-            operatives={players ? players.redOps : []}
-            spymasters={players ? players.redSpy : []}
-            joinAsOps={onJoin}
+            operatives={players.redOps}
+            spymaster={players.redSpy}
+            joinAsOps={() => socket.emit('joinedRedOps', player)}
             joinAsSpy={() => socket.emit('joinedRedSpy', player)}
           />
         </section>
@@ -89,10 +56,11 @@ const Room = ({ translate, gameStarted, socket }) => {
         <section className={styles.cardWrapper}>
           <TeamCard
             translate={translate}
-            operatives={players ? players.blueOps : []}
-            spymasters={players ? players.blueSpy : []}
+            operatives={players.blueOps}
+            spymaster={players.blueSpy}
             joinAsOps={() => socket.emit('joinedBlueOps', player)}
             joinAsSpy={() => socket.emit('joinedBlueSpy', player)}
+            myUsername={player ? player.username : null}
           />
         </section>
       </div>
@@ -108,7 +76,7 @@ const Room = ({ translate, gameStarted, socket }) => {
         </Button>
       </section>
     </div>
-  );
+  ) : null;
 };
 
 export default Room;

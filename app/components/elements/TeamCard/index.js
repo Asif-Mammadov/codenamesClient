@@ -7,10 +7,11 @@ const TeamCard = ({
   gameMode,
   translate,
   operatives,
-  spymasters,
+  spymaster,
   joinAsOps,
   joinAsSpy,
-  startFirst
+  startFirst,
+  myUsername
 }) => {
   return (
     <div className={[styles.teamCard, isRed ? styles.red : ''].join(' ')}>
@@ -22,20 +23,20 @@ const TeamCard = ({
         <section className={styles.roleWrapper}>
           <h6>{translate('operatives')}</h6>
           <div>
-            {operatives
-              ? operatives.map((item) => (
-                  <div
-                    key={item.username}
-                    className={[
-                      styles.player,
-                      item === 0 ? styles.me : ''
-                    ].join(' ')}
-                  >
-                    <img src="/img/avatar.png" />
-                    <span>{item.username}</span>
-                  </div>
-                ))
-              : null}
+            {operatives.map((item) =>
+              item.username ? (
+                <div
+                  key={item.username}
+                  className={[
+                    styles.player,
+                    item.username === myUsername ? styles.me : ''
+                  ].join(' ')}
+                >
+                  <img src="/img/avatar.png" />
+                  <span>{item.username}</span>
+                </div>
+              ) : null
+            )}
           </div>
 
           {!gameMode ? (
@@ -48,19 +49,17 @@ const TeamCard = ({
         <section className={styles.roleWrapper}>
           <h6>{translate('spymasters')}</h6>
           <div>
-            {spymasters
-              ? spymasters.map((item) => (
-                  <div
-                    key={item}
-                    className={[styles.player, item == 0 ? styles.me : ''].join(
-                      ' '
-                    )}
-                  >
-                    <img src="/img/avatar.png" />
-                    <span>{spymaster.username}</span>
-                  </div>
-                ))
-              : null}
+            {spymaster.username ? (
+              <div
+                className={[
+                  styles.player,
+                  spymaster.username === myUsername ? styles.me : ''
+                ].join(' ')}
+              >
+                <img src="/img/avatar.png" />
+                <span>{spymaster.username}</span>
+              </div>
+            ) : null}
           </div>
 
           {!gameMode ? (

@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slide from 'react-reveal/Slide';
 import Button from '../../elements/Button';
 import styles from './Game.module.scss';
 import FormGroup from '../../elements/FormGroup';
-import Dropdown from '../../elements/Dropdown';
 import Popup from '../../elements/Popup';
-import { LANGS } from '../../../data/main';
 import utils from '../../../utils';
 import DefaultLayout from '../../layouts/DefaultLayout';
 import { useRouter } from 'next/router';
@@ -65,6 +63,7 @@ const RoomForm = ({ isCreate, translate }) => {
     });
   }
 
+  const { error } = form;
   useEffect(() => {
     // Clear form error after some time
     const errorTimeout = setTimeout(
@@ -75,7 +74,7 @@ const RoomForm = ({ isCreate, translate }) => {
     return () => {
       clearTimeout(errorTimeout);
     };
-  }, [form.error]);
+  }, [error]);
 
   // Handle value change of a control
   const onValueChange = (itemId, value) => {
@@ -89,24 +88,27 @@ const RoomForm = ({ isCreate, translate }) => {
   };
 
   // Check nickname on join or create
-  const handleEnterRoom = (nicknameValid, room) => {
-    // If not valid
-    if (!nicknameValid) {
-      setForm({
-        ...form,
-        error: 'This nickname is already being used'
-      });
-    } else {
-      // Navigate to the room page
-      console.log('Joined to room : ', room);
-      router.push(`game/${room}`);
-    }
+  const handleEnterRoom = (room) => {
+    // Get player info and update player
+    socket.on('updateRole', (playerInfo) => {
+      window.localStorage.setItem('player', JSON.stringify(playerInfo));
+    });
+
+    // Get all players info
+    socket.on('updatePlayers', (playersInfo) => {
+      window.localStorage.setItem('players', JSON.stringify(playersInfo));
+    });
+
+    // Navigate to the room page
+    console.log('Joined to room : ', room);
+    router.push(`game/${room}`);
   };
 
   // Handle form submit
   const submitHandler = (e) => {
     e.preventDefault();
 
+    // If form is valid
     if (form.valid) {
       if (isCreate) {
         // Tell server to create a room
@@ -115,9 +117,17 @@ const RoomForm = ({ isCreate, translate }) => {
         // Get room id from the server
         socket.on('room', (room) => {
           socket.emit('join', room, form.controls.nickname.value);
+
           // Check nickname
           socket.on('nicknameChecked', (isValid) => {
-            handleEnterRoom(isValid, room);
+            if (isValid) {
+              handleEnterRoom(room);
+            } else {
+              setForm({
+                ...form,
+                error: 'This nickname is already being used'
+              });
+            }
           });
         });
       } else {
@@ -139,7 +149,14 @@ const RoomForm = ({ isCreate, translate }) => {
           } else {
             // Check nickname
             socket.on('nicknameChecked', (isValid) => {
-              handleEnterRoom(isValid, form.controls.roomId.value);
+              if (isValid) {
+                handleEnterRoom(orm.controls.roomId.value);
+              } else {
+                setForm({
+                  ...form,
+                  error: 'This nickname is already being used'
+                });
+              }
             });
           }
         });
@@ -176,6 +193,12 @@ const RoomForm = ({ isCreate, translate }) => {
 const Game = ({ translate }) => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isJoinOpen, setIsJoinOpen] = useState(false);
+
+  useEffect(() => {
+    // Clear previous game info
+    window.localStorage.removeItem('player');
+    window.localStorage.removeItem('players');
+  }, []);
 
   return (
     <DefaultLayout translate={translate}>

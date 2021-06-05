@@ -60,21 +60,15 @@ const GameLayout = ({ children, translate, onLeaveRoom }) => {
             <span className={styles.btnText}>{translate('share_room')}</span>
           </Button>
 
-          <Link href="/game">
-            <a>
-              <Button
-                icon="out"
-                type="room-white"
-                shadow
-                small
-                clicked={onLeaveRoom}
-              >
-                <span className={styles.btnText}>
-                  {translate('leave_room')}
-                </span>
-              </Button>
-            </a>
-          </Link>
+          <Button
+            icon="out"
+            type="room-white"
+            shadow
+            small
+            clicked={onLeaveRoom}
+          >
+            <span className={styles.btnText}>{translate('leave_room')}</span>
+          </Button>
         </div>
       </header>
 

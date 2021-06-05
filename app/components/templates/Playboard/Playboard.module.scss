@@ -16,6 +16,7 @@
     width: 100%;
     margin: 0;
     flex-wrap: nowrap;
+    align-items: flex-start;
     overflow: auto;
 
     .sectionWrapper {
@@ -34,6 +35,19 @@
     &:not(:last-child) {
       @extend .mb-5;
     }
+  }
+}
+
+.endTurnWrapper {
+  @extend .d-lg-block;
+  @extend .d-none;
+  width: 100%;
+
+  &.mobile {
+    @extend .d-lg-none;
+    @extend .d-flex;
+    justify-content: center;
+    margin: 20px auto;
   }
 }
 

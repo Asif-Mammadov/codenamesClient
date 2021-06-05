@@ -9,11 +9,11 @@ import ClueForm from '../../elements/ClueForm';
 
 const Playboard = ({
   translate,
+  socket,
   player,
   updatePlayer,
   players,
-  updatePlayers,
-  socket
+  updatePlayers
 }) => {
   // Store game state
   const [game, setGame] = useState({
@@ -25,68 +25,75 @@ const Playboard = ({
   });
 
   useEffect(() => {
-    // Check if blue starts the game
-    socket.on('gameStarted', (blueStarts) =>
-      setGame({ ...game, blueFirst: blueStarts })
-    );
+    if (socket) {
+      // Check if blue starts the game
+      socket.on('gameStarted', (blueStarts) => {
+        console.log(blueStarts);
+        setGame({ ...game, blueFirst: blueStarts });
+      });
 
-    // Get player info and update player
-    socket.on('updateRole', (playerInfo) => updatePlayer(playerInfo));
+      // Get player info and update player
+      socket.on('updateRole', (playerInfo) => updatePlayer(playerInfo));
 
-    // Get all players info
-    socket.on('updatePlayers', (playersInfo) => updatePlayers(playersInfo));
+      // Get all players info
+      socket.on('updatePlayers', (playersInfo) => updatePlayers(playersInfo));
 
-    // If not player's turn
-    socket.on('notYourTurn', (team, isSpymaster) => {
-      if (player.team === team && player.isSpymaster === isSpymaster) {
-        updatePlayer({ ...player, yourTurn: false });
-      }
-    });
+      // If not player's turn
+      socket.on('notYourTurn', (team, isSpymaster) => {
+        if (player.team === team && player.isSpymaster === isSpymaster) {
+          updatePlayer({ ...player, yourTurn: false });
+        }
+      });
 
-    // Get labels for spymaster
-    socket.on('getLabels', (socketID, labels) => {
-      if (socketID == socket.id) {
-        setGame({ ...game, labels: labels });
-      }
-    });
+      // Get labels for spymaster
+      socket.on('getLabels', (socketID, labels) => {
+        console.log(labels);
+        if (socketID == socket.id) {
+          setGame({ ...game, labels: labels });
+        }
+      });
 
-    // Get board for operatives
-    socket.on('getBoard', (boardValues) => {
-      setGame({ ...game, board: boardValues });
-    });
+      // Get board for operatives
+      socket.on('getBoard', (boardValues) => {
+        console.log(boardValues);
+        setGame({ ...game, board: boardValues });
+      });
 
-    // Start enter clue mode
-    socket.on('enterClue', (socketID) => {
-      if (socketID === socket.id) {
-        setGame({ ...game, enterClue: true });
-      }
-    });
+      // Start enter clue mode
+      socket.on('enterClue', (socketID) => {
+        if (socketID === socket.id) {
+          setGame({ ...game, enterClue: true });
+        }
+      });
 
-    // Get clues
-    socket.on('getClues', (clues) => {
-      setGame({ ...game, clues });
-    });
+      // Get clues
+      socket.on('getClues', (clues) => {
+        setGame({ ...game, clues });
+      });
 
-    // Blue spy turn
-    socket.on('turnBlueSpy', (socketID) => {
-      if (socket.id === socketID) {
-        updatePlayer({ ...player, yourTurn: true });
-      }
-    });
+      // Blue spy turn
+      socket.on('turnBlueSpy', (socketID) => {
+        if (socket.id === socketID) {
+          updatePlayer({ ...player, yourTurn: true });
+        }
+      });
 
-    // Red spy turn
-    socket.on('turnRedSpy', (socketID) => {
-      if (socket.id === socketID) {
-        updatePlayer({ ...player, yourTurn: true });
-      }
-    });
+      // Red spy turn
+      socket.on('turnRedSpy', (socketID) => {
+        if (socket.id === socketID) {
+          updatePlayer({ ...player, yourTurn: true });
+        }
+      });
 
-    // On choose card
-    socket.on('chooseCard', (team, isSpymaster) => {
-      if (player.team === team && player.isSpymaster === isSpymaster) {
-        updatePlayer({ ...player, yourTurn: true });
-      }
-    });
+      // On choose card
+      socket.on('chooseCard', (team, isSpymaster) => {
+        if (player.team === team && player.isSpymaster === isSpymaster) {
+          updatePlayer({ ...player, yourTurn: true });
+        }
+      });
+
+      console.log(game);
+    }
   }, [socket]);
 
   // Select a card
@@ -153,10 +160,14 @@ const Playboard = ({
       />
 
       {/* Clue form for mobile */}
-      {enterClue ? (
+      {game.enterClue ? (
         <ClueForm translate={translate} enterClue={onClueEntered} isMobile />
       ) : (
-        <Button clicked={onEndTurn}>End Turn</Button>
+        <div className={[styles.endTurnWrapper, styles.mobile].join(' ')}>
+          <Button clicked={onEndTurn} style={{ margin: '20 auto' }}>
+            End Turn
+          </Button>
+        </div>
       )}
 
       {/* Log, chat, clue sections */}
@@ -165,10 +176,14 @@ const Playboard = ({
           <Gamelog translate={translate} clues={game.clues} />
         </section>
 
-        {enterClue ? (
+        {game.enterClue ? (
           <ClueForm translate={translate} enterClue={onClueEntered} />
         ) : (
-          <Button clicked={onEndTurn}>End Turn</Button>
+          <div className={styles.endTurnWrapper}>
+            <Button clicked={onEndTurn} style={{ margin: '0 auto' }}>
+              End Turn
+            </Button>
+          </div>
         )}
 
         <section className={styles.sectionWrapper}>

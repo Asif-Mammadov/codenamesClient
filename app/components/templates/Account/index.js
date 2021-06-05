@@ -17,7 +17,6 @@ import {
 } from '../../../store/actions/Auth';
 import Message from '../../elements/Message';
 import Spinner from '../../elements/Spinner';
-import { SP } from 'next/dist/next-server/lib/utils';
 
 const Account = ({
   translate,
