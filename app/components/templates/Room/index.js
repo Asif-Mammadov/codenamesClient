@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { LANGS } from '../../../data/main';
 import Button from '../../elements/Button';
@@ -6,7 +7,14 @@ import TeamCard from '../../elements/TeamCard';
 import styles from './Room.module.scss';
 
 const Room = ({ translate, gameStarted, socket, player, players }) => {
-  useEffect(() => console.log(player), [player]);
+  const router = useRouter();
+
+  useEffect(() => {
+    // if (!player || !players) {
+    //   console.log('test');
+    //   router.push('/game');
+    // }
+  }, [player, players]);
 
   const onLangChange = (lang) => {
     // Send game language to server

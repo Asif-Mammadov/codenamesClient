@@ -22,12 +22,25 @@ const RoomPage = () => {
 
   useEffect(() => {
     if (socket) {
+      const roomId = router.query.id;
+      
+      socket.on('connect', () => {
+        if (socket.id) {
+          // Check player
+          socket.emit('checkUser', roomId, socket.id);
+        }
+      });
+      
+
+      // Redirect if not authenticated
+      socket.on('unauth', () => router.push('/game'));
+
       // Get player and players info from localstorage
       setPlayer(JSON.parse(window.localStorage.getItem('player')));
       setPlayers(JSON.parse(window.localStorage.getItem('players')));
 
       // Send room to the server to check if it's valid
-      socket.emit('checkRoom', router.query.id);
+      socket.emit('checkRoom', roomId);
 
       // Get result
       socket.on('roomChecked', (isValid) => {

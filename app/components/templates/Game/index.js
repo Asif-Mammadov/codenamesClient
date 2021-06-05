@@ -67,7 +67,7 @@ const RoomForm = ({ isCreate, translate }) => {
   useEffect(() => {
     // Clear form error after some time
     const errorTimeout = setTimeout(
-      () => setForm({ ...form, error: '' }),
+      () => setForm(prevForm => { return { ...prevForm, error: ''} }),
       2000
     );
 
@@ -134,29 +134,34 @@ const RoomForm = ({ isCreate, translate }) => {
         // Tell server to join a room
         socket.emit(
           'join',
-          form.controls.nickname.value,
-          form.controls.roomId.value
+          form.controls.roomId.value,
+          form.controls.nickname.value
         );
 
         // Check room
+        socket.emit('checkRoom', form.controls.roomId.value);
+
+        // Get check room result
         socket.on('roomChecked', (isValid) => {
+          console.log(isValid);
           // If not valid
           if (!isValid) {
             setForm({
               ...form,
               error: 'This room ID is not valid'
             });
+          }
+        });
+
+        // Check nickname
+        socket.on('nicknameChecked', (isValid) => {
+          console.log(isValid);
+          if (isValid) {
+            handleEnterRoom(form.controls.roomId.value);
           } else {
-            // Check nickname
-            socket.on('nicknameChecked', (isValid) => {
-              if (isValid) {
-                handleEnterRoom(orm.controls.roomId.value);
-              } else {
-                setForm({
-                  ...form,
-                  error: 'This nickname is already being used'
-                });
-              }
+            setForm({
+              ...form,
+              error: 'This nickname is already being used'
             });
           }
         });
