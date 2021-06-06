@@ -67,7 +67,10 @@ const RoomForm = ({ isCreate, translate }) => {
   useEffect(() => {
     // Clear form error after some time
     const errorTimeout = setTimeout(
-      () => setForm(prevForm => { return { ...prevForm, error: ''} }),
+      () =>
+        setForm((prevForm) => {
+          return { ...prevForm, error: '' };
+        }),
       2000
     );
 
@@ -100,7 +103,6 @@ const RoomForm = ({ isCreate, translate }) => {
     });
 
     // Navigate to the room page
-    console.log('Joined to room : ', room);
     router.push(`game/${room}`);
   };
 

@@ -9,33 +9,13 @@ import ClueForm from '../../elements/ClueForm';
 
 const Playboard = ({
   translate,
-  socket,
   player,
-  updatePlayer,
   players,
+  selectCard,
+  enterClue,
+  endTurn,
   game
 }) => {
-  // Select a card
-  const onCardSelected = (id) => {
-    if (player.yourTurn && !player.isSpymaster) {
-      socket.emit('cardChosen', id);
-    }
-  };
-
-  // End turn
-  const onEndTurn = () => {
-    if (player.yourTurn && !player.isSpymaster) {
-      updatePlayer({ ...player, yourTurn: false });
-      socket.emit('endTurn');
-    }
-  };
-
-  // Enter clue
-  const onClueEntered = (clue, count) => {
-    socket.emit('clueEntered', clue, count, player.name);
-    updatePlayer({ ...player, yourTurn: false });
-  };
-
   return (
     <div className={styles.boardContainer}>
       {/* Game section */}
@@ -56,7 +36,7 @@ const Playboard = ({
           spymaster={player.isSpymaster}
           board={game.board}
           labels={game.labels}
-          selectCard={onCardSelected}
+          selectCard={selectCard}
         />
 
         <section className={styles.sectionWrapper}>
@@ -77,19 +57,21 @@ const Playboard = ({
         spymaster={player.isSpymaster}
         board={game.board}
         labels={game.labels}
-        selectCard={onCardSelected}
+        selectCard={selectCard}
       />
 
       {/* Clue form for mobile */}
       {game.enterClue ? (
-        <ClueForm translate={translate} enterClue={onClueEntered} isMobile />
-      ) : (
+        <ClueForm translate={translate} enterClue={enterClue} isMobile />
+      ) : null}
+
+      {game.yourTurn && !player.isSpymaster ? (
         <div className={[styles.endTurnWrapper, styles.mobile].join(' ')}>
-          <Button clicked={onEndTurn} style={{ margin: '20 auto' }}>
+          <Button clicked={endTurn} style={{ margin: '20 auto' }}>
             End Turn
           </Button>
         </div>
-      )}
+      ) : null}
 
       {/* Log, chat, clue sections */}
       <div className={styles.boardRow}>
@@ -98,14 +80,16 @@ const Playboard = ({
         </section>
 
         {game.enterClue ? (
-          <ClueForm translate={translate} enterClue={onClueEntered} />
-        ) : (
+          <ClueForm translate={translate} enterClue={enterClue} />
+        ) : null}
+
+        {game.yourTurn && !player.isSpymaster ? (
           <div className={styles.endTurnWrapper}>
-            <Button clicked={onEndTurn} style={{ margin: '0 auto' }}>
+            <Button clicked={endTurn} style={{ margin: '0 auto' }}>
               End Turn
             </Button>
           </div>
-        )}
+        ) : null}
 
         <section className={styles.sectionWrapper}>
           <Chat translate={translate} />

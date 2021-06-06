@@ -9,12 +9,12 @@ const Gamelog = ({ translate, clues }) => (
 
     <div className={styles.boxContent}>
       {clues.map((item) => (
-        <div key={item} className={styles.record}>
+        <div key={item.clue} className={styles.record}>
           <span>{item.name} </span>
           {translate('gives_clue')}
           <strong>
             {' '}
-            {item.clueWord}-{item.clueNum}
+            {item.clue}-{item.count}
           </strong>
         </div>
       ))}

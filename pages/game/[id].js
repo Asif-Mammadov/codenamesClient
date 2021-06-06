@@ -63,7 +63,6 @@ const RoomPage = () => {
         // Save in localstorage
         window.localStorage.setItem('player', JSON.stringify(playerInfo));
         setPlayer(playerInfo);
-        console.log(playerInfo);
       });
 
       // Get all players info
@@ -85,7 +84,7 @@ const RoomPage = () => {
       socket.on('notYourTurn', (team, isSpymaster) => {
         if (player.team === team && player.isSpymaster === isSpymaster) {
           console.log('not your turn');
-          updatePlayer((prevState) => {
+          setPlayer((prevState) => {
             return { ...prevState, yourTurn: false };
           });
         }
@@ -93,7 +92,8 @@ const RoomPage = () => {
 
       // Get labels for spymaster
       socket.on('getLabels', (id, labels) => {
-        if ((socket.id = id)) {
+        console.log(labels);
+        if (socket.id === id) {
           setGame((prevState) => {
             return { ...prevState, labels };
           });
@@ -119,7 +119,6 @@ const RoomPage = () => {
 
       // Get clues
       socket.on('getClues', (clues) => {
-        console.log(clues);
         setGame((prevState) => {
           return { ...prevState, clues };
         });
@@ -127,7 +126,8 @@ const RoomPage = () => {
 
       // Blue spy turn
       socket.on('turnBlueSpy', (id) => {
-        console.log('is Blue spy: ', socket.id === id);
+        console.log('blue socket id', socket.id);
+        console.log('blue socket id from server', id);
         if (socket.id === id) {
           console.log('blue spy turn');
           setGame((prevState) => {
@@ -138,9 +138,9 @@ const RoomPage = () => {
 
       // Red spy turn
       socket.on('turnRedSpy', (id) => {
+        console.log('red socket id', socket.id);
+        console.log('red socket id from server', id);
         if (socket.id === id) {
-          console.log('socket id', socket.id);
-          console.log('socket id from server', id);
           setGame((prevState) => {
             return { ...prevState, yourTurn: true };
           });
@@ -149,15 +149,18 @@ const RoomPage = () => {
 
       // On choose card
       socket.on('chooseCard', (team, isSpymaster) => {
-        if (player.team === team && !isSpymaster) {
+        if (
+          JSON.parse(window.localStorage.getItem('player')).team === team &&
+          !isSpymaster
+        ) {
           console.log('choose a card');
-          updatePlayer((prevState) => {
+          setPlayer((prevState) => {
             return { ...prevState, yourTurn: true };
           });
         }
       });
     }
-  }, [socket]);
+  }, [socket, isGameStarted]);
 
   // Handle leave room
   const handleLeaveRoom = () => {
@@ -166,19 +169,51 @@ const RoomPage = () => {
     router.push('/game');
   };
 
+  // Select a card
+  const onCardSelected = (id) => {
+    if (player.yourTurn && !player.isSpymaster) {
+      socket.emit('cardChosen', id);
+    }
+  };
+
+  // End turn
+  const onEndTurn = () => {
+    if (player.yourTurn && !player.isSpymaster) {
+      socket.emit('endTurn');
+      setGame((prevState) => {
+        return { ...prevState, yourTurn: false };
+      });
+    }
+  };
+
+  // Enter clue
+  const onClueEntered = (clue, count) => {
+    socket.emit('clueEntered', clue, count, player.name);
+    setGame((prevState) => {
+      return { ...prevState, yourTurn: false };
+    });
+  };
+
   // Common config for game pages
   const gameConfig = {
     translate: t,
     socket: socket,
     player: player,
     players: players,
-    setPlayer: setPlayer
+    updatePlayer: setPlayer
   };
 
   return (
     <GameLayout translate={t} onLeaveRoom={handleLeaveRoom}>
       {isGameStarted ? (
-        <Playboard key={players} game={game} {...gameConfig} />
+        <Playboard
+          key={players}
+          game={game}
+          {...gameConfig}
+          selectCard={onCardSelected}
+          endTurn={onEndTurn}
+          enterClue={onClueEntered}
+        />
       ) : (
         <Room
           key={players}

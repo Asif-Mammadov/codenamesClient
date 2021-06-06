@@ -12,6 +12,16 @@ const Room = ({ translate, gameStarted, socket, player, players }) => {
   };
 
   const onStartGame = () => {
+    // Don't start if teams are not full
+    if (
+      !players.redSpy ||
+      !players.blueSpy ||
+      players.redOps.length === 0 ||
+      players.blueOps.length === 0
+    ) {
+      return;
+    }
+
     gameStarted();
     // Notify server that game starts
     socket.emit('startGame');
