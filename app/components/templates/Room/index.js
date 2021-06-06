@@ -1,5 +1,4 @@
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { LANGS } from '../../../data/main';
 import Button from '../../elements/Button';
 import Dropdown from '../../elements/Dropdown';
@@ -7,15 +6,6 @@ import TeamCard from '../../elements/TeamCard';
 import styles from './Room.module.scss';
 
 const Room = ({ translate, gameStarted, socket, player, players }) => {
-  const router = useRouter();
-
-  useEffect(() => {
-    // if (!player || !players) {
-    //   console.log('test');
-    //   router.push('/game');
-    // }
-  }, [player, players]);
-
   const onLangChange = (lang) => {
     // Send game language to server
     socket.emit('sendLang', lang.icon); // icon = az, fr, ar, en
@@ -44,6 +34,7 @@ const Room = ({ translate, gameStarted, socket, player, players }) => {
             spymaster={players.redSpy}
             joinAsOps={() => socket.emit('joinedRedOps', player)}
             joinAsSpy={() => socket.emit('joinedRedSpy', player)}
+            myUsername={player.name}
           />
         </section>
 
@@ -51,14 +42,18 @@ const Room = ({ translate, gameStarted, socket, player, players }) => {
           <h1>{translate('welcome_room')}</h1>
           <p>{translate('choose_team')}</p>
 
-          <div className={styles.gameLang}>
-            <h6>{translate('game_lang')}</h6>
-            <Dropdown items={LANGS} light onChange={onLangChange} />
-          </div>
+          {player.isHost ? (
+            <div className={styles.gameLang}>
+              <h6>{translate('game_lang')}</h6>
+              <Dropdown items={LANGS} light onChange={onLangChange} />
+            </div>
+          ) : null}
 
-          <Button shadow clicked={onStartGame}>
-            {translate('start_game')}
-          </Button>
+          {player.isHost ? (
+            <Button shadow clicked={onStartGame}>
+              {translate('start_game')}
+            </Button>
+          ) : null}
         </section>
 
         <section className={styles.cardWrapper}>
@@ -68,20 +63,24 @@ const Room = ({ translate, gameStarted, socket, player, players }) => {
             spymaster={players.blueSpy}
             joinAsOps={() => socket.emit('joinedBlueOps', player)}
             joinAsSpy={() => socket.emit('joinedBlueSpy', player)}
-            myUsername={player ? player.username : null}
+            myUsername={player.name}
           />
         </section>
       </div>
       {/* For mobile */}
       <section className={[styles.content, styles.mobile].join(' ')}>
-        <div className={styles.gameLang}>
-          <h6>{translate('game_lang')}</h6>
-          <Dropdown items={LANGS} light upward onChange={onLangChange} />
-        </div>
+        {player.isHost ? (
+          <div className={styles.gameLang}>
+            <h6>{translate('game_lang')}</h6>
+            <Dropdown items={LANGS} light upward onChange={onLangChange} />
+          </div>
+        ) : null}
 
-        <Button shadow clicked={onStartGame}>
-          {translate('start_game')}
-        </Button>
+        {player.isHost ? (
+          <Button shadow clicked={onStartGame}>
+            {translate('start_game')}
+          </Button>
+        ) : null}
       </section>
     </div>
   ) : null;

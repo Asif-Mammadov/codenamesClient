@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Button from '../../elements/Button';
 import TeamCard from '../../elements/TeamCard';
 import Gamelog from '../../elements/Gamelog';
@@ -13,89 +13,8 @@ const Playboard = ({
   player,
   updatePlayer,
   players,
-  updatePlayers
+  game
 }) => {
-  // Store game state
-  const [game, setGame] = useState({
-    blueFirst: false,
-    board: [],
-    labels: [],
-    enterClue: false,
-    clues: []
-  });
-
-  useEffect(() => {
-    if (socket) {
-      // Check if blue starts the game
-      socket.on('gameStarted', (blueStarts) => {
-        console.log(blueStarts);
-        setGame({ ...game, blueFirst: blueStarts });
-      });
-
-      // Get player info and update player
-      socket.on('updateRole', (playerInfo) => updatePlayer(playerInfo));
-
-      // Get all players info
-      socket.on('updatePlayers', (playersInfo) => updatePlayers(playersInfo));
-
-      // If not player's turn
-      socket.on('notYourTurn', (team, isSpymaster) => {
-        if (player.team === team && player.isSpymaster === isSpymaster) {
-          updatePlayer({ ...player, yourTurn: false });
-        }
-      });
-
-      // Get labels for spymaster
-      socket.on('getLabels', (socketID, labels) => {
-        console.log(labels);
-        if (socketID == socket.id) {
-          setGame({ ...game, labels: labels });
-        }
-      });
-
-      // Get board for operatives
-      socket.on('getBoard', (boardValues) => {
-        console.log(boardValues);
-        setGame({ ...game, board: boardValues });
-      });
-
-      // Start enter clue mode
-      socket.on('enterClue', (socketID) => {
-        if (socketID === socket.id) {
-          setGame({ ...game, enterClue: true });
-        }
-      });
-
-      // Get clues
-      socket.on('getClues', (clues) => {
-        setGame({ ...game, clues });
-      });
-
-      // Blue spy turn
-      socket.on('turnBlueSpy', (socketID) => {
-        if (socket.id === socketID) {
-          updatePlayer({ ...player, yourTurn: true });
-        }
-      });
-
-      // Red spy turn
-      socket.on('turnRedSpy', (socketID) => {
-        if (socket.id === socketID) {
-          updatePlayer({ ...player, yourTurn: true });
-        }
-      });
-
-      // On choose card
-      socket.on('chooseCard', (team, isSpymaster) => {
-        if (player.team === team && player.isSpymaster === isSpymaster) {
-          updatePlayer({ ...player, yourTurn: true });
-        }
-      });
-
-      console.log(game);
-    }
-  }, [socket]);
-
   // Select a card
   const onCardSelected = (id) => {
     if (player.yourTurn && !player.isSpymaster) {
@@ -127,6 +46,7 @@ const Playboard = ({
             startFirst={!game.blueFirst}
             operatives={players ? players.redOps : []}
             spymaster={players ? players.redSpy : []}
+            myUsername={player.name}
             gameMode
             isRed
           />
@@ -145,6 +65,7 @@ const Playboard = ({
             startFirst={game.blueFirst}
             operatives={players ? players.blueOps : []}
             spymaster={players ? players.blueSpy : []}
+            myUsername={player.name}
             gameMode
           />
         </section>

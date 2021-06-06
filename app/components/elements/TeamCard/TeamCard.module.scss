@@ -51,6 +51,10 @@
           @extend .user-avatar;
           margin-right: 16px;
           margin-bottom: 16px;
+
+          &.me {
+            color: $color-secondary;
+          }
         }
       }
     }
