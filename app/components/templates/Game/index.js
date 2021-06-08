@@ -94,12 +94,12 @@ const RoomForm = ({ isCreate, translate }) => {
   const handleEnterRoom = (room) => {
     // Get player info and update player
     socket.on('updateRole', (playerInfo) => {
-      window.localStorage.setItem('player', JSON.stringify(playerInfo));
+      window.sessionStorage.setItem('player', JSON.stringify(playerInfo));
     });
 
     // Get all players info
     socket.on('updatePlayers', (playersInfo) => {
-      window.localStorage.setItem('players', JSON.stringify(playersInfo));
+      window.sessionStorage.setItem('players', JSON.stringify(playersInfo));
     });
 
     // Navigate to the room page
@@ -203,8 +203,8 @@ const Game = ({ translate }) => {
 
   useEffect(() => {
     // Clear previous game info
-    window.localStorage.removeItem('player');
-    window.localStorage.removeItem('players');
+    window.sessionStorage.removeItem('player');
+    window.sessionStorage.removeItem('players');
   }, []);
 
   return (

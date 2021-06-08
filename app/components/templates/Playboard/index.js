@@ -14,6 +14,8 @@ const Playboard = ({
   selectCard,
   enterClue,
   endTurn,
+  sendGlobalMessage,
+  sendTeamMessage,
   game
 }) => {
   console.log(player);
@@ -26,10 +28,10 @@ const Playboard = ({
         <section className={styles.sectionWrapper}>
           <TeamCard
             translate={translate}
-            startFirst={!game.blueFirst}
             operatives={players ? players.redOps : []}
             spymaster={players ? players.redSpy : []}
             myUsername={player.name}
+            score={game.redScore}
             gameMode
             isRed
           />
@@ -45,10 +47,10 @@ const Playboard = ({
         <section className={styles.sectionWrapper}>
           <TeamCard
             translate={translate}
-            startFirst={game.blueFirst}
             operatives={players ? players.blueOps : []}
             spymaster={players ? players.blueSpy : []}
             myUsername={player.name}
+            score={game.blueScore}
             gameMode
           />
         </section>
@@ -95,7 +97,14 @@ const Playboard = ({
         ) : null}
 
         <section className={styles.sectionWrapper}>
-          <Chat translate={translate} />
+          <Chat
+            translate={translate}
+            globalMessages={game.globalChat}
+            teamMessages={game.teamChat}
+            onSendGlobal={sendGlobalMessage}
+            onSendTeam={sendTeamMessage}
+            myUsername={player.name}
+          />
         </section>
       </div>
     </div>

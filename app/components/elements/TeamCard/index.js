@@ -10,15 +10,15 @@ const TeamCard = ({
   spymaster,
   joinAsOps,
   joinAsSpy,
-  startFirst,
-  myUsername
+  myUsername,
+  score
 }) => {
   return (
     <div className={[styles.teamCard, isRed ? styles.red : ''].join(' ')}>
       <img src={`/img/team-${isRed ? 'red' : 'blue'}.png`} />
 
       <div className={styles.teamCardContent}>
-        {gameMode ? <h3>{startFirst ? 9 : 8}</h3> : null}
+        {gameMode ? <h3>{score}</h3> : null}
 
         <section className={styles.roleWrapper}>
           <h6>{translate('operatives')}</h6>

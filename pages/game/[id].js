@@ -11,7 +11,6 @@ const RoomPage = () => {
   const { t } = useTranslation();
   const [isGameStarted, setIsGameStarted] = useState(false);
 
-  // LocalStorage hooks (created in 'create or join room' page)
   const [player, setPlayer] = useState();
   const [players, setPlayers] = useState();
   // Store game state
@@ -20,7 +19,11 @@ const RoomPage = () => {
     board: [],
     labels: [],
     enterClue: false,
-    clues: []
+    clues: [],
+    redScore: 0,
+    blueScore: 0,
+    globalChat: [],
+    teamChat: []
   });
 
   const router = useRouter();
@@ -44,9 +47,9 @@ const RoomPage = () => {
       // Redirect if not authenticated
       socket.on('unauth', () => router.push('/game'));
 
-      // Get player and players info from localstorage
-      setPlayer(JSON.parse(window.localStorage.getItem('player')));
-      setPlayers(JSON.parse(window.localStorage.getItem('players')));
+      // Get player and players info from storage
+      setPlayer(JSON.parse(window.sessionStorage.getItem('player')));
+      setPlayers(JSON.parse(window.sessionStorage.getItem('players')));
 
       // Send room to the server to check if it's valid
       socket.emit('checkRoom', roomId);
@@ -61,15 +64,15 @@ const RoomPage = () => {
 
       // Get player info and update player
       socket.on('updateRole', (playerInfo) => {
-        // Save in localstorage
-        window.localStorage.setItem('player', JSON.stringify(playerInfo));
+        // Save in storage
+        window.sessionStorage.setItem('player', JSON.stringify(playerInfo));
         setPlayer(playerInfo);
       });
 
       // Get all players info
       socket.on('updatePlayers', (playersInfo) => {
-        // Save in localstorage
-        window.localStorage.setItem('players', JSON.stringify(playersInfo));
+        // Save in storage
+        window.sessionStorage.setItem('players', JSON.stringify(playersInfo));
         setPlayers(playersInfo);
       });
 
@@ -83,9 +86,10 @@ const RoomPage = () => {
 
       // If not player's turn
       socket.on('notYourTurn', (team, isSpymaster) => {
-        const player = JSON.parse(window.localStorage.getItem('player'));
+        const player = JSON.parse(window.sessionStorage.getItem('player'));
         if (player.team === team && player.isSpymaster === isSpymaster) {
           console.log('not your turn');
+          window.sessionStorage.setItem('player', JSON.stringify(playerInfo));
           setPlayer((prevState) => {
             return { ...prevState, yourTurn: false };
           });
@@ -127,6 +131,13 @@ const RoomPage = () => {
         });
       });
 
+      // Get game score
+      socket.on('getScore', (blue, red) => {
+        setGame((prevState) => {
+          return { ...prevState, blueScore: blue, redScore: red };
+        });
+      });
+
       // Blue spy turn
       socket.on('turnBlueSpy', (id) => {
         console.log('blue socket id', socket.id);
@@ -152,7 +163,7 @@ const RoomPage = () => {
 
       // On choose card
       socket.on('chooseCard', (team, isSpymaster) => {
-        const player = JSON.parse(window.localStorage.getItem('player'));
+        const player = JSON.parse(window.sessionStorage.getItem('player'));
         console.log('test');
         if (player.team === team && !isSpymaster) {
           console.log('choose a card');
@@ -160,6 +171,23 @@ const RoomPage = () => {
             return { ...prevState, yourTurn: true };
           });
         }
+      });
+
+      // Get global chat messages
+      socket.on('getGlobalMessages', (messages) => {
+        setGame((prevState) => {
+          return { ...prevState, globalChat: messages };
+        });
+      });
+
+      // Get team messages
+      socket.on('getTeamMessages', (messages, team) => {
+        const player = JSON.parse(window.sessionStorage.getItem('player'));
+        setGame((prevState) => {
+          if (player.team === team) {
+            return { ...prevState, teamChat: messages };
+          }
+        });
       });
     }
   }, [socket]);
@@ -223,6 +251,14 @@ const RoomPage = () => {
     });
   };
 
+  // Send global message
+  const globalMessageSent = (message) =>
+    socket.emit('sendGlobalMessage', message);
+
+  // Send team message
+  const teamMessageSent = (message) =>
+    socket.emit('sendTeamMessage', message, player.team);
+
   // Common config for game pages
   const gameConfig = {
     translate: t,
@@ -239,6 +275,8 @@ const RoomPage = () => {
           selectCard={onCardSelected}
           endTurn={onEndTurn}
           enterClue={onClueEntered}
+          sendGlobalMessage={globalMessageSent}
+          sendTeamMessage={teamMessageSent}
         />
       ) : (
         <Room
