@@ -17,6 +17,10 @@
       color: $color-secondary;
     }
 
+    em {
+      margin: 0 4px;
+    }
+
     // Clue
     strong {
       @extend .fw-700;

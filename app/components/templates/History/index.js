@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
+import { connect } from 'react-redux';
 import colors from '../../../constants/colors';
 import withAuth from '../../../hoc/withAuth';
+import Spinner from '../../elements/Spinner';
 import AccountLayout from '../../layouts/AccountLayout';
 
-const History = ({ translate, isAuth }) => {
+const History = ({ translate, isAuth, details, loading }) => {
   const columns = [
     {
       id: 'name',
@@ -36,26 +38,34 @@ const History = ({ translate, isAuth }) => {
     }
   ];
 
-  const history = [
-    {
-      name: translate('games'),
-      win: 10,
-      loss: 5,
-      ratio: '2:1'
-    },
-    {
-      name: translate('guesses_spymaster'),
-      win: 5,
-      loss: 8,
-      ratio: '5:8'
-    },
-    {
-      name: translate('guesses_operative'),
-      win: 3,
-      loss: 5,
-      ratio: '3:5'
+  const [history, setHistory] = useState();
+
+  console.log(loading);
+
+  useEffect(() => {
+    if (details) {
+      setHistory([
+        {
+          name: translate('games'),
+          win: details[0].Wins,
+          loss: details[0].Loses,
+          ratio: `${details[0].Wins}:${details[0].Loses}`
+        },
+        {
+          name: translate('guesses_spymaster'),
+          win: details[0].GuessedRightAsSpymaster,
+          loss: details[0].GuessedWrongAsSpymaster,
+          ratio: `${details[0].GuessedRightAsSpymaster}:${details[0].GuessedWrongAsSpymaster}`
+        },
+        {
+          name: translate('guesses_operative'),
+          win: details[0].GuessedRightAsOperative,
+          loss: details[0].GuessedWrongAsOperative,
+          ratio: `${details[0].GuessedRightAsOperative}:${details[0].GuessedWrongAsOperative}`
+        }
+      ]);
     }
-  ];
+  }, [details]);
 
   return (
     <AccountLayout translate={translate}>
@@ -84,4 +94,9 @@ const History = ({ translate, isAuth }) => {
   );
 };
 
-export default withAuth(History);
+const mapStateToProps = ({ auth }) => {
+  const { details } = auth;
+  return { details };
+};
+
+export default connect(mapStateToProps)(History);

@@ -2,6 +2,7 @@ import {
   AUTHENTICATED,
   AUTH_TOKEN,
   GET_DETAILS_SUCCESS,
+  GET_SCOREBOARD_SUCCESS,
   HIDE_AUTH_MESSAGE,
   RESET_PASSWORD_SUCCESS,
   SHOW_AUTH_LOADING,
@@ -17,11 +18,13 @@ const isBrowser = typeof window !== `undefined`;
 const initState = {
   loading: false,
   errorMessage: null,
+  successMessage: null,
   showMessage: false,
   redirect: '',
   token: isBrowser ? localStorage.getItem(AUTH_TOKEN) : null,
   userId: isBrowser ? localStorage.getItem(USER_ID) : null,
-  details: null
+  details: null,
+  scoreboard: null
 };
 
 const Auth = (state = initState, action) => {
@@ -38,7 +41,7 @@ const Auth = (state = initState, action) => {
       return {
         ...state,
         token: null,
-        redirect: '/',
+        redirect: '/login',
         loading: false
       };
     case SIGNUP_SUCCESS:
@@ -56,12 +59,22 @@ const Auth = (state = initState, action) => {
     case RESET_PASSWORD_SUCCESS:
       return {
         ...state,
-        loading: false
+        loading: false,
+        showMessage: true,
+        successMessage: action.message
       };
     case UPDATE_DETAILS_SUCCESS:
       return {
         ...state,
-        loading: false
+        loading: false,
+        showMessage: true,
+        successMessage: action.message
+      };
+    case GET_SCOREBOARD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        scoreboard: action.scoreboard
       };
     case SHOW_AUTH_MESSAGE:
       return {
@@ -74,6 +87,7 @@ const Auth = (state = initState, action) => {
       return {
         ...state,
         errorMessage: null,
+        successMessage: null,
         showMessage: false
       };
     case SHOW_AUTH_LOADING:

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Button from '../../elements/Button';
 import TeamCard from '../../elements/TeamCard';
 import Gamelog from '../../elements/Gamelog';
@@ -10,107 +10,16 @@ import ClueForm from '../../elements/ClueForm';
 const Playboard = ({
   translate,
   player,
-  updatePlayer,
   players,
-  updatePlayers
+  selectCard,
+  enterClue,
+  endTurn,
+  sendGlobalMessage,
+  sendTeamMessage,
+  game
 }) => {
-  // Get socket connection
-  const socket = useContext(SocketContext);
-
-  // Store game state
-  const [game, setGame] = useState({
-    blueFirst: false,
-    board: [],
-    labels: [],
-    enterClue: false,
-    clues: []
-  });
-
-  useEffect(() => {
-    // Check if blue starts the game
-    socket.on('gameStarted', (blueStarts) =>
-      setGame({ ...game, blueFirst: blueStarts })
-    );
-
-    // Get player info and update player
-    socket.on('updateRole', (playerInfo) => updatePlayer(playerInfo));
-
-    // Get all players info
-    socket.on('updatePlayers', (playersInfo) => updatePlayers(playersInfo));
-
-    // If not player's turn
-    socket.on('notYourTurn', (team, isSpymaster) => {
-      if (player.team === team && player.isSpymaster === isSpymaster) {
-        updatePlayer({ ...player, yourTurn: false });
-      }
-    });
-
-    // Get labels for spymaster
-    socket.on('getLabels', (socketID, labels) => {
-      if (socketID == socket.id) {
-        setGame({ ...game, labels: labels });
-      }
-    });
-
-    // Get board for operatives
-    socket.on('getBoard', (boardValues) => {
-      setGame({ ...game, board: boardValues });
-    });
-
-    // Start enter clue mode
-    socket.on('enterClue', (socketID) => {
-      if (socketID === socket.id) {
-        setGame({ ...game, enterClue: true });
-      }
-    });
-
-    // Get clues
-    socket.on('getClues', (clues) => {
-      setGame({ ...game, clues });
-    });
-
-    // Blue spy turn
-    socket.on('turnBlueSpy', (socketID) => {
-      if (socket.id === socketID) {
-        updatePlayer({ ...player, yourTurn: true });
-      }
-    });
-
-    // Red spy turn
-    socket.on('turnRedSpy', (socketID) => {
-      if (socket.id === socketID) {
-        updatePlayer({ ...player, yourTurn: true });
-      }
-    });
-
-    // On choose card
-    socket.on('chooseCard', (team, isSpymaster) => {
-      if (player.team === team && player.isSpymaster === isSpymaster) {
-        updatePlayer({ ...player, yourTurn: true });
-      }
-    });
-  }, [socket]);
-
-  // Select a card
-  const onCardSelected = (id) => {
-    if (player.yourTurn && !player.isSpymaster) {
-      socket.emit('cardChosen', id);
-    }
-  };
-
-  // End turn
-  const onEndTurn = () => {
-    if (player.yourTurn && !player.isSpymaster) {
-      updatePlayer({ ...player, yourTurn: false });
-      socket.emit('endTurn');
-    }
-  };
-
-  // Enter clue
-  const onClueEntered = (clue, count) => {
-    socket.emit('clueEntered', clue, count, player.name);
-    updatePlayer({ ...player, yourTurn: false });
-  };
+  console.log(player);
+  console.log(game);
 
   return (
     <div className={styles.boardContainer}>
@@ -119,9 +28,10 @@ const Playboard = ({
         <section className={styles.sectionWrapper}>
           <TeamCard
             translate={translate}
-            startFirst={!game.blueFirst}
-            operatives={players.redOps}
-            spymaster={players.redSpy}
+            operatives={players ? players.redOps : []}
+            spymaster={players ? players.redSpy : []}
+            myUsername={player.name}
+            score={game.redScore}
             gameMode
             isRed
           />
@@ -131,15 +41,16 @@ const Playboard = ({
           spymaster={player.isSpymaster}
           board={game.board}
           labels={game.labels}
-          selectCard={onCardSelected}
+          selectCard={selectCard}
         />
 
         <section className={styles.sectionWrapper}>
           <TeamCard
             translate={translate}
-            startFirst={game.blueFirst}
-            operatives={players.blueOps}
-            spymaster={players.blueSpy}
+            operatives={players ? players.blueOps : []}
+            spymaster={players ? players.blueSpy : []}
+            myUsername={player.name}
+            score={game.blueScore}
             gameMode
           />
         </section>
@@ -151,15 +62,21 @@ const Playboard = ({
         spymaster={player.isSpymaster}
         board={game.board}
         labels={game.labels}
-        selectCard={onCardSelected}
+        selectCard={selectCard}
       />
 
       {/* Clue form for mobile */}
-      {enterClue ? (
-        <ClueForm translate={translate} enterClue={onClueEntered} isMobile />
-      ) : (
-        <Button clicked={onEndTurn}>End Turn</Button>
-      )}
+      {game.enterClue ? (
+        <ClueForm translate={translate} enterClue={enterClue} isMobile />
+      ) : null}
+
+      {player.yourTurn && !player.isSpymaster ? (
+        <div className={[styles.endTurnWrapper, styles.mobile].join(' ')}>
+          <Button clicked={endTurn} style={{ margin: '20 auto' }}>
+            End Turn
+          </Button>
+        </div>
+      ) : null}
 
       {/* Log, chat, clue sections */}
       <div className={styles.boardRow}>
@@ -167,14 +84,27 @@ const Playboard = ({
           <Gamelog translate={translate} clues={game.clues} />
         </section>
 
-        {enterClue ? (
-          <ClueForm translate={translate} enterClue={onClueEntered} />
-        ) : (
-          <Button clicked={onEndTurn}>End Turn</Button>
-        )}
+        {game.enterClue ? (
+          <ClueForm translate={translate} enterClue={enterClue} />
+        ) : null}
+
+        {player.yourTurn && !player.isSpymaster ? (
+          <div className={styles.endTurnWrapper}>
+            <Button clicked={endTurn} style={{ margin: '0 auto' }}>
+              End Turn
+            </Button>
+          </div>
+        ) : null}
 
         <section className={styles.sectionWrapper}>
-          <Chat translate={translate} />
+          <Chat
+            translate={translate}
+            globalMessages={game.globalChat}
+            teamMessages={game.teamChat}
+            onSendGlobal={sendGlobalMessage}
+            onSendTeam={sendTeamMessage}
+            myUsername={player.name}
+          />
         </section>
       </div>
     </div>

@@ -23,12 +23,21 @@
   box-shadow: $shadow;
   transition: $transition;
 
+  // Don't show any content while closing
+  > * {
+    display: none;
+  }
+
   span {
     margin: 8px 0 0 0;
   }
 
   &.show {
     top: 0;
+
+    > * {
+      display: block;
+    }
   }
 }
 

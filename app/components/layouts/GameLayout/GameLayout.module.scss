@@ -2,6 +2,7 @@
 @import 'vendor/bootstrap-grid';
 
 .game {
+  min-height: 100vh;
   &Header {
     @extend .header;
 

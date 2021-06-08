@@ -3,7 +3,14 @@ import Button from '../Button';
 import FormGroup from '../FormGroup';
 import styles from './Chat.module.scss';
 
-const Chat = ({ translate }) => {
+const Chat = ({
+  translate,
+  globalMessages,
+  teamMessages,
+  onSendGlobal,
+  onSendTeam,
+  myUsername
+}) => {
   const [chatBox, setChatBox] = useState({
     value: '',
     valid: false
@@ -11,6 +18,9 @@ const Chat = ({ translate }) => {
   const [isGlobal, setIsGlobal] = useState(true);
 
   const chat = useRef(null);
+
+  console.log(globalMessages);
+  console.log(teamMessages);
 
   useEffect(
     () =>
@@ -28,7 +38,12 @@ const Chat = ({ translate }) => {
     e.preventDefault();
 
     if (chatBox.value.trim() !== '') {
-      console.log(chatBox.value);
+      const message = { name: myUsername, content: chatBox.value };
+
+      isGlobal ? onSendGlobal(message) : onSendTeam(message);
+
+      // Clear input
+      setChatBox({ value: '', valid: false });
     }
   };
 
@@ -42,13 +57,19 @@ const Chat = ({ translate }) => {
       </div>
 
       <div className={styles.boxContent}>
-        {Array.from({ length: 5 }).map((item) => (
-          <div key={item} className={[styles.message].join(' ')}>
+        {(isGlobal ? globalMessages : teamMessages).map((item) => (
+          <div
+            key={item.content}
+            className={[
+              styles.message,
+              myUsername === item.name ? styles.me : ''
+            ].join(' ')}
+          >
             <div>
               <img src="/img/avatar.png" />
-              <span>Eyvaz</span>
+              <span>{item.name}</span>
             </div>
-            <p>Hello world</p>
+            <p>{item.content}</p>
           </div>
         ))}
       </div>

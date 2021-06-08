@@ -2,7 +2,10 @@ import {
   AUTHENTICATED,
   GET_DETAILS,
   GET_DETAILS_SUCCESS,
+  GET_SCOREBOARD,
+  GET_SCOREBOARD_SUCCESS,
   HIDE_AUTH_MESSAGE,
+  RESET_PASSWORD,
   RESET_PASSWORD_SUCCESS,
   SHOW_AUTH_LOADING,
   SHOW_AUTH_MESSAGE,
@@ -76,22 +79,37 @@ export const updateDetails = (data) => {
   };
 };
 
-export const updateDetailsSuccess = () => {
+export const updateDetailsSuccess = (message) => {
   return {
-    type: UPDATE_DETAILS_SUCCESS
+    type: UPDATE_DETAILS_SUCCESS,
+    message
   };
 };
 
 export const resetPassword = (data) => {
   return {
-    type: UPDATE_DETAILS,
+    type: RESET_PASSWORD,
     data
   };
 };
 
-export const resetPasswordSuccess = () => {
+export const resetPasswordSuccess = (message) => {
   return {
-    type: RESET_PASSWORD_SUCCESS
+    type: RESET_PASSWORD_SUCCESS,
+    message
+  };
+};
+
+export const getScoreboard = () => {
+  return {
+    type: GET_SCOREBOARD
+  };
+};
+
+export const getScoreboardSuccess = (data) => {
+  return {
+    type: GET_SCOREBOARD_SUCCESS,
+    scoreboard: data
   };
 };
 
