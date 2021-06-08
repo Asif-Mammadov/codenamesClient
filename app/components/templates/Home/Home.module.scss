@@ -37,6 +37,7 @@
     @extend .headline;
     @extend .mb-lg-4;
     @extend .mb-3;
+    text-transform: uppercase;
   }
 
   > p {

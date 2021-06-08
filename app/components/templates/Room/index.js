@@ -5,52 +5,82 @@ import Dropdown from '../../elements/Dropdown';
 import TeamCard from '../../elements/TeamCard';
 import styles from './Room.module.scss';
 
-const Room = () => {
-  return (
+const Room = ({
+  translate,
+  startGame,
+  changeLang,
+  player,
+  players,
+  joinAs
+}) => {
+  return player && players ? (
     <div className={styles.roomContainer}>
-      {/* For module */}
+      {/* For mobile */}
       <section className={[styles.content, styles.mobile].join(' ')}>
-        <h1>
-          WELCOME TO THE <span>ROOM!</span>
-        </h1>
-        <p>Please choose your team and role.</p>
+        <h1>{translate('welcome_room')}</h1>
+        <p>{translate('choose_team')}</p>
       </section>
 
       <div className={styles.roomBody}>
         <section className={styles.cardWrapper}>
-          <TeamCard isRed />
+          <TeamCard
+            translate={translate}
+            isRed
+            operatives={players.redOps}
+            spymaster={players.redSpy}
+            joinAsOps={() => joinAs('RedOps')}
+            joinAsSpy={() => joinAs('RedSpy')}
+            myUsername={player.name}
+          />
         </section>
 
         <section className={styles.content}>
-          <h1>
-            WELCOME TO THE <span>ROOM!</span>
-          </h1>
-          <p>Please choose your team and role.</p>
+          <h1>{translate('welcome_room')}</h1>
+          <p>{translate('choose_team')}</p>
 
-          <div className={styles.gameLang}>
-            <h6>Game language</h6>
-            <Dropdown items={LANGS} light />
-          </div>
+          {player.isHost ? (
+            <div className={styles.gameLang}>
+              <h6>{translate('game_lang')}</h6>
+              <Dropdown items={LANGS} light onChange={changeLang} />
+            </div>
+          ) : null}
 
-          <Button shadow>Start Game</Button>
+          {player.isHost ? (
+            <Button shadow clicked={startGame}>
+              {translate('start_game')}
+            </Button>
+          ) : null}
         </section>
 
         <section className={styles.cardWrapper}>
-          <TeamCard />
+          <TeamCard
+            translate={translate}
+            operatives={players.blueOps}
+            spymaster={players.blueSpy}
+            joinAsOps={() => joinAs('BlueOps')}
+            joinAsSpy={() => joinAs('BlueSpy')}
+            myUsername={player.name}
+          />
         </section>
       </div>
 
-      {/* For module */}
+      {/* For mobile */}
       <section className={[styles.content, styles.mobile].join(' ')}>
-        <div className={styles.gameLang}>
-          <h6>Game language</h6>
-          <Dropdown items={LANGS} light upward />
-        </div>
+        {player.isHost ? (
+          <div className={styles.gameLang}>
+            <h6>{translate('game_lang')}</h6>
+            <Dropdown items={LANGS} light upward onChange={changeLang} />
+          </div>
+        ) : null}
 
-        <Button shadow>Start Game</Button>
+        {player.isHost ? (
+          <Button shadow clicked={startGame}>
+            {translate('start_game')}
+          </Button>
+        ) : null}
       </section>
     </div>
-  );
+  ) : null;
 };
 
 export default Room;

@@ -1,0 +1,33 @@
+@import 'app.scss';
+
+.formError {
+  @extend .fs-16;
+  @extend .lh-20;
+  @extend .fw-500;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $border-radius;
+  background-color: #ff6961;
+  color: $color-white;
+  opacity: 0;
+  height: 0;
+  transition: $transition;
+
+  // Don't show any content while closing
+  > * {
+    display: none;
+  }
+
+  &.show {
+    opacity: 1;
+    height: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+
+    > * {
+      display: block;
+    }
+  }
+}

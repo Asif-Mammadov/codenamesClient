@@ -2,4 +2,10 @@
 
 .tabs {
   @extend .tabs-primary;
+
+  .tabPanel {
+    form {
+      width: 100%;
+    }
+  }
 }

@@ -1,82 +1,110 @@
 import React from 'react';
 import Button from '../../elements/Button';
-import FormGroup from '../../elements/FormGroup';
-import GameCard from '../../elements/GameCard';
 import TeamCard from '../../elements/TeamCard';
 import Gamelog from '../../elements/Gamelog';
 import styles from './Playboard.module.scss';
 import Chat from '../../elements/Chat';
+import GameArea from '../../elements/GameArea';
+import ClueForm from '../../elements/ClueForm';
 
-const Playboard = () => {
+const Playboard = ({
+  translate,
+  player,
+  players,
+  selectCard,
+  enterClue,
+  endTurn,
+  sendGlobalMessage,
+  sendTeamMessage,
+  game
+}) => {
+  console.log(player);
+  console.log(game);
+
   return (
     <div className={styles.boardContainer}>
       {/* Game section */}
       <div className={styles.boardRow}>
         <section className={styles.sectionWrapper}>
-          <TeamCard isRed gameMode />
+          <TeamCard
+            translate={translate}
+            operatives={players ? players.redOps : []}
+            spymaster={players ? players.redSpy : []}
+            myUsername={player.name}
+            score={game.redScore}
+            gameMode
+            isRed
+          />
         </section>
 
-        <section className={styles.gameArea}>
-          {Array.from({ length: 25 }).map((item) => (
-            <div key={item} className={styles.gameCard}>
-              <GameCard />
-            </div>
-          ))}
-        </section>
+        <GameArea
+          spymaster={player.isSpymaster}
+          board={game.board}
+          labels={game.labels}
+          selectCard={selectCard}
+        />
 
         <section className={styles.sectionWrapper}>
-          <TeamCard gameMode />
+          <TeamCard
+            translate={translate}
+            operatives={players ? players.blueOps : []}
+            spymaster={players ? players.blueSpy : []}
+            myUsername={player.name}
+            score={game.blueScore}
+            gameMode
+          />
         </section>
       </div>
 
       {/* Game area for mobile */}
-      <div className={[styles.gameArea, styles.mobile].join(' ')}>
-        {Array.from({ length: 25 }).map((item) => (
-          <div key={item} className={styles.gameCard}>
-            <GameCard />
-          </div>
-        ))}
-      </div>
+      <GameArea
+        isMobile
+        spymaster={player.isSpymaster}
+        board={game.board}
+        labels={game.labels}
+        selectCard={selectCard}
+      />
 
       {/* Clue form for mobile */}
-      <form className={[styles.clueForm, styles.mobile].join(' ')}>
-        <div>
-          <FormGroup
-            name="clue"
-            type="text"
-            placeholder="Your clue"
-            style={{ marginRight: 8 }}
-          />
-          <FormGroup name="count" type="number" placeholder="0" />
+      {game.enterClue ? (
+        <ClueForm translate={translate} enterClue={enterClue} isMobile />
+      ) : null}
+
+      {player.yourTurn && !player.isSpymaster ? (
+        <div className={[styles.endTurnWrapper, styles.mobile].join(' ')}>
+          <Button clicked={endTurn} style={{ margin: '20 auto' }}>
+            End Turn
+          </Button>
         </div>
-        <Button shadow small style={{ marginTop: 8, width: '100%' }}>
-          Give clue
-        </Button>
-      </form>
+      ) : null}
 
       {/* Log, chat, clue sections */}
       <div className={styles.boardRow}>
         <section className={styles.sectionWrapper}>
-          <Gamelog />
+          <Gamelog translate={translate} clues={game.clues} />
         </section>
 
-        <form className={styles.clueForm}>
-          <div>
-            <FormGroup
-              name="clue"
-              type="text"
-              placeholder="Your clue"
-              style={{ marginRight: 8 }}
-            />
-            <FormGroup name="count" type="number" placeholder="0" />
+        {game.enterClue ? (
+          <ClueForm translate={translate} enterClue={enterClue} />
+        ) : null}
+
+        {player.yourTurn && !player.isSpymaster ? (
+          <div className={styles.endTurnWrapper}>
+            <Button clicked={endTurn} style={{ margin: '0 auto' }}>
+              End Turn
+            </Button>
           </div>
-          <Button shadow small style={{ marginTop: 8, width: '100%' }}>
-            Give clue
-          </Button>
-        </form>
+        ) : null}
 
         <section className={styles.sectionWrapper}>
-          <Chat />
+          <Chat
+            translate={translate}
+            globalMessages={game.globalChat}
+            teamMessages={game.teamChat}
+            onSendGlobal={sendGlobalMessage}
+            onSendTeam={sendTeamMessage}
+            myUsername={player.name}
+          />
         </section>
       </div>
     </div>

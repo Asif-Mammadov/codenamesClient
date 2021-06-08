@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const isBrowser = typeof window !== `undefined`;
+const isBrowser = typeof window !== 'undefined';
 
 const useWindowDimensions = () => {
   const [windowDimensions, setWindowDimensions] = useState({

@@ -2,50 +2,71 @@ import React from 'react';
 import Button from '../Button';
 import styles from './TeamCard.module.scss';
 
-const TeamCard = ({ isRed, gameMode }) => {
+const TeamCard = ({
+  isRed,
+  gameMode,
+  translate,
+  operatives,
+  spymaster,
+  joinAsOps,
+  joinAsSpy,
+  myUsername,
+  score
+}) => {
   return (
     <div className={[styles.teamCard, isRed ? styles.red : ''].join(' ')}>
       <img src={`/img/team-${isRed ? 'red' : 'blue'}.png`} />
 
       <div className={styles.teamCardContent}>
-        {gameMode ? <h3>8</h3> : null}
+        {gameMode ? <h3>{score}</h3> : null}
 
         <section className={styles.roleWrapper}>
-          <h6>Operatives</h6>
+          <h6>{translate('operatives')}</h6>
           <div>
-            {[0, 1, 2, 3].map((item) => (
-              <div
-                key={item}
-                className={[styles.player, item == 0 ? styles.me : ''].join(
-                  ' '
-                )}
-              >
-                <img src="/img/avatar.png" />
-                <span>Eyvaz</span>
-              </div>
-            ))}
+            {operatives.map((item) =>
+              item.username ? (
+                <div
+                  key={item.username}
+                  className={[
+                    styles.player,
+                    item.username === myUsername ? styles.me : ''
+                  ].join(' ')}
+                >
+                  <img src="/img/avatar.png" />
+                  <span>{item.username}</span>
+                </div>
+              ) : null
+            )}
           </div>
 
-          {!gameMode ? <Button extraSmall>Join</Button> : null}
+          {!gameMode ? (
+            <Button extraSmall clicked={joinAsOps}>
+              {translate('join')}
+            </Button>
+          ) : null}
         </section>
 
         <section className={styles.roleWrapper}>
-          <h6>Spymasters</h6>
+          <h6>{translate('spymasters')}</h6>
           <div>
-            {[0, 1, 2, 3].map((item) => (
+            {spymaster.username ? (
               <div
-                key={item}
-                className={[styles.player, item == 0 ? styles.me : ''].join(
-                  ' '
-                )}
+                className={[
+                  styles.player,
+                  spymaster.username === myUsername ? styles.me : ''
+                ].join(' ')}
               >
                 <img src="/img/avatar.png" />
-                <span>Eyvaz</span>
+                <span>{spymaster.username}</span>
               </div>
-            ))}
+            ) : null}
           </div>
 
-          {!gameMode ? <Button extraSmall>Join</Button> : null}
+          {!gameMode ? (
+            <Button extraSmall clicked={joinAsSpy}>
+              {translate('join')}
+            </Button>
+          ) : null}
         </section>
       </div>
     </div>

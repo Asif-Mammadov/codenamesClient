@@ -2,11 +2,11 @@ import React from 'react';
 import Footer from '../../modules/Footer';
 import Header from '../../modules/Header';
 
-const DefaultLayout = (props) => (
+const DefaultLayout = ({ children, translate }) => (
   <>
-    <Header />
-    <main>{props.children}</main>
-    <Footer />
+    <Header translate={translate} />
+    <main>{children}</main>
+    <Footer translate={translate} />
   </>
 );
 

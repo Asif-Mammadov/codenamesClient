@@ -1,13 +1,22 @@
+import React from 'react';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
-import { ACCOUNT_LINKS } from '../../../data/links';
-import { HOME_LINKS, LANGS } from '../../../data/main';
+import { HOME_LINKS, ACCOUNT_LINKS } from '../../../data/links';
+import { LANGS } from '../../../data/main';
 import Button from '../../elements/Button';
 import Dropdown from '../../elements/Dropdown';
 import NavLink from '../../elements/NavLink';
 import styles from './MobileMenu.module.scss';
+import { signOut } from '../../../store/actions/Auth';
+import { connect } from 'react-redux';
 
-const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
+const MobileMenu = ({
+  show,
+  isActive,
+  onClose,
+  isAccount,
+  translate,
+  signOut
+}) => {
   return show ? (
     <section className={[styles.menu, isActive ? styles.active : ''].join(' ')}>
       <div>
@@ -17,14 +26,19 @@ const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
             clicked={() => onClose()}
             href={`${!isAccount ? '/#' : ''}${link.href}`}
           >
-            {link.name}
+            {translate(link.name)}
           </NavLink>
         ))}
       </div>
 
       <div className={styles.menuOptions}>
         <div className={styles.langDropdown}>
-          <Dropdown items={LANGS} />
+          <Dropdown
+            items={LANGS}
+            onChange={onClose}
+            translate={translate}
+            lang
+          />
         </div>
 
         {isAccount ? (
@@ -32,14 +46,14 @@ const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
             <Link href="/game">
               <a style={{ marginBottom: 16 }}>
                 <Button icon="play-cards" type="white" small>
-                  Play
+                  {translate('play')}
                 </Button>
               </a>
             </Link>
             <Link href="/login">
               <a>
-                <Button icon="out" small>
-                  Sign Out
+                <Button icon="out" clicked={() => signOut()} small>
+                  {translate('sign_out')}
                 </Button>
               </a>
             </Link>
@@ -48,14 +62,12 @@ const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
           <div className={styles.homeButtons}>
             <Link href="/login">
               <a style={{ marginRight: 24 }}>
-                <Button type="white" style={{ width: 140 }}>
-                  Login
-                </Button>
+                <Button type="white">{translate('login')}</Button>
               </a>
             </Link>
             <Link href="/register">
-              <a>
-                <Button style={{ width: 140 }}>Register</Button>
+              <a style={{ marginRight: 0 }}>
+                <Button>{translate('register')}</Button>
               </a>
             </Link>
           </div>
@@ -65,4 +77,4 @@ const MobileMenu = ({ show, isActive, onClose, isAccount }) => {
   ) : null;
 };
 
-export default MobileMenu;
+export default connect(null, { signOut })(MobileMenu);
