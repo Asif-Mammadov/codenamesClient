@@ -59,7 +59,7 @@ const ClueForm = ({ isMobile, translate, enterClue }) => {
 
     if (clueForm.valid) {
       enterClue({
-        clue: clueForm.controls.clue.value,
+        word: clueForm.controls.clue.value,
         count: clueForm.controls.count.value
       });
     }

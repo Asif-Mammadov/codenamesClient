@@ -16,6 +16,9 @@ const Playboard = ({
   endTurn,
   game
 }) => {
+  console.log(player);
+  console.log(game);
+
   return (
     <div className={styles.boardContainer}>
       {/* Game section */}
@@ -65,7 +68,7 @@ const Playboard = ({
         <ClueForm translate={translate} enterClue={enterClue} isMobile />
       ) : null}
 
-      {game.yourTurn && !player.isSpymaster ? (
+      {player.yourTurn && !player.isSpymaster ? (
         <div className={[styles.endTurnWrapper, styles.mobile].join(' ')}>
           <Button clicked={endTurn} style={{ margin: '20 auto' }}>
             End Turn
@@ -83,7 +86,7 @@ const Playboard = ({
           <ClueForm translate={translate} enterClue={enterClue} />
         ) : null}
 
-        {game.yourTurn && !player.isSpymaster ? (
+        {player.yourTurn && !player.isSpymaster ? (
           <div className={styles.endTurnWrapper}>
             <Button clicked={endTurn} style={{ margin: '0 auto' }}>
               End Turn

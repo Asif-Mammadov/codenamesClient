@@ -29,6 +29,7 @@ const RoomPage = () => {
   const socket = useSocket();
 
   useEffect(() => {
+    console.log('PLAYER', player);
     if (socket) {
       const roomId = router.query.id;
 
@@ -82,6 +83,7 @@ const RoomPage = () => {
 
       // If not player's turn
       socket.on('notYourTurn', (team, isSpymaster) => {
+        const player = JSON.parse(window.localStorage.getItem('player'));
         if (player.team === team && player.isSpymaster === isSpymaster) {
           console.log('not your turn');
           setPlayer((prevState) => {
@@ -119,6 +121,7 @@ const RoomPage = () => {
 
       // Get clues
       socket.on('getClues', (clues) => {
+        console.log(clues);
         setGame((prevState) => {
           return { ...prevState, clues };
         });
@@ -149,10 +152,9 @@ const RoomPage = () => {
 
       // On choose card
       socket.on('chooseCard', (team, isSpymaster) => {
-        if (
-          JSON.parse(window.localStorage.getItem('player')).team === team &&
-          !isSpymaster
-        ) {
+        const player = JSON.parse(window.localStorage.getItem('player'));
+        console.log('test');
+        if (player.team === team && !isSpymaster) {
           console.log('choose a card');
           setPlayer((prevState) => {
             return { ...prevState, yourTurn: true };
@@ -160,7 +162,33 @@ const RoomPage = () => {
         }
       });
     }
-  }, [socket, isGameStarted]);
+  }, [socket]);
+
+  // Handle game start
+  const onStartGame = () => {
+    // Don't start if teams are not full
+    // if (
+    //   !players.redSpy ||
+    //   !players.blueSpy ||
+    //   players.redOps.length === 0 ||
+    //   players.blueOps.length === 0
+    // ) {
+    //   return;
+    // }
+
+    setIsGameStarted(true);
+    // Notify server that game starts
+    socket.emit('startGame');
+  };
+
+  // Handle player join
+  const join = (type) => socket.emit(`joined${type}`, player);
+
+  // Handle lang change
+  const onLangChange = (lang) => {
+    // Send game language to server
+    socket.emit('sendLang', lang.icon); // icon = az, fr, ar, en
+  };
 
   // Handle leave room
   const handleLeaveRoom = () => {
@@ -187,39 +215,37 @@ const RoomPage = () => {
   };
 
   // Enter clue
-  const onClueEntered = (clue, count) => {
-    socket.emit('clueEntered', clue, count, player.name);
+  const onClueEntered = (clue) => {
+    socket.emit('clueEntered', clue.word, clue.count, player.name);
+    console.log(clue.word, clue.count, player.name);
     setGame((prevState) => {
-      return { ...prevState, yourTurn: false };
+      return { ...prevState, enterClue: false };
     });
   };
 
   // Common config for game pages
   const gameConfig = {
     translate: t,
-    socket: socket,
     player: player,
-    players: players,
-    updatePlayer: setPlayer
+    players: players
   };
 
   return (
     <GameLayout translate={t} onLeaveRoom={handleLeaveRoom}>
       {isGameStarted ? (
         <Playboard
-          key={players}
-          game={game}
           {...gameConfig}
+          game={game}
           selectCard={onCardSelected}
           endTurn={onEndTurn}
           enterClue={onClueEntered}
         />
       ) : (
         <Room
-          key={players}
-          gameStarted={() => setIsGameStarted(true)}
-          setPlayers={setPlayers}
           {...gameConfig}
+          startGame={onStartGame}
+          changeLang={onLangChange}
+          joinAs={join}
         />
       )}
     </GameLayout>
