@@ -19,11 +19,12 @@ const RoomPage = () => {
     board: [],
     labels: [],
     enterClue: false,
+    yourTurn: false,
     clues: [],
     redScore: 0,
     blueScore: 0,
     globalChat: [],
-    teamChat: []
+    teamChat: [],
   });
 
   const router = useRouter();
@@ -87,10 +88,10 @@ const RoomPage = () => {
       // If not player's turn
       socket.on('notYourTurn', (team, isSpymaster) => {
         const player = JSON.parse(window.sessionStorage.getItem('player'));
+        console.log('not your turn');
         if (player.team === team && player.isSpymaster === isSpymaster) {
-          console.log('not your turn');
-          window.sessionStorage.setItem('player', JSON.stringify(playerInfo));
-          setPlayer((prevState) => {
+          console.log('not your turn passed if');
+          setGame((prevState) => {
             return { ...prevState, yourTurn: false };
           });
         }
@@ -167,7 +168,7 @@ const RoomPage = () => {
         console.log('test');
         if (player.team === team && !isSpymaster) {
           console.log('choose a card');
-          setPlayer((prevState) => {
+          setGame((prevState) => {
             return { ...prevState, yourTurn: true };
           });
         }
@@ -189,20 +190,23 @@ const RoomPage = () => {
           }
         });
       });
+
+      // Handle game over
+      socket.on('gameEnded', () => setIsGameStarted(false));
     }
   }, [socket]);
 
   // Handle game start
   const onStartGame = () => {
     // Don't start if teams are not full
-    // if (
-    //   !players.redSpy ||
-    //   !players.blueSpy ||
-    //   players.redOps.length === 0 ||
-    //   players.blueOps.length === 0
-    // ) {
-    //   return;
-    // }
+    if (
+      !players.redSpy ||
+      !players.blueSpy ||
+      players.redOps.length === 0 ||
+      players.blueOps.length === 0
+    ) {
+      return;
+    }
 
     setIsGameStarted(true);
     // Notify server that game starts
@@ -227,14 +231,14 @@ const RoomPage = () => {
 
   // Select a card
   const onCardSelected = (id) => {
-    if (player.yourTurn && !player.isSpymaster) {
+    if (game.yourTurn && !player.isSpymaster) {
       socket.emit('cardChosen', id);
     }
   };
 
   // End turn
   const onEndTurn = () => {
-    if (player.yourTurn && !player.isSpymaster) {
+    if (game.yourTurn && !player.isSpymaster) {
       socket.emit('endTurn');
       setGame((prevState) => {
         return { ...prevState, yourTurn: false };

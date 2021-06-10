@@ -14,6 +14,7 @@ export function SocketProvider({ children }) {
   useEffect(() => {
     const newSocket = io(SOCKET_BASE_URL);
     setSocket(newSocket);
+    console.log(newSocket);
 
     return () => newSocket.close();
   }, []);

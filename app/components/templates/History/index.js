@@ -99,4 +99,4 @@ const mapStateToProps = ({ auth }) => {
   return { details };
 };
 
-export default connect(mapStateToProps)(History);
+export default connect(mapStateToProps)(withAuth(History));
