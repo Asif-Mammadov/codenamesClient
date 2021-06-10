@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { AUTH_TOKEN } from '../store/constants';
 
-const WithoutAuth = (WrappedComponent) => {
+const withoutAuth = (WrappedComponent) => {
   return (props) => {
     // checks whether we are on client / browser or server.
     if (typeof window !== 'undefined') {
@@ -25,4 +25,4 @@ const WithoutAuth = (WrappedComponent) => {
   };
 };
 
-export default WithoutAuth;
+export default withoutAuth;

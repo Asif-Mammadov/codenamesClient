@@ -6,7 +6,7 @@ import utils from '../../../utils';
 import AuthLayout from '../../layouts/AuthLayout';
 import { showAuthLoading, signIn } from '../../../store/actions/Auth';
 import { useRouter } from 'next/router';
-import WithoutAuth from '../../../hoc/WithoutAuth';
+import withoutAuth from '../../../hoc/withoutAuth';
 
 const Login = ({
   translate,
@@ -134,5 +134,5 @@ const mapStateToProps = ({ auth }) => {
 };
 
 export default connect(mapStateToProps, { signIn, showAuthLoading })(
-  WithoutAuth(Login)
+  withoutAuth(Login)
 );

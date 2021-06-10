@@ -309,4 +309,4 @@ export default connect(mapStateToProps, {
   showAuthMessage,
   hideAuthMessage,
   showAuthLoading
-})(Account);
+})(withAuth(Account));
