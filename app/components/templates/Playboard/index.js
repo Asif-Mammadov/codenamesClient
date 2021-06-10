@@ -70,7 +70,7 @@ const Playboard = ({
         <ClueForm translate={translate} enterClue={enterClue} isMobile />
       ) : null}
 
-      {player.yourTurn && !player.isSpymaster ? (
+      {game.yourTurn && !player.isSpymaster ? (
         <div className={[styles.endTurnWrapper, styles.mobile].join(' ')}>
           <Button clicked={endTurn} style={{ margin: '20 auto' }}>
             End Turn
@@ -88,7 +88,7 @@ const Playboard = ({
           <ClueForm translate={translate} enterClue={enterClue} />
         ) : null}
 
-        {player.yourTurn && !player.isSpymaster ? (
+        {game.yourTurn && !player.isSpymaster ? (
           <div className={styles.endTurnWrapper}>
             <Button clicked={endTurn} style={{ margin: '0 auto' }}>
               End Turn

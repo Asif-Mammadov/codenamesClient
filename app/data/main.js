@@ -18,7 +18,7 @@ export const TEAM_MEMBERS = [
   },
   {
     name: 'Asif Mammadov',
-    position: 'UI & UX, Front End Developer',
+    position: 'Team Lead, Back End Developer',
     avatar: 'eyvazahmadzada',
     socialMedia: {
       email: 'eyvaz.ahmedzade.12@gmail.com',
@@ -28,7 +28,7 @@ export const TEAM_MEMBERS = [
   },
   {
     name: 'Sabina Abdyeva',
-    position: 'UI & UX, Front End Developer',
+    position: 'Back End Developer',
     avatar: 'eyvazahmadzada',
     socialMedia: {
       email: 'eyvaz.ahmedzade.12@gmail.com',
@@ -38,7 +38,7 @@ export const TEAM_MEMBERS = [
   },
   {
     name: 'Ravan Huseynli',
-    position: 'UI & UX, Front End Developer',
+    position: 'Back End Developer',
     avatar: 'eyvazahmadzada',
     socialMedia: {
       email: 'eyvaz.ahmedzade.12@gmail.com',
@@ -48,7 +48,7 @@ export const TEAM_MEMBERS = [
   },
   {
     name: 'Huseyn Naghiyev',
-    position: 'UI & UX, Front End Developer',
+    position: 'Front End Developer',
     avatar: 'eyvazahmadzada',
     socialMedia: {
       email: 'eyvaz.ahmedzade.12@gmail.com',
@@ -58,7 +58,7 @@ export const TEAM_MEMBERS = [
   },
   {
     name: 'Vugar Mammadov',
-    position: 'UI & UX, Front End Developer',
+    position: 'Front End Developer',
     avatar: 'eyvazahmadzada',
     socialMedia: {
       email: 'eyvaz.ahmedzade.12@gmail.com',

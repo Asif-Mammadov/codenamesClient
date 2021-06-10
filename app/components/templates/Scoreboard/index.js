@@ -15,7 +15,7 @@ const Scoreboard = ({ translate, scoreboard }) => {
     <AccountLayout translate={translate}>
       <div className={styles.scoreboard}>
         <section className={styles.topScorers}>
-          {[scoreboard[1], scoreboard[0], scoreboard[2]].map(
+          {scoreboard ? [scoreboard[1], scoreboard[0], scoreboard[2]].map(
             (scorer, index) => (
               <TopScorer
                 key={scorer.Username}
@@ -27,11 +27,11 @@ const Scoreboard = ({ translate, scoreboard }) => {
                 me={scorer.Username === 'You'}
               />
             )
-          )}
+          ) : null}
         </section>
 
         <section className={styles.scorers}>
-          {scoreboard.splice(0, 3).map((scorer, index) => (
+          {scoreboard ? scoreboard.splice(0, 3).map((scorer, index) => (
             <Scorer
               key={scorer.Username}
               name={scorer.Username}
@@ -41,7 +41,7 @@ const Scoreboard = ({ translate, scoreboard }) => {
               translate={translate}
               me={scorer.Username === 'You'}
             />
-          ))}
+          )) : null}
         </section>
       </div>
     </AccountLayout>
@@ -53,4 +53,4 @@ const mapStateToProps = ({ auth }) => {
   return { scoreboard };
 };
 
-export default connect(mapStateToProps, null)(Scoreboard);
+export default connect(mapStateToProps, null)(withAuth(Scoreboard));

@@ -6,7 +6,7 @@ import Button from '../../elements/Button';
 import FormGroup from '../../elements/FormGroup';
 import { showAuthLoading, signUp } from '../../../store/actions/Auth';
 import AuthLayout from '../../layouts/AuthLayout';
-import WithoutAuth from '../../../hoc/WithoutAuth';
+import withoutAuth from '../../../hoc/withoutAuth';
 
 const Register = ({
   translate,
@@ -146,5 +146,5 @@ const mapStateToProps = ({ auth }) => {
 };
 
 export default connect(mapStateToProps, { signUp, showAuthLoading })(
-  WithoutAuth(Register)
+  withoutAuth(Register)
 );
