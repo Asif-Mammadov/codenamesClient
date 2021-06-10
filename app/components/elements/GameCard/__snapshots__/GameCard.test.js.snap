@@ -6,21 +6,21 @@ Object {
   "baseElement": <body>
     <div>
       <div
-        class="gameCard"
+        class="gameCard "
       >
-        <h6>
-          Paper
-        </h6>
+        <div>
+          <h6 />
+        </div>
       </div>
     </div>
   </body>,
   "container": <div>
     <div
-      class="gameCard"
+      class="gameCard "
     >
-      <h6>
-        Paper
-      </h6>
+      <div>
+        <h6 />
+      </div>
     </div>
   </div>,
   "debug": [Function],
